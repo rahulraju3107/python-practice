@@ -1,12 +1,38 @@
 // Settings: theme, backup (export and import), sync, shortcuts.
 import { $, $$, esc, download, today } from '../util.js';
 import { getSetting, putSetting, exportAll, mergeIn } from '../storage.js';
-import { syncEnabled, onSyncStatus, syncUser, signIn, signOutUser, syncNow } from '../sync.js';
+import { syncEnabled, onSyncStatus, syncUser, syncMessage, signInGoogle, signInEmail, signUpEmail, resetPassword, signOutUser, syncNow } from '../sync.js';
 
 export function settingsPage(main) {
   const theme = getSetting('theme', 'system');
   main.innerHTML = `<div class="page">
     <h1>Settings</h1>
+
+    <section><h2>Account and sync</h2>
+      ${syncEnabled ? `<div data-signed-out>
+          <p>Sign in to keep your progress and notes in step across your devices. Everything is still saved in this browser first.</p>
+          <form class="auth-form" data-auth>
+            <label class="field"><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
+            <label class="field"><span>Password</span><input type="password" name="password" autocomplete="current-password"></label>
+            <div class="toolbar">
+              <button type="submit" class="btn primary">Sign in</button>
+              <button type="button" class="btn" data-signup>Create account</button>
+              <button type="button" class="btn quiet" data-reset>Forgot password</button>
+            </div>
+          </form>
+          <div class="toolbar"><span class="muted small">or</span><button type="button" class="btn" data-google>Sign in with Google</button></div>
+        </div>
+        <div data-signed-in hidden>
+          <p>Signed in as <b data-email></b>. Status: <b data-sync-label></b></p>
+          <div class="toolbar">
+            <button type="button" class="btn" data-syncnow>Sync now</button>
+            <button type="button" class="btn quiet" data-signout>Sign out</button>
+          </div>
+          <p class="muted small">Signing out keeps everything that is saved in this browser.</p>
+        </div>
+        <p data-sync-msg aria-live="polite"></p>`
+      : '<p><b>Accounts are not set up yet.</b> Until then, everything is saved in this browser only ("Local only"). The setup is a short checklist in <code>SETUP-SYNC.md</code>. Export and import below work without it.</p>'}
+    </section>
 
     <section><h2>Theme</h2>
       <div class="checks">${['system', 'light', 'dark'].map((t) => `<label><input type="radio" name="theme" value="${t}" ${t === theme ? 'checked' : ''}> ${t === 'system' ? 'Match my device' : t[0].toUpperCase() + t.slice(1)}</label>`).join('')}</div>
@@ -19,16 +45,6 @@ export function settingsPage(main) {
         <label class="btn">Import a backup file<input type="file" accept="application/json,.json" data-import hidden></label>
       </div>
       <p data-import-result aria-live="polite"></p>
-    </section>
-
-    <section><h2>Sync</h2>
-      ${syncEnabled ? `<p>Status: <b data-sync-label></b> <span class="muted" data-sync-user></span></p>
-        <div class="toolbar">
-          <button type="button" class="btn" data-signin>Sign in with Google</button>
-          <button type="button" class="btn" data-syncnow>Sync now</button>
-          <button type="button" class="btn quiet" data-signout>Sign out</button>
-        </div><p class="bad" data-sync-error></p>`
-      : '<p>Sync is off, so everything is saved in this browser only ("Local only"). To sync between devices with your own free Firebase project, follow <code>SETUP-SYNC.md</code> in the repository. Export and import above works without any setup.</p>'}
     </section>
 
     <section><h2>Keyboard shortcuts</h2>
@@ -63,20 +79,27 @@ export function settingsPage(main) {
   };
 
   if (!syncEnabled) return null;
-  const errorEl = $('[data-sync-error]', main);
-  const attempt = (fn) => async () => {
-    errorEl.textContent = '';
-    try { await fn(); } catch (err) { errorEl.textContent = `That did not work: ${err.message}`; }
+  const msg = $('[data-sync-msg]', main);
+  const form = $('[data-auth]', main);
+  const say = (text, cls = 'muted') => { msg.className = cls; msg.textContent = text; };
+  const attempt = (fn, working, done = '') => async () => {
+    say(working);
+    try { await fn(); say(done); } catch (err) { say(err.message, 'bad'); }
   };
-  $('[data-signin]', main).onclick = attempt(signIn);
-  $('[data-signout]', main).onclick = attempt(signOutUser);
-  $('[data-syncnow]', main).onclick = attempt(syncNow);
+  const email = () => form.email.value;
+  const password = () => form.password.value;
+  form.addEventListener('submit', (e) => { e.preventDefault(); attempt(() => signInEmail(email(), password()), 'Signing in.')(); });
+  $('[data-signup]', main).onclick = attempt(() => signUpEmail(email(), password()), 'Creating your account.');
+  $('[data-reset]', main).onclick = attempt(() => resetPassword(email()), 'Sending.', 'If there is an account for that address, a password reset email is on its way. Check your junk folder too.');
+  $('[data-google]', main).onclick = attempt(signInGoogle, 'Opening Google sign-in. If no window appears, this page will go to Google and come back.');
+  $('[data-signout]', main).onclick = attempt(signOutUser, 'Signing out.', 'Signed out. Your progress is still saved in this browser.');
+  $('[data-syncnow]', main).onclick = attempt(syncNow, 'Syncing.');
   return onSyncStatus((label) => {
     const user = syncUser();
+    $('[data-signed-out]', main).hidden = !!user;
+    $('[data-signed-in]', main).hidden = !user;
     $('[data-sync-label]', main).textContent = label;
-    $('[data-sync-user]', main).textContent = user ? `Signed in as ${user.email}` : 'Not signed in';
-    $('[data-signin]', main).hidden = !!user;
-    $('[data-signout]', main).hidden = !user;
-    $('[data-syncnow]', main).hidden = !user;
+    $('[data-email]', main).textContent = user ? (user.email || 'your account') : '';
+    if (syncMessage()) say(syncMessage(), syncMessage().startsWith('First sync') || syncMessage().startsWith('Backup') ? 'good' : 'bad');
   });
 }

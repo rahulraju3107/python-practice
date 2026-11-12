@@ -41,7 +41,7 @@ Then open <http://localhost:8000>.
 In your browser, on that device ("Local only" in the corner of the screen). Two ways to move it:
 
 - **Settings > Export** downloads one file. **Import** it on another device. Import merges, keeping the newer copy of each exercise and note.
-- Optional automatic sync through your own free Firebase project. See [SETUP-SYNC.md](SETUP-SYNC.md).
+- Optional accounts: sign in with email and password or with Google, and progress follows you between devices. It uses your own free Firebase project. The checklist is in [SETUP-SYNC.md](SETUP-SYNC.md). Until that is done the app says "Accounts are not set up yet" and works as before.
 
 Clearing your browser data deletes local progress, so export a backup now and then.
 

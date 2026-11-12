@@ -69,6 +69,7 @@
    "id": "m03",
    "title": "Strings in depth",
    "summary": "Indexing, slicing, methods, building and validating text, and simple parsing. A heavy module.",
+   "file": "modules/m03.json",
    "lessons": [
     {
      "id": "m03-l01",

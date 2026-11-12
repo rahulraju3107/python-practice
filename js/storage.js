@@ -204,6 +204,12 @@ export function setPulledAt(ts) {
   write(KEYS.sync, sync);
 }
 
+/** Remember which account this device last synced with. Stays on this device. */
+export function setSyncUid(uid) {
+  sync.uid = uid;
+  write(KEYS.sync, sync);
+}
+
 /** A new sign-in must send everything, not just recent changes. */
 export function markAllDirty() {
   sync.dirtyEx = Object.keys(db.exercises);

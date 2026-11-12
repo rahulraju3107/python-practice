@@ -1,5 +1,5 @@
-// Optional Firebase sync. Does nothing unless firebase-config.js is filled in.
-// The Firebase SDK is only downloaded when sync is enabled.
+// Optional accounts and sync through Firebase. Does nothing unless
+// firebase-config.js is filled in. The Firebase SDK is only downloaded then.
 //
 // Firestore layout (each user can only touch their own tree):
 //   users/{uid}/exercises/{exerciseId}
@@ -7,7 +7,7 @@
 //   users/{uid}/meta/main        lessons, activity days, settings
 import { firebaseConfig } from '../firebase-config.js';
 import * as store from './storage.js';
-import { debounce } from './util.js';
+import { debounce, download, today } from './util.js';
 
 export const syncEnabled = !!(firebaseConfig && firebaseConfig.apiKey);
 
@@ -20,9 +20,30 @@ const LABELS = {
   error: 'Sync error',
 };
 
+const ERRORS = {
+  'auth/invalid-credential': 'That email and password do not match an account.',
+  'auth/wrong-password': 'That email and password do not match an account.',
+  'auth/user-not-found': 'That email and password do not match an account.',
+  'auth/invalid-email': 'That does not look like an email address.',
+  'auth/missing-email': 'Type your email address first.',
+  'auth/missing-password': 'Type a password.',
+  'auth/email-already-in-use': 'There is already an account for that email. Use Sign in.',
+  'auth/weak-password': 'Use a password with at least 6 characters.',
+  'auth/too-many-requests': 'Too many attempts. Wait a few minutes and try again.',
+  'auth/network-request-failed': 'No connection to the sign-in service. Check your network.',
+  'auth/unauthorized-domain': 'This website address is not on the Authorised domains list in Firebase. See SETUP-SYNC.md, step 6.',
+  'auth/operation-not-allowed': 'This sign-in method is not switched on in Firebase. See SETUP-SYNC.md, step 3.',
+  'auth/account-exists-with-different-credential': 'This email already has an account with a different sign-in method. Use that method.',
+};
+
+function friendly(err) {
+  return new Error(ERRORS[err?.code] || err?.message || 'Something went wrong.');
+}
+
 let state = syncEnabled ? 'signed-out' : 'local';
 let fb = null;      // loaded SDK functions
 let user = null;
+let message = '';   // one-line note about the last sign-in or first sync
 let running = false;
 let again = false;
 const listeners = new Set();
@@ -32,6 +53,7 @@ function set(next) {
   listeners.forEach((fn) => fn(LABELS[state], state));
 }
 
+/** fn(label, state) is called now and on every change: status, user or message. */
 export function onSyncStatus(fn) {
   listeners.add(fn);
   fn(LABELS[state], state);
@@ -39,7 +61,7 @@ export function onSyncStatus(fn) {
 }
 
 export const syncUser = () => user;
-export const syncStateNow = () => state;
+export const syncMessage = () => message;
 
 async function loadSdk() {
   if (fb) return fb;
@@ -54,17 +76,40 @@ async function loadSdk() {
   return fb;
 }
 
+function hasLocalProgress() {
+  return Object.keys(store.allEx()).length > 0
+    || Object.values(store.allNotes()).some((n) => n.text && n.text.trim());
+}
+
+async function onUser(u) {
+  user = u;
+  if (!u) { set('signed-out'); return; }
+  const firstSyncHere = store.syncState().uid !== u.uid;
+  let backedUp = false;
+  if (firstSyncHere) {
+    // Safety first: keep a copy of what is on this device before anything merges.
+    if (hasLocalProgress()) {
+      download(`python-practice-backup-before-sync-${today()}.json`, JSON.stringify(store.exportAll(), null, 1), 'application/json');
+      backedUp = true;
+    }
+    store.markAllDirty();
+    store.setSyncUid(u.uid);
+  }
+  const result = await syncNow();
+  if (firstSyncHere && result) {
+    const n = (count, word) => `${count} ${word}${count === 1 ? '' : 's'}`;
+    message = `${backedUp ? 'Backup file saved to your downloads. ' : ''}First sync on this device: uploaded ${n(result.pushedEx, 'exercise record')} and ${n(result.pushedNotes, 'note')}, received ${n(result.pulledEx, 'exercise record')} and ${n(result.pulledNotes, 'note')}.`;
+    set(state);
+  }
+}
+
 export async function initSync() {
   if (!syncEnabled) return;
   try {
     const sdk = await loadSdk();
-    sdk.auth.onAuthStateChanged(sdk.authInstance, (u) => {
-      const changed = (u?.uid || null) !== (store.getSetting('sync_uid') || null);
-      user = u;
-      if (!u) { set('signed-out'); return; }
-      if (changed) { store.markAllDirty(); store.putSetting('sync_uid', u.uid); }
-      syncNow();
-    });
+    // Finishes a Google sign-in that used the redirect fallback.
+    sdk.auth.getRedirectResult(sdk.authInstance).catch((err) => { message = friendly(err).message; set(state); });
+    sdk.auth.onAuthStateChanged(sdk.authInstance, onUser);
   } catch (err) {
     console.warn('Sync could not start', err);
     set(navigator.onLine ? 'error' : 'offline');
@@ -76,15 +121,45 @@ export async function initSync() {
   store.subscribe((what) => { if (what !== 'merge') later(); });
 }
 
-export async function signIn() {
+// ---- signing in and out ----
+const POPUP_BLOCKED = ['auth/popup-blocked', 'auth/operation-not-supported-in-this-environment', 'auth/web-storage-unsupported'];
+const POPUP_CLOSED = ['auth/popup-closed-by-user', 'auth/cancelled-popup-request', 'auth/user-cancelled'];
+
+/** Google sign-in. Uses a pop-up, and falls back to a full-page redirect if the pop-up is blocked. */
+export async function signInGoogle() {
   const sdk = await loadSdk();
-  await sdk.auth.signInWithPopup(sdk.authInstance, new sdk.auth.GoogleAuthProvider());
+  const provider = new sdk.auth.GoogleAuthProvider();
+  try {
+    await sdk.auth.signInWithPopup(sdk.authInstance, provider);
+  } catch (err) {
+    if (POPUP_CLOSED.includes(err.code)) return;
+    if (!POPUP_BLOCKED.includes(err.code)) throw friendly(err);
+    try { await sdk.auth.signInWithRedirect(sdk.authInstance, provider); } catch (err2) { throw friendly(err2); }
+  }
 }
 
+export async function signInEmail(email, password) {
+  const sdk = await loadSdk();
+  try { await sdk.auth.signInWithEmailAndPassword(sdk.authInstance, email.trim(), password); } catch (err) { throw friendly(err); }
+}
+
+export async function signUpEmail(email, password) {
+  const sdk = await loadSdk();
+  try { await sdk.auth.createUserWithEmailAndPassword(sdk.authInstance, email.trim(), password); } catch (err) { throw friendly(err); }
+}
+
+export async function resetPassword(email) {
+  const sdk = await loadSdk();
+  try { await sdk.auth.sendPasswordResetEmail(sdk.authInstance, email.trim()); } catch (err) { throw friendly(err); }
+}
+
+/** Signing out stops syncing. Everything stays saved in this browser. */
 export async function signOutUser() {
+  message = '';
   if (fb) await fb.auth.signOut(fb.authInstance);
 }
 
+// ---- pull and push ----
 async function pull() {
   const { fs, db } = fb;
   const since = store.syncState().pulledAt || 0;
@@ -100,8 +175,9 @@ async function pull() {
   }
   const meta = await fs.getDoc(fs.doc(db, 'users', user.uid, 'meta', 'main'));
   if (meta.exists()) Object.assign(incoming, meta.data());
-  store.mergeIn(incoming, { markDirty: false });
+  const taken = store.mergeIn(incoming, { markDirty: false });
   store.setPulledAt(newest);
+  return taken;
 }
 
 async function push() {
@@ -127,18 +203,27 @@ async function push() {
     await batch.commit();
   }
   store.clearDirty(pushed);
+  return pushed;
 }
 
-/** Pull newer records, then push local changes. Safe to call at any time. */
+/**
+ * Pull newer records, then push local changes. Safe to call at any time.
+ * Resolves to the counts moved, or null if nothing ran.
+ */
 export async function syncNow() {
-  if (!syncEnabled || !user) return;
-  if (!navigator.onLine) { set('offline'); return; }
-  if (running) { again = true; return; }
+  if (!syncEnabled || !user) return null;
+  if (!navigator.onLine) { set('offline'); return null; }
+  if (running) { again = true; return null; }
   running = true;
   set('syncing');
+  let result = null;
   try {
-    await pull();
-    await push();
+    const taken = await pull();
+    const pushed = await push();
+    result = {
+      pulledEx: taken.exercises, pulledNotes: taken.notes,
+      pushedEx: Object.keys(pushed.ex).length, pushedNotes: Object.keys(pushed.notes).length,
+    };
     set('synced');
   } catch (err) {
     console.warn('Sync failed', err);
@@ -147,4 +232,5 @@ export async function syncNow() {
     running = false;
     if (again) { again = false; syncNow(); }
   }
+  return result;
 }

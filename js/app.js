@@ -5,7 +5,7 @@ import { warm, onStatus } from './runner.js';
 import { subscribe, getSetting, putSetting } from './storage.js';
 import { dueExercises } from './progress.js';
 import { initShortcuts, clearShortcuts } from './keys.js';
-import { initSync, onSyncStatus } from './sync.js';
+import { initSync, onSyncStatus, syncEnabled, syncUser, signOutUser } from './sync.js';
 import { dashboard } from './views/dashboard.js';
 import { learn } from './views/learn.js';
 import { lessonPage } from './views/lesson.js';
@@ -86,6 +86,17 @@ async function boot() {
     const chip = $('#sync-status');
     chip.textContent = label;
     chip.dataset.state = state;
+    // Sign-in entry point, next to the sync status.
+    const box = $('#account');
+    const user = syncUser();
+    if (!syncEnabled) {
+      box.innerHTML = '<a class="muted small" href="#/settings">Accounts are not set up yet</a>';
+    } else if (!user) {
+      box.innerHTML = '<a class="btn small" href="#/settings">Sign in</a>';
+    } else {
+      box.innerHTML = `<span class="who small" title="${esc(user.email || '')}">${esc(user.email || 'Signed in')}</span><button type="button" class="btn small quiet">Sign out</button>`;
+      $('button', box).onclick = () => signOutUser();
+    }
   });
   try {
     await loadContent();
