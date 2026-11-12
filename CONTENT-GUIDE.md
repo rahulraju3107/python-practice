@@ -172,9 +172,10 @@ Free-text tags, lowercase with hyphens. They drive the per-skill table, weak are
 
 - The four priority skills: `file-parsing`, `strings`, `debugging`, `explaining`.
 - **Every fix exercise must include `debugging`. Every explain exercise must include `explaining`.** Predict exercises include `tracing`.
-- In use so far: `variables`, `printing`, `input`, `types`, `conversion`, `operators`, `f-strings`, `strings`, `conditionals`, `boolean-logic`, `while-loops`, `for-loops`, `range`, `break-continue`, `nested-loops`, `indexing`, `slicing`, `string-methods`, `split-join`, `formatting`, `validation`, `parsing`, `tracing`, `debugging`, `explaining`.
+- In use so far: `variables`, `printing`, `input`, `types`, `conversion`, `operators`, `f-strings`, `strings`, `conditionals`, `boolean-logic`, `while-loops`, `for-loops`, `range`, `break-continue`, `nested-loops`, `indexing`, `slicing`, `string-methods`, `split-join`, `formatting`, `validation`, `parsing`, `tracing`, `debugging`, `explaining`, `lists`, `list-methods`, `searching`, `sorting`, `tuples`, `unpacking`, `nested-lists`, `mutation`.
 - Every Module 3 exercise carries `strings` plus one or two of the narrower tags, so the Strings row in the skill table covers the whole module.
-- Suggested for later modules: `lists`, `tuples`, `dictionaries`, `sets`, `functions`, `errors`, `file-parsing`, `csv`, `json`, `comprehensions`, `sorting`, `classes`, `regex`, `datetime`, `complexity`, `recursion`, `two-pointers`, `sliding-window`, `stacks-queues`, `binary-search`, `trees`, `graphs`, `heaps`, `dynamic-programming`.
+- Every Module 4 exercise carries `lists` plus one or two of the narrower tags (`indexing`, `slicing`, `list-methods`, `searching`, `sorting`, `tuples`, `unpacking`, `nested-lists`, `mutation`).
+- Suggested for later modules: `dictionaries`, `sets`, `functions`, `errors`, `file-parsing`, `csv`, `json`, `comprehensions`, `classes`, `regex`, `datetime`, `complexity`, `recursion`, `two-pointers`, `sliding-window`, `stacks-queues`, `binary-search`, `trees`, `graphs`, `heaps`, `dynamic-programming`.
 
 ## How tests run
 
@@ -267,7 +268,7 @@ Tip: writing JSON with escaped newlines by hand is error-prone. It is fine to wr
 
 ### Size targets
 
-At least 450 exercises across all 14 modules. Strings (Module 3), debugging (Module 7) and files (Module 8) together should hold about a third of them. Modules 1 and 2 have 130 and Module 3 has 96.
+At least 450 exercises across all 14 modules. Strings (Module 3), debugging (Module 7) and files (Module 8) together should hold about a third of them. Modules 1 and 2 have 130, Module 3 has 96 and Module 4 has 76.
 
 The quality gate needs at least 8 exercises in every lesson, so the smallest a module can be is 8 times its number of lessons. That makes Module 7 at least 80 and Module 8 at least 104, and the whole curriculum at least 872. Plan each module from its lesson count, not from a round number. Fix and explain exercises belong in every lesson, not only in Module 7.
 

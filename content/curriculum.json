@@ -125,6 +125,7 @@
    "id": "m04",
    "title": "Lists and tuples",
    "summary": "Ordered collections: creating, changing, looping, nesting, and the copying gotchas.",
+   "file": "modules/m04.json",
    "lessons": [
     {
      "id": "m04-l01",
