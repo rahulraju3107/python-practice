@@ -1,0 +1,1998 @@
+{
+ "id": "m01",
+ "title": "Python basics",
+ "lessons": [
+  {
+   "id": "m01-l01",
+   "title": "Variables and print",
+   "what": "A **variable** is a name that points to a value, so you can use the value again later.\n`print()` is a **function** (a named piece of code you can run) that shows values on the screen.",
+   "why": "Without variables you have to repeat the same value everywhere. If the price changes, you must find and fix every copy.\n\nBefore:\n\n```python\nprint(4.5 * 3)\nprint(4.5 * 10)\n```\n\nAfter:\n\n```python\nprice = 4.5\nprint(price * 3)\nprint(price * 10)\n```\n\nNow the price lives in one place. Change it once and every line that uses it is right.",
+   "syntax": "```python\nprice = 4.5          # name = value. The name is on the left.\nitem = \"Flat white\"  # text goes inside quotes\nprint(item)          # show one value\nprint(item, price)   # show several values, with a space between them\n# a line that starts with # is a comment. Python ignores it.\n```\n\n- `=` means \"store the value on the right under the name on the left\". It does not mean \"equals\" like in maths.\n- Names use lowercase letters, digits and underscores, such as `unit_price`. They cannot start with a digit.\n- Names are case-sensitive: `price` and `Price` are two different names.",
+   "examples": [
+    {
+     "title": "Store two values and print them",
+     "code": "item = \"Flat white\"\nprice = 4.5\nprint(item)\nprint(price)\n",
+     "output": "Flat white\n4.5\n",
+     "explain": "- Line 1 stores the text `\"Flat white\"` under the name `item`.\n- Line 2 stores the number `4.5` under the name `price`.\n- Lines 3 and 4 print each value on its own line. The quotes are not printed: they only mark where the text starts and ends."
+    },
+    {
+     "title": "Print several things on one line",
+     "code": "item = \"Flat white\"\nprice = 4.5\nprint(item, \"costs\", price)\nprint(\"With a muffin:\", price + 4)\n",
+     "output": "Flat white costs 4.5\nWith a muffin: 8.5\n",
+     "explain": "- Line 3 gives `print` three values separated by commas. `print` puts one space between them.\n- Line 4 works out `price + 4` first, then prints the result after the label."
+    },
+    {
+     "title": "Change a variable",
+     "code": "stock = 10\nprint(stock)\nstock = stock - 3\nprint(stock)\n",
+     "output": "10\n7\n",
+     "explain": "- Line 3 looks odd if you read `=` as \"equals\". Read it as: work out the right side first (`10 - 3` is `7`), then store that under `stock`.\n- The old value `10` is gone. A variable holds one value at a time."
+    }
+   ],
+   "mistakes": [
+    {
+     "title": "A typo in the name",
+     "fix": "Read the last line of the error first. `NameError` means Python does not know that name. The value was stored as `pirce`, but line 2 asks for `price`. Fix the spelling so both lines match. Capital letters count too: `Price` would fail the same way.",
+     "code": "pirce = 4.5\nprint(price)\n",
+     "error": "Traceback (most recent call last):\n  File \"main.py\", line 2, in <module>\n    print(price)\n          ^^^^^\nNameError: name 'price' is not defined"
+    },
+    {
+     "title": "Text without quotes",
+     "fix": "Without quotes Python thinks `Flat` and `white` are variable names, and two names side by side make no sense to it. `SyntaxError` means the line breaks the grammar of Python, so nothing runs at all. Put the text in quotes: `item = \"Flat white\"`.",
+     "code": "item = Flat white\nprint(item)\n",
+     "error": "  File \"main.py\", line 1\n    item = Flat white\n                ^^^^^\nSyntaxError: invalid syntax"
+    },
+    {
+     "title": "Using a variable before it has a value",
+     "fix": "Python runs from the top down, one line at a time. On line 1 the name `total` does not exist yet. Move the `print` below the line that creates `total`.",
+     "code": "print(total)\ntotal = 40 + 8\n",
+     "error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\n    print(total)\n          ^^^^^\nNameError: name 'total' is not defined"
+    }
+   ],
+   "remember": "Name on the left, value on the right: name = value.",
+   "quick_checks": [
+    {
+     "code": "a = 3\nb = a\na = 10\nprint(a, b)\n",
+     "expected_output": "10 3\n",
+     "explain": "Line 2 copies the value `3` into `b`. It does not tie `b` to `a`. When `a` later becomes `10`, `b` still holds `3`."
+    }
+   ],
+   "reference": [
+    {
+     "concept": "Create or change a variable",
+     "syntax": "name = value",
+     "example": "price = 4.5"
+    },
+    {
+     "concept": "Print values",
+     "syntax": "print(value1, value2)",
+     "example": "print(\"Total:\", 12)"
+    },
+    {
+     "concept": "Comment",
+     "syntax": "# text Python ignores",
+     "example": "# price in dollars"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "m01-l01-e01",
+     "type": "predict",
+     "tier": "warmup",
+     "title": "City and temperature",
+     "skills": [
+      "variables",
+      "printing",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "city = \"Perth\"\ntemp = 31\nprint(city)\nprint(\"Temp:\", temp)\n",
+     "expected_output": "Perth\nTemp: 31\n",
+     "hints": [
+      "Count the `print` calls. Each one makes exactly one line."
+     ],
+     "solution_explanation": "Each `print` makes one line. The second `print` has two values, so it puts one space between `Temp:` and `31`."
+    },
+    {
+     "id": "m01-l01-e02",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Store a receipt line",
+     "skills": [
+      "variables",
+      "printing"
+     ],
+     "prompt": "Create two variables:\n\n- `item` holding the text `Sourdough loaf`\n- `price` holding the number `7.5`\n\nThen print the item on one line and the price on the next line.\n\nExpected output:\n\n```\nSourdough loaf\n7.5\n```",
+     "starter_code": "# Create item and price, then print each one on its own line.\n",
+     "tests": [
+      {
+       "name": "item holds the text",
+       "code": "assert item == \"Sourdough loaf\"",
+       "hidden": false
+      },
+      {
+       "name": "price holds the number",
+       "code": "assert price == 7.5",
+       "hidden": false
+      },
+      {
+       "name": "price is a number, not text",
+       "code": "assert price + 1 == 8.5",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "stdin_tests": [
+      {
+       "name": "prints two lines",
+       "stdin": "",
+       "expected_stdout": "Sourdough loaf\n7.5\n",
+       "hidden": false
+      }
+     ],
+     "hints": [
+      "Text needs quotes. Numbers do not.",
+      "Use two separate `print` calls, one per line."
+     ],
+     "solution": "item = \"Sourdough loaf\"\nprice = 7.5\nprint(item)\nprint(price)\n",
+     "solution_explanation": "Lines 1 and 2 store the two values. The text has quotes and the number does not, so `price` can be used in maths later. Each `print` makes one line of output."
+    },
+    {
+     "id": "m01-l01-e03",
+     "type": "fix",
+     "tier": "warmup",
+     "title": "The missing quotes",
+     "skills": [
+      "variables",
+      "debugging"
+     ],
+     "prompt": "This program should print `Welcome mia_k`. It crashes with:\n\n```\nTraceback (most recent call last):\n  File \"main.py\", line 1, in <module>\n    username = mia_k\n               ^^^^^\nNameError: name 'mia_k' is not defined\n```\n\nFind the bug and fix it.",
+     "starter_code": "username = mia_k\nprint(\"Welcome\", username)\n",
+     "tests": [
+      {
+       "name": "username is the text mia_k",
+       "code": "assert username == \"mia_k\"",
+       "hidden": false,
+       "edge": true
+      }
+     ],
+     "stdin_tests": [
+      {
+       "name": "prints the welcome line",
+       "stdin": "",
+       "expected_stdout": "Welcome mia_k\n",
+       "hidden": false
+      }
+     ],
+     "hints": [
+      "The error names `mia_k`. Why does Python think that is a variable?",
+      "Text must be inside quotes."
+     ],
+     "solution": "username = \"mia_k\"\nprint(\"Welcome\", username)\n",
+     "solution_explanation": "Without quotes, Python reads `mia_k` as the name of a variable that does not exist. With quotes it is text, and that text is stored under `username`."
+    },
+    {
+     "id": "m01-l01-e04",
+     "type": "write",
+     "tier": "core",
+     "title": "Swap two drinks",
+     "skills": [
+      "variables"
+     ],
+     "prompt": "The starter code stores two drinks. Swap them, so `left` ends up holding `\"coffee\"` and `right` ends up holding `\"tea\"`.\n\nDo not retype the words. Use a third variable to hold one value while you move the other.\n\nExpected output:\n\n```\ncoffee tea\n```",
+     "starter_code": "left = \"tea\"\nright = \"coffee\"\n\n# Swap the two values here, using a third variable.\n\nprint(left, right)\n",
+     "tests": [
+      {
+       "name": "left now holds coffee",
+       "code": "assert left == \"coffee\"",
+       "hidden": false
+      },
+      {
+       "name": "right now holds tea",
+       "code": "assert right == \"tea\"",
+       "hidden": false
+      }
+     ],
+     "stdin_tests": [
+      {
+       "name": "prints the swapped values",
+       "stdin": "",
+       "expected_stdout": "coffee tea\n",
+       "hidden": false,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "If you write `left = right` first, the tea is lost. Where can you keep it safe?",
+      "Make `spare = left`. Now `left` is free to take the value of `right`.",
+      "Three lines: `spare = left`, `left = right`, `right = spare`."
+     ],
+     "solution": "left = \"tea\"\nright = \"coffee\"\n\nspare = left\nleft = right\nright = spare\n\nprint(left, right)\n",
+     "solution_explanation": "`spare = left` keeps a copy of `\"tea\"`. Then `left` can safely take `\"coffee\"`. Last, `right` takes the saved `\"tea\"`. Without the spare, the first assignment would overwrite a value you still need."
+    },
+    {
+     "id": "m01-l01-e05",
+     "type": "predict",
+     "tier": "core",
+     "title": "Stock after a sale",
+     "skills": [
+      "variables",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "stock = 12\nsold = 5\nstock = stock - sold\nsold = 0\nprint(\"Left:\", stock)\nprint(\"Sold:\", sold)\n",
+     "expected_output": "Left: 7\nSold: 0\n",
+     "hints": [
+      "Go line by line and write down the value of each variable after every line."
+     ],
+     "solution_explanation": "Line 3 works out `12 - 5` and stores `7` back into `stock`. Line 4 then sets `sold` to `0`. That does not change `stock`, because line 3 already finished."
+    },
+    {
+     "id": "m01-l01-e06",
+     "type": "fix",
+     "tier": "core",
+     "title": "Lines in the wrong order",
+     "skills": [
+      "variables",
+      "printing",
+      "debugging"
+     ],
+     "prompt": "This program should print `Total: 48`. It crashes with:\n\n```\nTraceback (most recent call last):\n  File \"main.py\", line 1, in <module>\n    print(\"Total:\", total)\n                    ^^^^^\nNameError: name 'total' is not defined\n```\n\nFix it without changing any numbers.",
+     "starter_code": "print(\"Total:\", total)\nsubtotal = 40\ndelivery = 8\ntotal = subtotal + delivery\n",
+     "tests": [
+      {
+       "name": "total is worked out from the two parts",
+       "code": "assert total == subtotal + delivery",
+       "hidden": false,
+       "edge": true
+      }
+     ],
+     "stdin_tests": [
+      {
+       "name": "prints the total",
+       "stdin": "",
+       "expected_stdout": "Total: 48\n",
+       "hidden": false
+      }
+     ],
+     "hints": [
+      "The traceback says line 1. What does line 1 need that does not exist yet?",
+      "Python runs top to bottom. A variable must be created before it is used."
+     ],
+     "solution": "subtotal = 40\ndelivery = 8\ntotal = subtotal + delivery\nprint(\"Total:\", total)\n",
+     "solution_explanation": "The `print` ran before `total` was created. Moving it to the end means all three variables exist by the time it runs."
+    },
+    {
+     "id": "m01-l01-e07",
+     "type": "explain",
+     "tier": "core",
+     "title": "Explain the discount",
+     "skills": [
+      "variables",
+      "explaining"
+     ],
+     "prompt": "Read the code. In your own words, explain what it does, why each step is there, and what it prints. Mention any edge cases you can see.",
+     "starter_code": "price = 20\ndiscount = 5\nprice = price - discount\nprint(\"You pay\", price)\n",
+     "model_explanation": "The program stores a price of 20 and a discount of 5. Line 3 works out the right side first: 20 minus 5 is 15. It then stores 15 back under the name `price`, replacing the 20. Line 4 prints `You pay 15`.\n\n`discount` is never changed. It is still 5 at the end. The original price of 20 is gone, because a variable only holds its latest value.",
+     "checklist": [
+      "Said that line 3 works out the right side first, then stores the result",
+      "Said that price changes from 20 to 15",
+      "Gave the exact output: You pay 15",
+      "Noted that discount stays 5, or that the old price is lost"
+     ]
+    },
+    {
+     "id": "m01-l01-e08",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Running total",
+     "skills": [
+      "variables",
+      "printing"
+     ],
+     "prompt": "A customer buys three things costing `12`, `7` and `30`.\n\nStart with `total = 0`. Add one purchase at a time by updating `total`, and print `total` after each update.\n\nExpected output:\n\n```\n12\n19\n49\n```",
+     "starter_code": "total = 0\n\n# Add 12, then 7, then 30. Print total after each one.\n",
+     "tests": [
+      {
+       "name": "total ends at 49",
+       "code": "assert total == 49",
+       "hidden": false
+      },
+      {
+       "name": "prints exactly three lines",
+       "code": "assert len(_stdout.splitlines()) == 3",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "stdin_tests": [
+      {
+       "name": "prints the three running totals",
+       "stdin": "",
+       "expected_stdout": "12\n19\n49\n",
+       "hidden": false
+      }
+     ],
+     "hints": [
+      "To add to a variable: `total = total + 12`.",
+      "You need the pattern \"update, then print\" three times."
+     ],
+     "solution": "total = 0\n\ntotal = total + 12\nprint(total)\ntotal = total + 7\nprint(total)\ntotal = total + 30\nprint(total)\n",
+     "solution_explanation": "Each update reads the current total, adds the next purchase and stores the result back. Printing straight after each update shows 12, then 19, then 49."
+    },
+    {
+     "id": "m01-l01-e09",
+     "type": "fix",
+     "tier": "stretch",
+     "title": "Two bugs in a name label",
+     "skills": [
+      "printing",
+      "debugging"
+     ],
+     "prompt": "This program should print `Ada Lovelace`. It has **two** bugs. The first error you will see is:\n\n```\n  File \"main.py\", line 2\n    last = \"Lovelace\n           ^\nSyntaxError: unterminated string literal (detected at line 2)\n```\n\nFix that one, run it again, and read the next error.",
+     "starter_code": "first = \"Ada\"\nlast = \"Lovelace\nprint(first last)\n",
+     "tests": [
+      {
+       "name": "last holds the surname",
+       "code": "assert last == \"Lovelace\"",
+       "hidden": false,
+       "edge": true
+      }
+     ],
+     "stdin_tests": [
+      {
+       "name": "prints the full name",
+       "stdin": "",
+       "expected_stdout": "Ada Lovelace\n",
+       "hidden": false
+      }
+     ],
+     "hints": [
+      "\"Unterminated string\" means a piece of text was opened with a quote and never closed.",
+      "After fixing line 2, look at line 3. How do you separate two values inside `print`?"
+     ],
+     "solution": "first = \"Ada\"\nlast = \"Lovelace\"\nprint(first, last)\n",
+     "solution_explanation": "Line 2 was missing its closing quote. Line 3 was missing the comma between the two values. Python reports one syntax error at a time, so you fix one, run again, then fix the next."
+    }
+   ]
+  },
+  {
+   "id": "m01-l02",
+   "title": "Reading input",
+   "recap": "Last lesson: a variable is a name for a value (`price = 4.5`), and `print()` shows values on the screen. Python runs top to bottom, so a name must be created before it is used.",
+   "what": "`input()` pauses the program, waits for the user to type a line, and hands that line back to your code as text.",
+   "why": "A program with fixed values does the same thing every time. With `input()`, the same program works for any name, price or order.\n\nBefore, it only ever greets Priya:\n\n```python\nname = \"Priya\"\nprint(\"Hello\", name)\n```\n\nAfter, it greets whoever is using it:\n\n```python\nname = input(\"What is your name? \")\nprint(\"Hello\", name)\n```",
+   "syntax": "```python\nanswer = input(\"Prompt text: \")\n# answer            the variable that receives the typed line\n# input(...)        waits for one line\n# \"Prompt text: \"   optional message shown to the user\n```\n\nText is called a **string** in Python, written `str`. `input()` always gives you a string. You can join strings with `+`:\n\n```python\nfull = first + \" \" + last\n```\n\n**On this site:** type the lines your program should read into the Input box before you press Run, one line for each `input()` call. The console shows each typed line after its prompt, the way a terminal would. When your code is tested, prompts and typed lines are ignored. Only what you `print()` is checked.",
+   "examples": [
+    {
+     "title": "Ask for a name",
+     "code": "name = input(\"What is your name? \")\nprint(\"Hello\", name)\n",
+     "output": "What is your name? Priya\nHello Priya\n",
+     "explain": "- Line 1 shows the prompt, waits, and stores the typed line `Priya` under `name`.\n- Line 2 prints a greeting using that value.",
+     "stdin": "Priya\n"
+    },
+    {
+     "title": "Two questions",
+     "code": "suburb = input(\"Suburb: \")\npostcode = input(\"Postcode: \")\nprint(suburb, postcode)\n",
+     "output": "Suburb: Fitzroy\nPostcode: 3065\nFitzroy 3065\n",
+     "explain": "- Each `input()` reads the next line, in order. The first reads `Fitzroy`, the second reads `3065`.\n- `postcode` holds the text `\"3065\"`, not a number. That is fine here because we only print it.",
+     "stdin": "Fitzroy\n3065\n"
+    },
+    {
+     "title": "Join text with +",
+     "code": "first = input(\"First name: \")\nlast = input(\"Last name: \")\nfull = first + \" \" + last\nprint(full)\nprint(first + last)\n",
+     "output": "First name: Ada\nLast name: Lovelace\nAda Lovelace\nAdaLovelace\n",
+     "explain": "- Line 3 joins three strings: the first name, a space, and the last name.\n- Line 5 shows what happens without the space. `+` adds nothing between the parts. A comma inside `print` adds a space, but `+` does not.",
+     "stdin": "Ada\nLovelace\n"
+    }
+   ],
+   "mistakes": [
+    {
+     "title": "Doing maths with typed digits",
+     "fix": "`input()` gave back the text `\"30\"`, not the number 30. Python will not add text and a number. `TypeError` means a value has the wrong type for what you asked. The next lesson shows how to turn text into a number.",
+     "code": "age = input(\"Age: \")\nprint(age + 1)\n",
+     "stdin": "30\n",
+     "error": "Traceback (most recent call last):\n  File \"main.py\", line 2, in <module>\n    print(age + 1)\n          ~~~~^~~\nTypeError: can only concatenate str (not \"int\") to str"
+    },
+    {
+     "title": "Not enough input lines",
+     "fix": "The program called `input()` twice but there was only one line to read. `EOFError` means \"end of input\". On this site, add one line to the Input box for every `input()` call.",
+     "code": "first = input(\"First: \")\nsecond = input(\"Second: \")\n",
+     "stdin": "Ada\n",
+     "error": "Traceback (most recent call last):\n  File \"main.py\", line 2, in <module>\n    second = input(\"Second: \")\nEOFError: input() was called but there was no more input to read"
+    },
+    {
+     "title": "Forgetting to store the answer",
+     "fix": "Line 1 reads a line and then throws it away, because nothing stores it. Write `name = input(\"Name: \")`.",
+     "code": "input(\"Name: \")\nprint(\"Hello\", name)\n",
+     "stdin": "Sam\n",
+     "error": "Traceback (most recent call last):\n  File \"main.py\", line 2, in <module>\n    print(\"Hello\", name)\n                   ^^^^\nNameError: name 'name' is not defined"
+    }
+   ],
+   "remember": "input() always hands you text, even when the user types digits.",
+   "quick_checks": [
+    {
+     "code": "a = \"3\"\nb = \"4\"\nprint(a + b)\nprint(a, b)\n",
+     "expected_output": "34\n3 4\n",
+     "explain": "Both values are strings, so `+` joins them into `\"34\"`. It does not add them. The comma version prints them with a space between."
+    }
+   ],
+   "reference": [
+    {
+     "concept": "Read a line of text",
+     "syntax": "name = input(\"Prompt: \")",
+     "example": "city = input(\"City: \")"
+    },
+    {
+     "concept": "Join strings",
+     "syntax": "text1 + text2",
+     "example": "full = first + \" \" + last"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "m01-l02-e01",
+     "type": "predict",
+     "tier": "warmup",
+     "title": "Building a greeting",
+     "skills": [
+      "strings",
+      "printing",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "first = \"Sam\"\ngreeting = \"Hi \" + first\nprint(greeting)\nprint(greeting + \"!\")\n",
+     "expected_output": "Hi Sam\nHi Sam!\n",
+     "solution_explanation": "`\"Hi \"` already ends with a space, so joining gives `Hi Sam`. The last line joins `!` straight on, with no space, because `+` never adds one."
+    },
+    {
+     "id": "m01-l02-e02",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Greet the user",
+     "skills": [
+      "input",
+      "strings"
+     ],
+     "prompt": "Read a name. Print `Hello, <name>!` with the comma and the exclamation mark exactly as shown.\n\nExample: if the input is `Priya`, print:\n\n```\nHello, Priya!\n```",
+     "starter_code": "name = input()\n",
+     "stdin_tests": [
+      {
+       "name": "simple name",
+       "stdin": "Priya\n",
+       "expected_stdout": "Hello, Priya!\n",
+       "hidden": false
+      },
+      {
+       "name": "short name",
+       "stdin": "Jo\n",
+       "expected_stdout": "Hello, Jo!\n",
+       "hidden": true
+      },
+      {
+       "name": "name with a space in it",
+       "stdin": "Mary Ann\n",
+       "expected_stdout": "Hello, Mary Ann!\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "A comma inside `print` adds a space. That would put a space before the `!`.",
+      "Join the parts with `+` so you control every space."
+     ],
+     "solution": "name = input()\nprint(\"Hello, \" + name + \"!\")\n",
+     "solution_explanation": "The three strings are joined with `+`, so the only space is the one typed inside `\"Hello, \"`. Using commas would print `Hello,  Priya !` with unwanted spaces."
+    },
+    {
+     "id": "m01-l02-e03",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Suburb and state",
+     "skills": [
+      "input",
+      "strings"
+     ],
+     "prompt": "Read a suburb, then a state. Print them on one line with a comma and a space between them.\n\nExample: for the input lines `Fitzroy` and `VIC`, print:\n\n```\nFitzroy, VIC\n```",
+     "starter_code": "# Read two lines, then print them as: suburb, state\n",
+     "stdin_tests": [
+      {
+       "name": "Fitzroy in Victoria",
+       "stdin": "Fitzroy\nVIC\n",
+       "expected_stdout": "Fitzroy, VIC\n",
+       "hidden": false
+      },
+      {
+       "name": "two-word suburb",
+       "stdin": "Surry Hills\nNSW\n",
+       "expected_stdout": "Surry Hills, NSW\n",
+       "hidden": true
+      },
+      {
+       "name": "suburb left blank",
+       "stdin": "\nTAS\n",
+       "expected_stdout": ", TAS\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "You need two `input()` calls, each stored in its own variable.",
+      "Join with `+`: the middle piece is the string `\", \"`."
+     ],
+     "solution": "suburb = input()\nstate = input()\nprint(suburb + \", \" + state)\n",
+     "solution_explanation": "Two `input()` calls read the two lines in order. The join puts exactly a comma and one space between them, even when the suburb is empty."
+    },
+    {
+     "id": "m01-l02-e04",
+     "type": "fix",
+     "tier": "core",
+     "title": "Greeting before the question",
+     "skills": [
+      "input",
+      "debugging"
+     ],
+     "prompt": "This program should read a username and print `Welcome back, <username>`. It crashes with:\n\n```\nTraceback (most recent call last):\n  File \"main.py\", line 1, in <module>\n    print(\"Welcome back, \" + user)\n                             ^^^^\nNameError: name 'user' is not defined\n```",
+     "starter_code": "print(\"Welcome back, \" + user)\nuser = input(\"Username: \")\n",
+     "stdin_tests": [
+      {
+       "name": "greets mia",
+       "stdin": "mia\n",
+       "expected_stdout": "Welcome back, mia\n",
+       "hidden": false
+      },
+      {
+       "name": "greets a name with digits",
+       "stdin": "dev42\n",
+       "expected_stdout": "Welcome back, dev42\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Which line creates `user`? Which line uses it?"
+     ],
+     "solution": "user = input(\"Username: \")\nprint(\"Welcome back, \" + user)\n",
+     "solution_explanation": "The program used `user` on line 1, before the `input()` on line 2 had created it. Swapping the lines fixes the order."
+    },
+    {
+     "id": "m01-l02-e05",
+     "type": "fix",
+     "tier": "core",
+     "title": "The space that went missing",
+     "skills": [
+      "strings",
+      "input",
+      "debugging"
+     ],
+     "prompt": "This program reads a first name and a last name. For `Ada` and `Lovelace` it should print `Ada Lovelace`, but it prints `AdaLovelace`.\n\nThere is no error message. The code runs, but the output is wrong. This is called a **logic error**.",
+     "starter_code": "first = input()\nlast = input()\nprint(first + last)\n",
+     "stdin_tests": [
+      {
+       "name": "Ada Lovelace",
+       "stdin": "Ada\nLovelace\n",
+       "expected_stdout": "Ada Lovelace\n",
+       "hidden": false
+      },
+      {
+       "name": "single letters",
+       "stdin": "J\nK\n",
+       "expected_stdout": "J K\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "What does `+` put between two strings?",
+      "Either join a `\" \"` in the middle, or give `print` two values separated by a comma."
+     ],
+     "solution": "first = input()\nlast = input()\nprint(first + \" \" + last)\n",
+     "solution_explanation": "`+` joins strings with nothing between them. Adding `\" \"` in the middle puts the space back. `print(first, last)` would also work, because a comma in `print` adds a space."
+    },
+    {
+     "id": "m01-l02-e06",
+     "type": "write",
+     "tier": "core",
+     "title": "Email builder",
+     "skills": [
+      "strings",
+      "input"
+     ],
+     "prompt": "Read a username, then a domain. Print the email address: the username, an `@`, then the domain, with no spaces.\n\nExample: for `mia` and `example.com`, print:\n\n```\nmia@example.com\n```",
+     "starter_code": "# Read the username and the domain, then print the email address.\n",
+     "stdin_tests": [
+      {
+       "name": "simple address",
+       "stdin": "mia\nexample.com\n",
+       "expected_stdout": "mia@example.com\n",
+       "hidden": false
+      },
+      {
+       "name": "username with a dot",
+       "stdin": "j.smith\nuni.edu.au\n",
+       "expected_stdout": "j.smith@uni.edu.au\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "`print(user, \"@\", domain)` puts spaces around the `@`. You do not want that.",
+      "Join the three parts with `+`."
+     ],
+     "solution": "user = input()\ndomain = input()\nprint(user + \"@\" + domain)\n",
+     "solution_explanation": "Joining with `+` gives no spaces between the parts, which is what an email address needs."
+    },
+    {
+     "id": "m01-l02-e07",
+     "type": "predict",
+     "tier": "core",
+     "title": "Plus or comma",
+     "skills": [
+      "strings",
+      "printing",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "a = \"10\"\nb = \"20\"\nprint(a + b)\nprint(a, b)\nprint(a + \" \" + b)\n",
+     "expected_output": "1020\n10 20\n10 20\n",
+     "solution_explanation": "`a` and `b` are strings because of the quotes. Line 3 joins them into `1020`. Line 4 prints two values with a space. Line 5 joins them with a space in the middle, which looks the same as line 4."
+    },
+    {
+     "id": "m01-l02-e08",
+     "type": "explain",
+     "tier": "core",
+     "title": "Explain the laugh",
+     "skills": [
+      "strings",
+      "printing",
+      "explaining"
+     ],
+     "prompt": "Read the code. In your own words, explain what it does, why each step is there, and what it prints. Mention any edge cases you can see.",
+     "starter_code": "word = \"ha\"\nlaugh = word + word + word\nprint(laugh)\nprint(word, word)\n",
+     "model_explanation": "`word` holds the text `ha`. Line 2 joins three copies with `+`. Because `+` puts nothing between strings, `laugh` is `hahaha`. Line 3 prints `hahaha`.\n\nLine 4 gives `print` two separate values, so `print` puts a space between them and shows `ha ha`.\n\n`word` itself never changes. Joining makes a new string and leaves the original alone.",
+     "checklist": [
+      "Said that + joins strings with nothing in between",
+      "Gave the first output line: hahaha",
+      "Said the comma in print adds a space, giving: ha ha",
+      "Noted that word itself is not changed"
+     ]
+    },
+    {
+     "id": "m01-l02-e09",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Name badge",
+     "skills": [
+      "input",
+      "strings",
+      "printing"
+     ],
+     "prompt": "Read three lines: a first name, a last name and a team.\n\nPrint a two-line badge. Line 1 is the last name, a comma and a space, then the first name. Line 2 is `Team: ` followed by the team.\n\nExample: for `Grace`, `Hopper` and `Compilers`, print:\n\n```\nHopper, Grace\nTeam: Compilers\n```",
+     "starter_code": "# Read first name, last name and team. Print the badge.\n",
+     "stdin_tests": [
+      {
+       "name": "Grace Hopper",
+       "stdin": "Grace\nHopper\nCompilers\n",
+       "expected_stdout": "Hopper, Grace\nTeam: Compilers\n",
+       "hidden": false
+      },
+      {
+       "name": "team name with spaces",
+       "stdin": "Alan\nTuring\nCode Breakers\n",
+       "expected_stdout": "Turing, Alan\nTeam: Code Breakers\n",
+       "hidden": true
+      },
+      {
+       "name": "team left blank",
+       "stdin": "Ada\nLovelace\n\n",
+       "expected_stdout": "Lovelace, Ada\nTeam:\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Read the three lines in the same order they are given.",
+      "The first printed line starts with the *last* name."
+     ],
+     "solution": "first = input()\nlast = input()\nteam = input()\nprint(last + \", \" + first)\nprint(\"Team: \" + team)\n",
+     "solution_explanation": "The three `input()` calls read the lines in order. The badge prints the last name first, so the order of the variables in the join is swapped compared with the order they were read."
+    },
+    {
+     "id": "m01-l02-e10",
+     "type": "fix",
+     "tier": "stretch",
+     "title": "Sign-up with three bugs",
+     "skills": [
+      "input",
+      "strings",
+      "debugging"
+     ],
+     "prompt": "This program should read a name and a city, then print a line like `Priya lives in Darwin`.\n\nIt has **three** bugs. Fix them one at a time: fix, run, read the next message. The first error is:\n\n```\n  File \"main.py\", line 1\n    name = input(\"Name: \"\n                ^\nSyntaxError: '(' was never closed\n```",
+     "starter_code": "name = input(\"Name: \"\ncity = input(\"City: \")\nprint(\"name\" + \" lives in \" + City)\n",
+     "stdin_tests": [
+      {
+       "name": "Priya in Darwin",
+       "stdin": "Priya\nDarwin\n",
+       "expected_stdout": "Priya lives in Darwin\n",
+       "hidden": false
+      },
+      {
+       "name": "two-word city",
+       "stdin": "Tom\nAlice Springs\n",
+       "expected_stdout": "Tom lives in Alice Springs\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Count the brackets on line 1.",
+      "Next error: names are case-sensitive. Is it `City` or `city`?",
+      "Last bug has no error message. `\"name\"` in quotes is the text n-a-m-e, not the variable."
+     ],
+     "solution": "name = input(\"Name: \")\ncity = input(\"City: \")\nprint(name + \" lives in \" + city)\n",
+     "solution_explanation": "Line 1 was missing its closing bracket. Line 3 used `City` with a capital, which is a different name from `city`. Line 3 also had `\"name\"` in quotes, which prints the word name. Removing the quotes uses the variable."
+    }
+   ]
+  },
+  {
+   "id": "m01-l03",
+   "title": "Types and type conversion",
+   "recap": "Last lesson: `input()` reads one line and always gives back a string (text). Strings join with `+`, and `+` adds nothing between them.",
+   "what": "Every value has a **type**, which is the kind of thing it is. The four basic types are `int` (whole number), `float` (number with a decimal point), `str` (text) and `bool` (`True` or `False`).\n**Type conversion** makes a new value of a different type, for example the number `42` from the text `\"42\"`.",
+   "why": "The type decides what an operation does. `3 + 4` is `7`, but `\"3\" + \"4\"` is `\"34\"`. Because `input()` gives text, you must convert before doing maths.\n\nBefore, the digits are joined:\n\n```python\na = input()      # user types 3\nb = input()      # user types 4\nprint(a + b)     # 34\n```\n\nAfter, they are added:\n\n```python\na = int(input())\nb = int(input())\nprint(a + b)     # 7\n```",
+   "syntax": "```python\ntype(value)     # tells you the type of a value\nint(\"42\")       # text  -> whole number 42\nfloat(\"4.5\")    # text  -> decimal number 4.5\nstr(42)         # number -> text \"42\"\nint(input())    # read a line and convert it in one step\n```\n\n- `int()` of a float cuts off the decimal part: `int(4.9)` is `4`. It does not round.\n- `float()` of a whole number adds `.0`: `float(7)` is `7.0`.",
+   "examples": [
+    {
+     "title": "Ask Python for the type",
+     "code": "print(type(42))\nprint(type(4.5))\nprint(type(\"42\"))\nprint(type(True))\n",
+     "output": "<class 'int'>\n<class 'float'>\n<class 'str'>\n<class 'bool'>\n",
+     "explain": "- `42` with no quotes is an `int`. `\"42\"` in quotes is a `str`. They look alike on screen but behave differently.\n- `True` and `False` are the two `bool` values. They start with a capital letter."
+    },
+    {
+     "title": "Convert input, then calculate",
+     "code": "age = int(input(\"Age: \"))\nprint(age + 1)\n",
+     "output": "Age: 30\n31\n",
+     "explain": "- Read line 1 from the inside out: `input()` returns the text `\"30\"`, then `int()` turns it into the number `30`.\n- Now `age + 1` is real addition.",
+     "stdin": "30\n"
+    },
+    {
+     "title": "Turn a number into text to join it",
+     "code": "qty = 3\nlabel = \"Items: \" + str(qty)\nprint(label)\n",
+     "output": "Items: 3\n",
+     "explain": "- `\"Items: \" + qty` would crash, because `+` cannot mix text and a number.\n- `str(qty)` makes the text `\"3\"`, which joins without trouble."
+    },
+    {
+     "title": "What the conversions do to numbers",
+     "code": "print(int(4.9))\nprint(float(7))\nprint(int(\"12\") + int(\"8\"))\n",
+     "output": "4\n7.0\n20\n",
+     "explain": "- `int(4.9)` drops the `.9`. It does not round up.\n- `float(7)` gives `7.0`. A float always prints with a decimal point.\n- The last line converts both strings first, then adds: `12 + 8`."
+    }
+   ],
+   "mistakes": [
+    {
+     "title": "Converting text that is not a whole number",
+     "fix": "`ValueError` means the type is right (it is a string) but the content is wrong. `int()` only accepts digits, with an optional minus sign. For `\"4.5\"` use `float(\"4.5\")`. For words like `\"twelve\"` there is no conversion.",
+     "code": "price = int(\"4.5\")\n",
+     "error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\n    price = int(\"4.5\")\nValueError: invalid literal for int() with base 10: '4.5'"
+    },
+    {
+     "title": "Joining text and a number",
+     "fix": "`+` needs both sides to be the same kind. Either convert the number with `str(5)`, or let `print` do the work with a comma: `print(\"Total:\", 5)`.",
+     "code": "print(\"Total: \" + 5)\n",
+     "error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\n    print(\"Total: \" + 5)\n          ~~~~~~~~~~^~~\nTypeError: can only concatenate str (not \"int\") to str"
+    },
+    {
+     "title": "Forgetting to convert",
+     "fix": "No error here, which makes this one easy to miss. Both values are strings, so `+` joins them and prints `34`. If a sum looks like two numbers stuck together, a conversion is missing.",
+     "code": "a = \"3\"\nb = \"4\"\nprint(a + b)\n"
+    }
+   ],
+   "remember": "Text in, convert, then calculate: int(input()).",
+   "quick_checks": [
+    {
+     "code": "x = \"5\"\ny = int(x) + 1\nprint(x + \"1\")\nprint(y)\n",
+     "expected_output": "51\n6\n",
+     "explain": "`x` is still the string `\"5\"`, so `x + \"1\"` joins to `51`. `int(x)` made a separate number, so `y` is `6`. Converting never changes the original variable."
+    }
+   ],
+   "reference": [
+    {
+     "concept": "Check a type",
+     "syntax": "type(value)",
+     "example": "type(4.5)   # <class 'float'>"
+    },
+    {
+     "concept": "Text to whole number",
+     "syntax": "int(text)",
+     "example": "age = int(input())"
+    },
+    {
+     "concept": "Text to decimal number",
+     "syntax": "float(text)",
+     "example": "price = float(\"4.50\")"
+    },
+    {
+     "concept": "Number to text",
+     "syntax": "str(number)",
+     "example": "\"Items: \" + str(3)"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "m01-l03-e01",
+     "type": "predict",
+     "tier": "warmup",
+     "title": "Three conversions",
+     "skills": [
+      "types",
+      "conversion",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "a = int(\"7\")\nb = float(\"2\")\nprint(a + 1)\nprint(b)\nprint(str(a) + \"1\")\n",
+     "expected_output": "8\n2.0\n71\n",
+     "solution_explanation": "`a` is the number 7, so `a + 1` is 8. `b` is a float, so it prints as `2.0`. `str(a)` is the text `\"7\"`, and joining `\"1\"` gives `71`."
+    },
+    {
+     "id": "m01-l03-e02",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Age next year",
+     "skills": [
+      "conversion",
+      "input"
+     ],
+     "prompt": "Read an age as a whole number. Print the age next year.\n\nExample: for `30`, print `31`.",
+     "starter_code": "# Read the age, convert it, print age + 1.\n",
+     "stdin_tests": [
+      {
+       "name": "age 30",
+       "stdin": "30\n",
+       "expected_stdout": "31\n",
+       "hidden": false
+      },
+      {
+       "name": "age 99",
+       "stdin": "99\n",
+       "expected_stdout": "100\n",
+       "hidden": true
+      },
+      {
+       "name": "a newborn, age 0",
+       "stdin": "0\n",
+       "expected_stdout": "1\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "`input()` gives text. What turns text into a whole number?",
+      "`age = int(input())`"
+     ],
+     "solution": "age = int(input())\nprint(age + 1)\n",
+     "solution_explanation": "`int(input())` reads the line and converts it to a whole number in one step. After that, `+ 1` is ordinary addition."
+    },
+    {
+     "id": "m01-l03-e03",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Add two prices",
+     "skills": [
+      "conversion",
+      "input"
+     ],
+     "prompt": "Read two prices. They may have decimals. Print their sum.\n\nExample: for `2.5` and `4.0`, print `6.5`.",
+     "starter_code": "# Read two decimal numbers and print the sum.\n",
+     "stdin_tests": [
+      {
+       "name": "2.5 plus 4.0",
+       "stdin": "2.5\n4.0\n",
+       "expected_stdout": "6.5\n",
+       "hidden": false
+      },
+      {
+       "name": "whole number typed without a decimal",
+       "stdin": "10\n0.25\n",
+       "expected_stdout": "10.25\n",
+       "hidden": true
+      },
+      {
+       "name": "both zero",
+       "stdin": "0\n0\n",
+       "expected_stdout": "0.0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Prices have decimals, so `int()` is the wrong tool.",
+      "Use `float(input())` twice."
+     ],
+     "solution": "first = float(input())\nsecond = float(input())\nprint(first + second)\n",
+     "solution_explanation": "`float()` accepts both `\"2.5\"` and `\"10\"`. Adding two floats gives a float, which is why zero plus zero prints as `0.0`."
+    },
+    {
+     "id": "m01-l03-e04",
+     "type": "fix",
+     "tier": "core",
+     "title": "Joined, not added",
+     "skills": [
+      "conversion",
+      "debugging"
+     ],
+     "prompt": "This program should add two whole numbers. For `3` and `4` it should print `7`, but it prints `34`.\n\nThere is no error message. Find the logic error.",
+     "starter_code": "a = input()\nb = input()\nprint(a + b)\n",
+     "stdin_tests": [
+      {
+       "name": "3 plus 4",
+       "stdin": "3\n4\n",
+       "expected_stdout": "7\n",
+       "hidden": false
+      },
+      {
+       "name": "two-digit numbers",
+       "stdin": "15\n27\n",
+       "expected_stdout": "42\n",
+       "hidden": true
+      },
+      {
+       "name": "a negative number",
+       "stdin": "-5\n5\n",
+       "expected_stdout": "0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "What type does `input()` give back?",
+      "Convert both values with `int()` before adding."
+     ],
+     "solution": "a = int(input())\nb = int(input())\nprint(a + b)\n",
+     "solution_explanation": "Both values were strings, so `+` joined them. Wrapping each `input()` in `int()` makes them numbers, and `+` then adds."
+    },
+    {
+     "id": "m01-l03-e05",
+     "type": "fix",
+     "tier": "core",
+     "title": "Label crash",
+     "skills": [
+      "conversion",
+      "strings",
+      "debugging"
+     ],
+     "prompt": "This program reads a number of points and should print a label like `Points: 15`. It crashes:\n\n```\nTraceback (most recent call last):\n  File \"main.py\", line 2, in <module>\n    print(\"Points: \" + points)\n          ~~~~~~~~~~~^~~~~~~~\nTypeError: can only concatenate str (not \"int\") to str\n```\n\nFix it so the output has exactly one space after the colon.",
+     "starter_code": "points = int(input())\nprint(\"Points: \" + points)\n",
+     "stdin_tests": [
+      {
+       "name": "15 points",
+       "stdin": "15\n",
+       "expected_stdout": "Points: 15\n",
+       "hidden": false
+      },
+      {
+       "name": "zero points",
+       "stdin": "0\n",
+       "expected_stdout": "Points: 0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Read the last line of the error. Which two types is `+` being asked to join?",
+      "Use `str(points)`, or pass two values to `print` with a comma."
+     ],
+     "solution": "points = int(input())\nprint(\"Points: \" + str(points))\n",
+     "solution_explanation": "`points` is an `int`, and `+` cannot join text to a number. `str(points)` turns it back into text for the label. `print(\"Points:\", points)` is another correct fix."
+    },
+    {
+     "id": "m01-l03-e06",
+     "type": "write",
+     "tier": "core",
+     "title": "Whole dollars",
+     "skills": [
+      "conversion"
+     ],
+     "prompt": "Read a price such as `4.95`. Print only the whole dollars, as a whole number with no decimal point.\n\nExample: for `4.95`, print `4`. For `12.0`, print `12`.",
+     "starter_code": "# Read a price and print the whole dollars.\n",
+     "stdin_tests": [
+      {
+       "name": "4.95",
+       "stdin": "4.95\n",
+       "expected_stdout": "4\n",
+       "hidden": false
+      },
+      {
+       "name": "12.0",
+       "stdin": "12.0\n",
+       "expected_stdout": "12\n",
+       "hidden": false
+      },
+      {
+       "name": "less than a dollar",
+       "stdin": "0.99\n",
+       "expected_stdout": "0\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "typed with no decimal point",
+       "stdin": "7\n",
+       "expected_stdout": "7\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "`int(\"4.95\")` crashes. The text has a decimal point in it.",
+      "Convert in two steps: text to float, then float to int."
+     ],
+     "solution": "price = float(input())\nprint(int(price))\n",
+     "solution_explanation": "`float()` handles the decimal text. `int()` then cuts off everything after the decimal point, leaving the whole dollars."
+    },
+    {
+     "id": "m01-l03-e07",
+     "type": "predict",
+     "tier": "core",
+     "title": "Same digits, different types",
+     "skills": [
+      "types",
+      "conversion",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "n = \"12\"\nprint(n + n)\nprint(int(n) + int(n))\nprint(float(n))\nprint(type(n))\n",
+     "expected_output": "1212\n24\n12.0\n<class 'str'>\n",
+     "solution_explanation": "`n` is a string the whole time. Joining gives `1212`. Converting each copy to `int` gives real addition, 24. `float(n)` prints with `.0`. The last line shows `n` was never changed by the conversions."
+    },
+    {
+     "id": "m01-l03-e08",
+     "type": "explain",
+     "tier": "core",
+     "title": "Explain the counter",
+     "skills": [
+      "conversion",
+      "types",
+      "explaining"
+     ],
+     "prompt": "Read the code. In your own words, explain what it does, why each step is there, and what it prints. Mention any edge cases you can see.",
+     "starter_code": "raw = \"8\"\ncount = int(raw)\ncount = count + 2\nmessage = \"Count is \" + str(count)\nprint(message)\n",
+     "model_explanation": "`raw` is the text `\"8\"`. Line 2 converts it to the number 8 so that maths works. Line 3 adds 2, making `count` 10.\n\nLine 4 needs text again, because `+` cannot join a string and a number. `str(count)` gives `\"10\"`, and the join makes `Count is 10`, which line 5 prints.\n\nEdge case: if `raw` held something that is not a whole number, such as `\"eight\"` or `\"8.5\"`, line 2 would stop with a `ValueError`.",
+     "checklist": [
+      "Said int() is needed so that + adds instead of joining",
+      "Said str() is needed to join the number to the label",
+      "Gave the exact output: Count is 10",
+      "Mentioned what happens if raw is not a whole number (ValueError)"
+     ]
+    },
+    {
+     "id": "m01-l03-e09",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Added and side by side",
+     "skills": [
+      "conversion",
+      "strings"
+     ],
+     "prompt": "Read two whole numbers. Print two lines:\n\n1. their sum\n2. the two numbers written side by side, with nothing between them\n\nExample: for `3` and `4`, print:\n\n```\n7\n34\n```",
+     "starter_code": "# Read two whole numbers. Print the sum, then the digits side by side.\n",
+     "stdin_tests": [
+      {
+       "name": "3 and 4",
+       "stdin": "3\n4\n",
+       "expected_stdout": "7\n34\n",
+       "hidden": false
+      },
+      {
+       "name": "two-digit numbers",
+       "stdin": "12\n30\n",
+       "expected_stdout": "42\n1230\n",
+       "hidden": true
+      },
+      {
+       "name": "zero and zero",
+       "stdin": "0\n0\n",
+       "expected_stdout": "0\n00\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "You need the values as numbers for line 1 and as text for line 2.",
+      "Keep the numbers, and use `str()` when you join them."
+     ],
+     "solution": "a = int(input())\nb = int(input())\nprint(a + b)\nprint(str(a) + str(b))\n",
+     "solution_explanation": "The numbers are converted once with `int()` for the sum. For the second line each number goes back to text with `str()`, so `+` joins them."
+    },
+    {
+     "id": "m01-l03-e10",
+     "type": "fix",
+     "tier": "stretch",
+     "title": "Decimal crash",
+     "skills": [
+      "conversion",
+      "debugging"
+     ],
+     "prompt": "This program reads a height in metres such as `1.82`. It should print the height, then the height rounded down to whole metres:\n\n```\nHeight: 1.82\nRounded down: 1\n```\n\nInstead it crashes:\n\n```\nTraceback (most recent call last):\n  File \"main.py\", line 1, in <module>\n    height = int(input())\nValueError: invalid literal for int() with base 10: '1.82'\n```",
+     "starter_code": "height = int(input())\nprint(\"Height:\", height)\nprint(\"Rounded down:\", int(height))\n",
+     "stdin_tests": [
+      {
+       "name": "1.82 metres",
+       "stdin": "1.82\n",
+       "expected_stdout": "Height: 1.82\nRounded down: 1\n",
+       "hidden": false
+      },
+      {
+       "name": "exactly two metres",
+       "stdin": "2.0\n",
+       "expected_stdout": "Height: 2.0\nRounded down: 2\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "under one metre",
+       "stdin": "0.75\n",
+       "expected_stdout": "Height: 0.75\nRounded down: 0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "The traceback points at line 1. What text is `int()` being given?",
+      "`int()` cannot read text with a decimal point. Which conversion can?"
+     ],
+     "solution": "height = float(input())\nprint(\"Height:\", height)\nprint(\"Rounded down:\", int(height))\n",
+     "solution_explanation": "Line 1 tried `int(\"1.82\")`, which fails because of the decimal point. Reading the value with `float()` works, and the `int(height)` on line 3 then cuts it down to whole metres."
+    }
+   ]
+  },
+  {
+   "id": "m01-l04",
+   "title": "Arithmetic operators",
+   "recap": "Last lesson: values have types (`int`, `float`, `str`, `bool`). Convert typed text with `int()` or `float()` before doing maths, and use `str()` to join a number to text.",
+   "what": "An **operator** is a symbol that works on values. Python has the usual `+ - * /`, plus three more you will use a lot: `//` (divide and keep the whole part), `%` (the remainder) and `**` (power).",
+   "why": "Most real tasks need a little arithmetic: a total, a share of a bill, hours and minutes. `//` and `%` solve \"how many whole groups, and how many left over\" in one line each.\n\nBefore, 135 minutes is hard to read. After:\n\n```python\nhours = 135 // 60    # 2 whole hours\nleft = 135 % 60      # 15 minutes left over\n```",
+   "syntax": "```python\n7 + 2    # 9     add\n7 - 2    # 5     subtract\n7 * 2    # 14    multiply\n7 / 2    # 3.5   divide. The answer is always a float.\n7 // 2   # 3     divide and keep the whole part\n7 % 2    # 1     remainder after dividing\n7 ** 2   # 49    power\n\ntotal += 5           # short for: total = total + 5\nround(3.14159, 2)    # 3.14   round to 2 decimal places\n```\n\nOrder: `**` first, then `* / // %`, then `+ -`. Brackets go first of all. When unsure, add brackets.",
+   "examples": [
+    {
+     "title": "Totals and order of operations",
+     "code": "price = 4.5\nqty = 3\nprint(price * qty)\nprint(10 - 2 * 3)\nprint((10 - 2) * 3)\n",
+     "output": "13.5\n4\n24\n",
+     "explain": "- Line 3 multiplies a float by an int. The result is a float.\n- Line 4 multiplies first (`2 * 3` is 6), then subtracts: 4.\n- Line 5 has brackets, so the subtraction goes first: `8 * 3` is 24."
+    },
+    {
+     "title": "Three kinds of division",
+     "code": "print(7 / 2)\nprint(7 // 2)\nprint(7 % 2)\nprint(8 / 2)\n",
+     "output": "3.5\n3\n1\n4.0\n",
+     "explain": "- `/` gives the exact answer as a float. Even `8 / 2` is `4.0`, not `4`.\n- `//` gives how many whole times 2 fits into 7.\n- `%` gives what is left over: 7 is three 2s with 1 remaining."
+    },
+    {
+     "title": "Minutes into hours and minutes",
+     "code": "minutes = 135\nhours = minutes // 60\nleft = minutes % 60\nprint(hours, \"h\", left, \"min\")\n",
+     "output": "2 h 15 min\n",
+     "explain": "- `135 // 60` is 2: two whole hours fit.\n- `135 % 60` is 15: the minutes left after taking out the whole hours.\n- `//` and `%` are usually used as a pair like this."
+    },
+    {
+     "title": "Updating a variable, powers and rounding",
+     "code": "total = 20\ntotal += 5\ntotal *= 2\nprint(total)\nprint(2 ** 3)\nprint(round(10 / 3, 2))\n",
+     "output": "50\n8\n3.33\n",
+     "explain": "- `total += 5` adds 5 to the current value: 25. `total *= 2` doubles it: 50.\n- `2 ** 3` is 2 times 2 times 2.\n- `10 / 3` is 3.3333333333333335. `round(..., 2)` keeps 2 decimal places."
+    }
+   ],
+   "mistakes": [
+    {
+     "title": "Dividing by zero",
+     "fix": "Dividing by zero has no answer, so Python stops. This usually happens when a count comes from input. Later you will check the value with `if` before dividing.",
+     "code": "people = 0\nprint(100 / people)\n",
+     "error": "Traceback (most recent call last):\n  File \"main.py\", line 2, in <module>\n    print(100 / people)\n          ~~~~^~~~~~~~\nZeroDivisionError: division by zero"
+    },
+    {
+     "title": "Forgetting the order of operations",
+     "fix": "No error, but the answer is wrong. This prints `7.0`, because `6 / 2` happens before the `+`. The average of 4 and 6 needs brackets: `(4 + 6) / 2`.",
+     "code": "average = 4 + 6 / 2\nprint(average)\n"
+    },
+    {
+     "title": "Surprising decimals",
+     "fix": "Floats are stored in binary, so some decimals cannot be stored exactly. This prints `0.30000000000000004`. It is normal in every language. When you show money or measurements, round the result: `round(0.1 + 0.2, 2)` is `0.3`.",
+     "code": "print(0.1 + 0.2)\n"
+    }
+   ],
+   "remember": "// keeps the whole part, % keeps the leftover.",
+   "quick_checks": [
+    {
+     "code": "print(17 // 5, 17 % 5)\nprint(2 + 3 * 4)\n",
+     "expected_output": "3 2\n14\n",
+     "explain": "5 fits into 17 three whole times (15), leaving 2. On the second line the multiplication goes first: `3 * 4` is 12, plus 2 is 14."
+    }
+   ],
+   "reference": [
+    {
+     "concept": "Basic arithmetic",
+     "syntax": "a + b    a - b    a * b    a / b",
+     "example": "print(7 / 2)   # 3.5"
+    },
+    {
+     "concept": "Whole-number division",
+     "syntax": "a // b",
+     "example": "hours = 135 // 60   # 2"
+    },
+    {
+     "concept": "Remainder",
+     "syntax": "a % b",
+     "example": "left = 135 % 60   # 15"
+    },
+    {
+     "concept": "Power",
+     "syntax": "a ** b",
+     "example": "2 ** 3   # 8"
+    },
+    {
+     "concept": "Update a variable",
+     "syntax": "x += n    x -= n    x *= n",
+     "example": "total += 5"
+    },
+    {
+     "concept": "Round a number",
+     "syntax": "round(number, places)",
+     "example": "round(3.14159, 2)   # 3.14"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "m01-l04-e01",
+     "type": "predict",
+     "tier": "warmup",
+     "title": "Four operators",
+     "skills": [
+      "operators",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "print(9 / 3)\nprint(9 // 2)\nprint(9 % 2)\nprint(2 ** 4)\n",
+     "expected_output": "3.0\n4\n1\n16\n",
+     "solution_explanation": "`/` always gives a float, so `9 / 3` is `3.0`. `9 // 2` is 4 with `9 % 2` equal to 1 left over. `2 ** 4` is 2 multiplied by itself four times."
+    },
+    {
+     "id": "m01-l04-e02",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Line total",
+     "skills": [
+      "operators",
+      "input"
+     ],
+     "prompt": "Read a unit price (may have decimals) and a quantity (whole number). Print the price multiplied by the quantity.\n\nExample: for `4.5` and `3`, print `13.5`.",
+     "starter_code": "price = float(input())\nqty = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "4.5 times 3",
+       "stdin": "4.5\n3\n",
+       "expected_stdout": "13.5\n",
+       "hidden": false
+      },
+      {
+       "name": "2.25 times 4",
+       "stdin": "2.25\n4\n",
+       "expected_stdout": "9.0\n",
+       "hidden": true
+      },
+      {
+       "name": "quantity of zero",
+       "stdin": "7.5\n0\n",
+       "expected_stdout": "0.0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "The multiply operator is `*`."
+     ],
+     "solution": "price = float(input())\nqty = int(input())\nprint(price * qty)\n",
+     "solution_explanation": "A float times an int gives a float. That is why zero items prints `0.0` and not `0`."
+    },
+    {
+     "id": "m01-l04-e03",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Hours and minutes",
+     "skills": [
+      "operators"
+     ],
+     "prompt": "Read a number of minutes (whole number). Print the whole hours on one line and the leftover minutes on the next.\n\nExample: for `135`, print:\n\n```\n2\n15\n```",
+     "starter_code": "minutes = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "135 minutes",
+       "stdin": "135\n",
+       "expected_stdout": "2\n15\n",
+       "hidden": false
+      },
+      {
+       "name": "exactly two hours",
+       "stdin": "120\n",
+       "expected_stdout": "2\n0\n",
+       "hidden": true
+      },
+      {
+       "name": "less than an hour",
+       "stdin": "59\n",
+       "expected_stdout": "0\n59\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Which operator gives the whole number of times 60 fits?",
+      "`//` for the hours, `%` for the leftover."
+     ],
+     "solution": "minutes = int(input())\nprint(minutes // 60)\nprint(minutes % 60)\n",
+     "solution_explanation": "`// 60` counts the whole hours. `% 60` gives the minutes that do not fill a whole hour."
+    },
+    {
+     "id": "m01-l04-e04",
+     "type": "fix",
+     "tier": "core",
+     "title": "Average of three",
+     "skills": [
+      "operators",
+      "debugging"
+     ],
+     "prompt": "This program should print the average of three whole numbers. For `3`, `6` and `9` the average is `6.0`, but the program prints `12.0`.",
+     "starter_code": "a = int(input())\nb = int(input())\nc = int(input())\naverage = a + b + c / 3\nprint(average)\n",
+     "stdin_tests": [
+      {
+       "name": "3, 6 and 9",
+       "stdin": "3\n6\n9\n",
+       "expected_stdout": "6.0\n",
+       "hidden": false
+      },
+      {
+       "name": "1, 2 and 6",
+       "stdin": "1\n2\n6\n",
+       "expected_stdout": "3.0\n",
+       "hidden": true
+      },
+      {
+       "name": "all zero",
+       "stdin": "0\n0\n0\n",
+       "expected_stdout": "0.0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Work out `3 + 6 + 9 / 3` by hand, using Python's order of operations.",
+      "Division happens before addition unless brackets say otherwise."
+     ],
+     "solution": "a = int(input())\nb = int(input())\nc = int(input())\naverage = (a + b + c) / 3\nprint(average)\n",
+     "solution_explanation": "Without brackets only `c` was divided by 3. The brackets make Python add the three numbers first, then divide the sum."
+    },
+    {
+     "id": "m01-l04-e05",
+     "type": "write",
+     "tier": "core",
+     "title": "Split the bill",
+     "skills": [
+      "operators",
+      "conversion"
+     ],
+     "prompt": "Read a bill total (may have decimals) and a number of people (whole number, at least 1). Print how much each person pays, rounded to 2 decimal places with `round()`.\n\nExample: for `100` and `3`, print `33.33`.",
+     "starter_code": "# Read the total and the number of people. Print each share.\n",
+     "stdin_tests": [
+      {
+       "name": "100 between 3",
+       "stdin": "100\n3\n",
+       "expected_stdout": "33.33\n",
+       "hidden": false
+      },
+      {
+       "name": "45.5 between 2",
+       "stdin": "45.5\n2\n",
+       "expected_stdout": "22.75\n",
+       "hidden": true
+      },
+      {
+       "name": "one person pays it all",
+       "stdin": "80\n1\n",
+       "expected_stdout": "80.0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Divide with `/`, then wrap the result in `round(..., 2)`."
+     ],
+     "solution": "total = float(input())\npeople = int(input())\nprint(round(total / people, 2))\n",
+     "solution_explanation": "`/` gives the exact share as a float. `round(..., 2)` trims it to cents. With one person the share is the whole bill, printed as a float."
+    },
+    {
+     "id": "m01-l04-e06",
+     "type": "fix",
+     "tier": "core",
+     "title": "Dollars and cents",
+     "skills": [
+      "operators",
+      "debugging"
+     ],
+     "prompt": "This program reads an amount in cents and should print the whole dollars and the leftover cents on one line. For `345` it should print `3 45`.\n\nIt prints `3.45 3`. Both calculations use the wrong operator.",
+     "starter_code": "cents = int(input())\ndollars = cents / 100\nleft = cents // 100\nprint(dollars, left)\n",
+     "stdin_tests": [
+      {
+       "name": "345 cents",
+       "stdin": "345\n",
+       "expected_stdout": "3 45\n",
+       "hidden": false
+      },
+      {
+       "name": "exactly five dollars",
+       "stdin": "500\n",
+       "expected_stdout": "5 0\n",
+       "hidden": true
+      },
+      {
+       "name": "under a dollar",
+       "stdin": "99\n",
+       "expected_stdout": "0 99\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Whole dollars means \"how many whole 100s fit\". Which operator does that?",
+      "Leftover cents is the remainder after taking out the whole dollars."
+     ],
+     "solution": "cents = int(input())\ndollars = cents // 100\nleft = cents % 100\nprint(dollars, left)\n",
+     "solution_explanation": "`/` gave an exact float, but whole dollars needs `//`. The leftover is a remainder, so it needs `%`, not a second `//`."
+    },
+    {
+     "id": "m01-l04-e07",
+     "type": "predict",
+     "tier": "core",
+     "title": "Updating a total",
+     "skills": [
+      "operators",
+      "variables",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "total = 10\ntotal += 5\ntotal = total * 2\ntotal -= 1\nprint(total)\nprint(total % 10)\nprint(total // 10)\n",
+     "expected_output": "29\n9\n2\n",
+     "solution_explanation": "10 plus 5 is 15, doubled is 30, minus 1 is 29. Then `29 % 10` is the last digit, 9, and `29 // 10` is 2. The last two lines print results without changing `total`."
+    },
+    {
+     "id": "m01-l04-e08",
+     "type": "explain",
+     "tier": "core",
+     "title": "Explain the clock maths",
+     "skills": [
+      "operators",
+      "explaining"
+     ],
+     "prompt": "Read the code. In your own words, explain what it does, why each step is there, and what it prints. Mention any edge cases you can see.",
+     "starter_code": "seconds = 3725\nhours = seconds // 3600\nminutes = (seconds % 3600) // 60\nsecs = seconds % 60\nprint(hours, minutes, secs)\n",
+     "model_explanation": "The program turns a number of seconds into hours, minutes and seconds.\n\nAn hour is 3600 seconds, so `seconds // 3600` counts the whole hours: 1. `seconds % 3600` is what is left after removing the whole hours: 125 seconds. Dividing that by 60 with `//` gives the whole minutes: 2. Finally `seconds % 60` gives the seconds that do not fill a minute: 5.\n\nIt prints `1 2 5`.\n\nEdge cases: for fewer than 60 seconds, hours and minutes are both 0. For exactly 3600, it prints `1 0 0`.",
+     "checklist": [
+      "Said // 3600 counts whole hours",
+      "Said % 3600 gives the seconds left after the hours are removed",
+      "Gave the exact output: 1 2 5",
+      "Mentioned a small or exact case, such as under 60 seconds"
+     ]
+    },
+    {
+     "id": "m01-l04-e09",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Last digit and the rest",
+     "skills": [
+      "operators"
+     ],
+     "prompt": "Read a whole number that is 0 or more. Print its last digit on one line, then the number with the last digit removed on the next line.\n\nExample: for `472`, print:\n\n```\n2\n47\n```",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "472",
+       "stdin": "472\n",
+       "expected_stdout": "2\n47\n",
+       "hidden": false
+      },
+      {
+       "name": "ends in zero",
+       "stdin": "1000\n",
+       "expected_stdout": "0\n100\n",
+       "hidden": true
+      },
+      {
+       "name": "a single digit",
+       "stdin": "5\n",
+       "expected_stdout": "5\n0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Think about dividing by 10. What is the remainder of 472 divided by 10?",
+      "`n % 10` is the last digit. `n // 10` drops it."
+     ],
+     "solution": "n = int(input())\nprint(n % 10)\nprint(n // 10)\n",
+     "solution_explanation": "Dividing by 10 splits a number at its last digit. The remainder is the last digit, and the whole part is everything before it. For a single digit the whole part is 0."
+    },
+    {
+     "id": "m01-l04-e10",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Celsius to Fahrenheit",
+     "skills": [
+      "operators",
+      "conversion"
+     ],
+     "prompt": "Read a temperature in Celsius (may have decimals). Convert it to Fahrenheit: multiply by 9, divide by 5, then add 32. Print the result rounded to 1 decimal place.\n\nExample: for `25`, print `77.0`.",
+     "starter_code": "# Read Celsius, print Fahrenheit rounded to 1 decimal place.\n",
+     "stdin_tests": [
+      {
+       "name": "25 degrees",
+       "stdin": "25\n",
+       "expected_stdout": "77.0\n",
+       "hidden": false
+      },
+      {
+       "name": "body temperature",
+       "stdin": "36.6\n",
+       "expected_stdout": "97.9\n",
+       "hidden": true
+      },
+      {
+       "name": "minus 40 is the same in both scales",
+       "stdin": "-40\n",
+       "expected_stdout": "-40.0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Write the formula as `c * 9 / 5 + 32`.",
+      "Wrap the whole calculation in `round(..., 1)`."
+     ],
+     "solution": "c = float(input())\nprint(round(c * 9 / 5 + 32, 1))\n",
+     "solution_explanation": "Multiplication and division happen before the addition, which is the order the formula needs. `round(..., 1)` keeps one decimal place."
+    },
+    {
+     "id": "m01-l04-e11",
+     "type": "fix",
+     "tier": "stretch",
+     "title": "GST inside the price",
+     "skills": [
+      "operators",
+      "debugging"
+     ],
+     "prompt": "In Australia, shelf prices already include 10% GST. That means the GST part is **one eleventh** of the shelf price, not one tenth.\n\nThis program reads a shelf price and should print the GST part, then the price before GST, each rounded to 2 decimal places. For `110` it should print:\n\n```\n10.0\n100.0\n```\n\nIt prints `11.0` and `99.0`.",
+     "starter_code": "price = float(input())\ngst = round(price * 0.1, 2)\nbefore = round(price - gst, 2)\nprint(gst)\nprint(before)\n",
+     "stdin_tests": [
+      {
+       "name": "shelf price 110",
+       "stdin": "110\n",
+       "expected_stdout": "10.0\n100.0\n",
+       "hidden": false
+      },
+      {
+       "name": "shelf price 22",
+       "stdin": "22\n",
+       "expected_stdout": "2.0\n20.0\n",
+       "hidden": true
+      },
+      {
+       "name": "a free item",
+       "stdin": "0\n",
+       "expected_stdout": "0.0\n0.0\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "shelf price 5.50",
+       "stdin": "5.5\n",
+       "expected_stdout": "0.5\n5.0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Check with the example: what is one tenth of 110? What is one eleventh?",
+      "Only one line is wrong. Change how `gst` is worked out."
+     ],
+     "solution": "price = float(input())\ngst = round(price / 11, 2)\nbefore = round(price - gst, 2)\nprint(gst)\nprint(before)\n",
+     "solution_explanation": "The code took 10% of the shelf price, but the shelf price is already 110% of the original. Dividing by 11 gives the GST part. The second calculation was fine once `gst` was right."
+    }
+   ]
+  },
+  {
+   "id": "m01-l05",
+   "title": "f-strings and formatting output",
+   "recap": "Last lesson: the arithmetic operators, including `//` for whole division and `%` for the remainder, and `round(number, places)`.",
+   "what": "An **f-string** is a string with an `f` before the opening quote. Inside it, anything in curly brackets `{ }` is replaced by its value.",
+   "why": "Building a message with `+` and `str()` is slow to write and easy to get wrong.\n\nBefore:\n\n```python\nprint(\"Total: $\" + str(total) + \" for \" + str(qty) + \" items\")\n```\n\nAfter:\n\n```python\nprint(f\"Total: ${total} for {qty} items\")\n```\n\nThe f-string reads like the finished sentence, and you do not need `str()`.",
+   "syntax": "```python\nf\"text {name} more text\"   # f before the quote, {} around a variable\nf\"{a + b}\"                 # any calculation works inside {}\nf\"{value:.2f}\"             # :.2f  show a number with 2 decimal places\n```\n\nTwo extras for `print`:\n\n```python\nprint(\"a\", \"b\", sep=\"-\")   # sep: what goes between values (default is a space)\nprint(\"no newline\", end=\"\")  # end: what goes after the line (default is a new line)\n```",
+   "examples": [
+    {
+     "title": "Values inside a sentence",
+     "code": "item = \"Flat white\"\nqty = 2\nprint(f\"{qty} x {item}\")\n",
+     "output": "2 x Flat white\n",
+     "explain": "- The `f` before the quote switches on the curly brackets.\n- `{qty}` and `{item}` are replaced by `2` and `Flat white`. The number needs no `str()`."
+    },
+    {
+     "title": "Money with two decimal places",
+     "code": "price = 4.5\ntotal = price * 3\nprint(f\"Total: ${total:.2f}\")\nprint(f\"Each: ${price:.2f}\")\n",
+     "output": "Total: $13.50\nEach: $4.50\n",
+     "explain": "- `:.2f` after the name means \"show as a decimal number with 2 places\". 13.5 becomes `13.50`.\n- The `$` is ordinary text. Only the part inside `{ }` is replaced.\n- The format changes how the number is shown. The variable keeps its full value."
+    },
+    {
+     "title": "Calculations inside the brackets",
+     "code": "width = 4\nheight = 3\nprint(f\"Area: {width * height} square metres\")\nprint(f\"{width} by {height}\")\n",
+     "output": "Area: 12 square metres\n4 by 3\n",
+     "explain": "- Python works out `width * height` first, then puts `12` into the text."
+    },
+    {
+     "title": "sep and end",
+     "code": "print(\"2026\", \"11\", \"12\", sep=\"-\")\nprint(\"Loading\", end=\"\")\nprint(\"...done\")\n",
+     "output": "2026-11-12\nLoading...done\n",
+     "explain": "- `sep=\"-\"` puts a dash between the values in place of the usual space.\n- `end=\"\"` stops `print` from starting a new line, so the next `print` continues on the same line."
+    }
+   ],
+   "mistakes": [
+    {
+     "title": "Forgetting the f",
+     "fix": "No error, but the brackets are printed as they are: `Hello {name}`. Without the `f`, it is a plain string. Add the `f` before the opening quote.",
+     "code": "name = \"Sam\"\nprint(\"Hello {name}\")\n"
+    },
+    {
+     "title": "Using :.2f on text",
+     "fix": "`:.2f` only works on numbers. Here `price` is a string, perhaps because it came straight from `input()`. Convert it first: `price = float(price)`.",
+     "code": "price = \"4.5\"\nprint(f\"{price:.2f}\")\n",
+     "error": "Traceback (most recent call last):\n  File \"main.py\", line 2, in <module>\n    print(f\"{price:.2f}\")\n            ^^^^^^^^^^^\nValueError: Unknown format code 'f' for object of type 'str'"
+    },
+    {
+     "title": "Leaving out the closing bracket",
+     "fix": "Every `{` inside an f-string needs a matching `}`. The error message tells you what Python was waiting for.",
+     "code": "total = 12\nprint(f\"Total: {total\")\n",
+     "error": "  File \"main.py\", line 2\n    print(f\"Total: {total\")\n                         ^\nSyntaxError: f-string: expecting '}'"
+    }
+   ],
+   "remember": "f before the quote, curly brackets around the value.",
+   "quick_checks": [
+    {
+     "code": "n = 3\nprint(f\"{n} + {n} = {n + n}\")\nprint(\"{n}\")\n",
+     "expected_output": "3 + 3 = 6\n{n}\n",
+     "explain": "The first string has an `f`, so each `{ }` is replaced, including the calculation. The second has no `f`, so it prints the brackets as plain text."
+    }
+   ],
+   "reference": [
+    {
+     "concept": "f-string",
+     "syntax": "f\"text {value} text\"",
+     "example": "print(f\"Hello {name}\")"
+    },
+    {
+     "concept": "Two decimal places",
+     "syntax": "f\"{number:.2f}\"",
+     "example": "print(f\"${total:.2f}\")"
+    },
+    {
+     "concept": "print separator",
+     "syntax": "print(a, b, sep=\"-\")",
+     "example": "print(\"2026\", \"11\", sep=\"-\")   # 2026-11"
+    },
+    {
+     "concept": "print without a new line",
+     "syntax": "print(value, end=\"\")",
+     "example": "print(\"#\", end=\"\")"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "m01-l05-e01",
+     "type": "predict",
+     "tier": "warmup",
+     "title": "Score line",
+     "skills": [
+      "f-strings",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "name = \"Mia\"\nscore = 7\nprint(f\"{name} scored {score}\")\nprint(f\"{score * 2}\")\nprint(f\"{score}{score}\")\n",
+     "expected_output": "Mia scored 7\n14\n77\n",
+     "solution_explanation": "Line 4 does the multiplication inside the brackets: 14. Line 5 has two separate brackets side by side with nothing between them, so the two 7s sit next to each other."
+    },
+    {
+     "id": "m01-l05-e02",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Receipt line",
+     "skills": [
+      "f-strings",
+      "input"
+     ],
+     "prompt": "Read an item name, then a price (may have decimals). Print the item, a colon, and the price with a dollar sign and exactly 2 decimal places.\n\nExample: for `Flat white` and `4.5`, print:\n\n```\nFlat white: $4.50\n```",
+     "starter_code": "item = input()\nprice = float(input())\n",
+     "stdin_tests": [
+      {
+       "name": "flat white",
+       "stdin": "Flat white\n4.5\n",
+       "expected_stdout": "Flat white: $4.50\n",
+       "hidden": false
+      },
+      {
+       "name": "price with three decimals rounds",
+       "stdin": "Muffin\n3.999\n",
+       "expected_stdout": "Muffin: $4.00\n",
+       "hidden": true
+      },
+      {
+       "name": "free item",
+       "stdin": "Water\n0\n",
+       "expected_stdout": "Water: $0.00\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Start with `print(f\"...\")`.",
+      "Inside the f-string, write `{price:.2f}` for the price."
+     ],
+     "solution": "item = input()\nprice = float(input())\nprint(f\"{item}: ${price:.2f}\")\n",
+     "solution_explanation": "The f-string drops `item` in as it is and formats `price` with `:.2f`, which always shows two decimal places, so `4.5` becomes `4.50` and `0` becomes `0.00`."
+    },
+    {
+     "id": "m01-l05-e03",
+     "type": "fix",
+     "tier": "warmup",
+     "title": "The missing f",
+     "skills": [
+      "f-strings",
+      "debugging"
+     ],
+     "prompt": "This program should greet the user by name. For `Sam` it should print `Welcome, Sam!` but it prints `Welcome, {name}!`.",
+     "starter_code": "name = input()\nprint(\"Welcome, {name}!\")\n",
+     "stdin_tests": [
+      {
+       "name": "greets Sam",
+       "stdin": "Sam\n",
+       "expected_stdout": "Welcome, Sam!\n",
+       "hidden": false
+      },
+      {
+       "name": "name with a space",
+       "stdin": "Mary Ann\n",
+       "expected_stdout": "Welcome, Mary Ann!\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "What turns an ordinary string into an f-string?"
+     ],
+     "solution": "name = input()\nprint(f\"Welcome, {name}!\")\n",
+     "solution_explanation": "Without the `f` before the quote, the curly brackets are ordinary characters. Adding the `f` makes Python replace `{name}` with the value."
+    },
+    {
+     "id": "m01-l05-e04",
+     "type": "write",
+     "tier": "core",
+     "title": "Order summary",
+     "skills": [
+      "f-strings",
+      "operators"
+     ],
+     "prompt": "Read an item name, a quantity (whole number) and a unit price (may have decimals). Print one line in this format:\n\n```\n3 x Pen = $4.50\n```\n\nThe amount is quantity times unit price, with 2 decimal places.",
+     "starter_code": "# Read item, quantity and unit price. Print the summary line.\n",
+     "stdin_tests": [
+      {
+       "name": "3 pens at 1.50",
+       "stdin": "Pen\n3\n1.5\n",
+       "expected_stdout": "3 x Pen = $4.50\n",
+       "hidden": false
+      },
+      {
+       "name": "2 notebooks at 3.25",
+       "stdin": "Notebook\n2\n3.25\n",
+       "expected_stdout": "2 x Notebook = $6.50\n",
+       "hidden": true
+      },
+      {
+       "name": "quantity of zero",
+       "stdin": "Pen\n0\n1.5\n",
+       "expected_stdout": "0 x Pen = $0.00\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Convert the quantity with `int()` and the price with `float()`.",
+      "You can multiply inside the brackets: `{qty * price:.2f}`."
+     ],
+     "solution": "item = input()\nqty = int(input())\nprice = float(input())\nprint(f\"{qty} x {item} = ${qty * price:.2f}\")\n",
+     "solution_explanation": "The three values are read in order and converted. The f-string multiplies inside the brackets and formats the result to two decimal places in one go."
+    },
+    {
+     "id": "m01-l05-e05",
+     "type": "fix",
+     "tier": "core",
+     "title": "Rounded the wrong way",
+     "skills": [
+      "f-strings",
+      "operators",
+      "debugging"
+     ],
+     "prompt": "This program splits a bill. For a total of `100` between `3` people it should print `Each pays $33.33`, but it prints `Each pays $33`.",
+     "starter_code": "total = float(input())\npeople = int(input())\nprint(f\"Each pays ${total / people:.0f}\")\n",
+     "stdin_tests": [
+      {
+       "name": "100 between 3",
+       "stdin": "100\n3\n",
+       "expected_stdout": "Each pays $33.33\n",
+       "hidden": false
+      },
+      {
+       "name": "one person",
+       "stdin": "45.5\n1\n",
+       "expected_stdout": "Each pays $45.50\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "10 between 4",
+       "stdin": "10\n4\n",
+       "expected_stdout": "Each pays $2.50\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Look at the format after the colon. How many decimal places does it ask for?"
+     ],
+     "solution": "total = float(input())\npeople = int(input())\nprint(f\"Each pays ${total / people:.2f}\")\n",
+     "solution_explanation": "The number before the `f` in the format is the count of decimal places. `:.0f` shows none. `:.2f` shows the two that money needs."
+    },
+    {
+     "id": "m01-l05-e06",
+     "type": "write",
+     "tier": "core",
+     "title": "Date stamp",
+     "skills": [
+      "f-strings",
+      "printing"
+     ],
+     "prompt": "Read a day, a month and a year (three lines). Print them as year, month, day with dashes between.\n\nExample: for `12`, `11` and `2026`, print:\n\n```\n2026-11-12\n```\n\nPrint the values exactly as they were typed. Do not add leading zeros.",
+     "starter_code": "# Read day, month, year. Print year-month-day.\n",
+     "stdin_tests": [
+      {
+       "name": "12 November 2026",
+       "stdin": "12\n11\n2026\n",
+       "expected_stdout": "2026-11-12\n",
+       "hidden": false
+      },
+      {
+       "name": "single digits stay as typed",
+       "stdin": "5\n3\n2026\n",
+       "expected_stdout": "2026-3-5\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "The input order is day, month, year. The output order is the reverse.",
+      "Either an f-string with dashes typed in, or `print(..., sep=\"-\")`."
+     ],
+     "solution": "day = input()\nmonth = input()\nyear = input()\nprint(f\"{year}-{month}-{day}\")\n",
+     "solution_explanation": "The values stay as strings because no maths is needed. The f-string puts them in the new order with dashes between. `print(year, month, day, sep=\"-\")` gives the same output."
+    },
+    {
+     "id": "m01-l05-e07",
+     "type": "predict",
+     "tier": "core",
+     "title": "Formats, sep and end",
+     "skills": [
+      "f-strings",
+      "printing",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "price = 2.5\nqty = 4\nprint(f\"{price:.2f}\")\nprint(f\"{price * qty:.1f}\")\nprint(\"a\", \"b\", sep=\"\")\nprint(\"x\", end=\"-\")\nprint(\"y\")\n",
+     "expected_output": "2.50\n10.0\nab\nx-y\n",
+     "solution_explanation": "`:.2f` pads 2.5 to `2.50`. `2.5 * 4` is 10.0 and `:.1f` shows one decimal place. `sep=\"\"` removes the space between `a` and `b`. `end=\"-\"` replaces the new line with a dash, so `y` continues on the same line."
+    },
+    {
+     "id": "m01-l05-e08",
+     "type": "explain",
+     "tier": "core",
+     "title": "Explain the distance label",
+     "skills": [
+      "f-strings",
+      "explaining"
+     ],
+     "prompt": "Read the code. In your own words, explain what it does, why each step is there, and what it prints. Mention any edge cases you can see.",
+     "starter_code": "km = 12.345\nlabel = f\"Distance: {km:.1f} km\"\nprint(label)\nprint(km)\n",
+     "model_explanation": "`km` holds the float 12.345. Line 2 builds a string. The f-string replaces `{km:.1f}` with the value shown to 1 decimal place, which is `12.3`. So `label` is the text `Distance: 12.3 km`, and line 3 prints it.\n\nLine 4 prints `12.345`. The format only changed how the number was written into the label. The variable `km` still holds the full value.",
+     "checklist": [
+      "Said the f-string replaces the curly brackets with the value",
+      "Said :.1f shows one decimal place",
+      "Gave both output lines: Distance: 12.3 km and 12.345",
+      "Noted that km itself is unchanged by the formatting"
+     ]
+    },
+    {
+     "id": "m01-l05-e09",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Temperature report",
+     "skills": [
+      "f-strings",
+      "operators",
+      "input"
+     ],
+     "prompt": "Read a city name, a minimum temperature and a maximum temperature (both may have decimals). Print two lines, with every temperature shown to 1 decimal place:\n\n```\nHobart: 8.0 to 17.3\nRange: 9.3\n```\n\nThe range is the maximum minus the minimum.",
+     "starter_code": "# Read city, minimum and maximum. Print the two-line report.\n",
+     "stdin_tests": [
+      {
+       "name": "Hobart",
+       "stdin": "Hobart\n8\n17.3\n",
+       "expected_stdout": "Hobart: 8.0 to 17.3\nRange: 9.3\n",
+       "hidden": false
+      },
+      {
+       "name": "below zero",
+       "stdin": "Thredbo\n-3.5\n2\n",
+       "expected_stdout": "Thredbo: -3.5 to 2.0\nRange: 5.5\n",
+       "hidden": true
+      },
+      {
+       "name": "minimum equals maximum",
+       "stdin": "Darwin\n30\n30\n",
+       "expected_stdout": "Darwin: 30.0 to 30.0\nRange: 0.0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Convert both temperatures with `float()`.",
+      "Use `:.1f` three times: minimum, maximum, and the subtraction."
+     ],
+     "solution": "city = input()\nlow = float(input())\nhigh = float(input())\nprint(f\"{city}: {low:.1f} to {high:.1f}\")\nprint(f\"Range: {high - low:.1f}\")\n",
+     "solution_explanation": "Both temperatures are converted to floats. Each one is formatted with `:.1f`, and the subtraction is done inside the brackets on the second line."
+    },
+    {
+     "id": "m01-l05-e10",
+     "type": "fix",
+     "tier": "stretch",
+     "title": "Receipt that will not format",
+     "skills": [
+      "f-strings",
+      "conversion",
+      "debugging"
+     ],
+     "prompt": "This program reads an item, a price and a quantity. For `Muffin`, `3.5` and `2` it should print:\n\n```\n2 x Muffin\nTotal: $7.00\n```\n\nIt crashes on the last line:\n\n```\nTraceback (most recent call last):\n  File \"main.py\", line 6, in <module>\n    print(f\"Total: ${total:.2f}\")\n                    ^^^^^^^^^^^\nValueError: Unknown format code 'f' for object of type 'str'\n```\n\nThe line named in the traceback is not where the real mistake is. Work backwards: what is in `total`, and why?",
+     "starter_code": "item = input()\nprice = input()\nqty = int(input())\ntotal = price * qty\nprint(f\"{qty} x {item}\")\nprint(f\"Total: ${total:.2f}\")\n",
+     "stdin_tests": [
+      {
+       "name": "two muffins",
+       "stdin": "Muffin\n3.5\n2\n",
+       "expected_stdout": "2 x Muffin\nTotal: $7.00\n",
+       "hidden": false
+      },
+      {
+       "name": "one coffee",
+       "stdin": "Coffee\n4\n1\n",
+       "expected_stdout": "1 x Coffee\nTotal: $4.00\n",
+       "hidden": true
+      },
+      {
+       "name": "quantity of zero",
+       "stdin": "Muffin\n3.5\n0\n",
+       "expected_stdout": "0 x Muffin\nTotal: $0.00\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "The error says the format `f` was used on a `str`. So `total` is a string. Where did it come from?",
+      "Add `print(total)` before the last line and run it. What do you see?",
+      "`price` was never converted to a number."
+     ],
+     "solution": "item = input()\nprice = float(input())\nqty = int(input())\ntotal = price * qty\nprint(f\"{qty} x {item}\")\nprint(f\"Total: ${total:.2f}\")\n",
+     "solution_explanation": "`price` was left as a string. Multiplying a string by a whole number repeats the text, so `total` became `\"3.53.5\"`. The crash only showed up later, when `:.2f` was used on that string. Converting `price` with `float()` on line 2 fixes the real cause."
+    }
+   ]
+  }
+ ]
+}

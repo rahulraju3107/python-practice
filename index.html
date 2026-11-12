@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Python Practice</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="vendor/codemirror/codemirror.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <a class="skip" href="#app">Skip to content</a>
+  <header class="rail">
+    <a class="brand" href="#/">Python Practice</a>
+    <nav id="nav" aria-label="Main">
+      <a href="#/" data-nav="">Dashboard</a>
+      <a href="#/learn" data-nav="learn">Learn</a>
+      <a href="#/review" data-nav="review">Review <span class="count" id="due-count" hidden></span></a>
+      <a href="#/timed" data-nav="timed">Timed mode</a>
+      <a href="#/progress" data-nav="progress">Progress</a>
+      <a href="#/notes" data-nav="notes">Notes</a>
+      <a href="#/reference" data-nav="reference">Quick reference</a>
+      <a href="#/settings" data-nav="settings">Settings</a>
+    </nav>
+    <div class="rail-foot">
+      <span class="chip" id="py-status" title="Python runs in this browser">Python: not loaded</span>
+      <a class="chip" id="sync-status" href="#/settings" title="Where your progress is saved">Local only</a>
+      <button type="button" class="btn small quiet" id="theme-toggle">Dark theme</button>
+    </div>
+  </header>
+  <main id="app" tabindex="-1"><p class="page muted">Loading.</p></main>
+  <script src="vendor/codemirror/codemirror.min.js"></script>
+  <script src="vendor/marked/marked.min.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

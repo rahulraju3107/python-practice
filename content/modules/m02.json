@@ -1,0 +1,3542 @@
+{
+ "id": "m02",
+ "title": "Conditionals and loops",
+ "lessons": [
+  {
+   "id": "m02-l01",
+   "title": "Comparisons and if",
+   "recap": "Module 1: variables, `input()`, converting types, arithmetic, and f-strings such as `f\"${total:.2f}\"`. Every program so far ran every line, top to bottom.",
+   "what": "A **comparison** asks a yes or no question about two values and gives back `True` or `False`.\nAn `if` statement runs a block of code only when its **condition** (the question) is `True`.",
+   "why": "Real programs make decisions: free delivery over $50, a warning when stock is low. Without `if`, a program can only do the same steps every time.\n\n```python\ntotal = 62\nif total >= 50:\n    print(\"Free delivery\")\n```",
+   "syntax": "```python\nif condition:          # the line ends with a colon\n    do_this()          # indented 4 spaces: runs only when the condition is True\n    and_this()         # same indent, so still inside the if\nback_to_normal()       # not indented: always runs\n```\n\nThe comparison operators:\n\n| Operator | Meaning |\n|---|---|\n| `==` | equal to |\n| `!=` | not equal to |\n| `<`  `>` | less than, greater than |\n| `<=`  `>=` | less than or equal, greater than or equal |\n\nThe indented lines are called a **block**. Indentation is not decoration in Python. It is how Python knows which lines belong to the `if`.",
+   "examples": [
+    {
+     "title": "A comparison is just a value",
+     "code": "age = 17\nprint(age >= 18)\nprint(age == 17)\nprint(age != 17)\n",
+     "output": "False\nTrue\nFalse\n",
+     "explain": "- Each comparison is worked out to `True` or `False`, and `print` shows the result.\n- `==` with two equals signs asks \"are these equal?\". A single `=` would try to store a value."
+    },
+    {
+     "title": "Run a line only sometimes",
+     "code": "temp = 36\nif temp > 35:\n    print(\"Hot day\")\nprint(\"Done\")\n",
+     "output": "Hot day\nDone\n",
+     "explain": "- `36 > 35` is `True`, so the indented line runs.\n- `print(\"Done\")` is not indented. It is outside the `if` and runs every time. Change `temp` to 20 and run it again."
+    },
+    {
+     "title": "A block can have several lines",
+     "code": "total = 40\nif total >= 50:\n    print(\"Free delivery\")\n    print(\"Thanks for the big order\")\nif total < 50:\n    print(\"Delivery is $8\")\n",
+     "output": "Delivery is $8\n",
+     "explain": "- The first condition is `False`, so both indented lines are skipped together.\n- The second `if` is a separate question. `40 < 50` is `True`, so its block runs."
+    },
+    {
+     "title": "Comparing text",
+     "code": "answer = \"yes\"\nif answer == \"yes\":\n    print(\"Confirmed\")\nif answer == \"Yes\":\n    print(\"Capital Y is a different string\")\n",
+     "output": "Confirmed\n",
+     "explain": "- Strings are equal only when every character matches, including capitals and spaces.\n- `\"yes\" == \"Yes\"` is `False`, so the second block is skipped."
+    }
+   ],
+   "mistakes": [
+    {
+     "title": "One equals sign in a condition",
+     "fix": "`=` stores a value. `==` compares. Python even guesses what you meant in the message. Change it to `if age == 18:`.",
+     "code": "age = 18\nif age = 18:\n    print(\"Just an adult\")\n",
+     "error": "  File \"main.py\", line 2\n    if age = 18:\n       ^^^^^^^^\nSyntaxError: invalid syntax. Maybe you meant '==' or ':=' instead of '='?"
+    },
+    {
+     "title": "Forgetting the colon",
+     "fix": "The `if` line must end with a colon. The message says exactly what is missing.",
+     "code": "age = 18\nif age >= 18\n    print(\"Adult\")\n",
+     "error": "  File \"main.py\", line 2\n    if age >= 18\n                ^\nSyntaxError: expected ':'"
+    },
+    {
+     "title": "Forgetting to indent",
+     "fix": "`IndentationError` means the spacing at the start of a line is wrong. After an `if` line, the next line must be indented. Add 4 spaces before `print`.",
+     "code": "age = 18\nif age >= 18:\nprint(\"Adult\")\n",
+     "error": "  File \"main.py\", line 3\n    print(\"Adult\")\n    ^^^^^\nIndentationError: expected an indented block after 'if' statement on line 2"
+    },
+    {
+     "title": "Comparing text with a number",
+     "fix": "`age` is a string, perhaps straight from `input()`. Python will not guess whether you mean text order or number order. Convert first: `int(age) > 18`.",
+     "code": "age = \"20\"\nif age > 18:\n    print(\"Adult\")\n",
+     "error": "Traceback (most recent call last):\n  File \"main.py\", line 2, in <module>\n    if age > 18:\n       ^^^^^^^^\nTypeError: '>' not supported between instances of 'str' and 'int'"
+    }
+   ],
+   "remember": "One = stores. Two == compares.",
+   "quick_checks": [
+    {
+     "code": "x = 5\nif x > 5:\n    print(\"big\")\nif x >= 5:\n    print(\"at least five\")\nprint(\"end\")\n",
+     "expected_output": "at least five\nend\n",
+     "explain": "`5 > 5` is `False`, because 5 is not greater than itself. `5 >= 5` is `True`. The last line is outside both blocks and always runs."
+    }
+   ],
+   "reference": [
+    {
+     "concept": "Comparison operators",
+     "syntax": "a == b   a != b   a < b   a > b   a <= b   a >= b",
+     "example": "print(age >= 18)   # True or False"
+    },
+    {
+     "concept": "if statement",
+     "syntax": "if condition:\n    block",
+     "example": "if total >= 50:\n    print(\"Free delivery\")"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "m02-l01-e01",
+     "type": "predict",
+     "tier": "warmup",
+     "title": "Stock check",
+     "skills": [
+      "conditionals",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "stock = 0\nif stock == 0:\n    print(\"Sold out\")\nif stock > 0:\n    print(\"In stock\")\nprint(stock != 0)\n",
+     "expected_output": "Sold out\nFalse\n",
+     "solution_explanation": "The first condition is `True`, so `Sold out` prints. The second is `False`, so its block is skipped. The last line prints the result of a comparison: 0 is equal to 0, so \"not equal\" is `False`."
+    },
+    {
+     "id": "m02-l01-e02",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Adult check",
+     "skills": [
+      "conditionals",
+      "input"
+     ],
+     "prompt": "Read an age (whole number). If the age is 18 or more, print `Adult`. Then, in every case, print `Checked`.\n\nExample: for `20`, print:\n\n```\nAdult\nChecked\n```\n\nFor `17`, print only `Checked`.",
+     "starter_code": "age = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "age 20",
+       "stdin": "20\n",
+       "expected_stdout": "Adult\nChecked\n",
+       "hidden": false
+      },
+      {
+       "name": "age 17",
+       "stdin": "17\n",
+       "expected_stdout": "Checked\n",
+       "hidden": false
+      },
+      {
+       "name": "exactly 18",
+       "stdin": "18\n",
+       "expected_stdout": "Adult\nChecked\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "\"18 or more\" is `>=`.",
+      "The `Checked` line must not be indented, so it runs every time."
+     ],
+     "solution": "age = int(input())\nif age >= 18:\n    print(\"Adult\")\nprint(\"Checked\")\n",
+     "solution_explanation": "The condition `age >= 18` includes 18 itself. Only the indented line depends on the condition. `print(\"Checked\")` is back at the left edge, so it always runs."
+    },
+    {
+     "id": "m02-l01-e03",
+     "type": "fix",
+     "tier": "warmup",
+     "title": "Assignment in the condition",
+     "skills": [
+      "conditionals",
+      "debugging"
+     ],
+     "prompt": "This program should print `Door unlocked` when the code typed in is exactly `OPEN`. It does not run at all:\n\n```\n  File \"main.py\", line 2\n    if code = \"OPEN\":\n       ^^^^^^^^^^^^^\nSyntaxError: invalid syntax. Maybe you meant '==' or ':=' instead of '='?\n```",
+     "starter_code": "code = input()\nif code = \"OPEN\":\n    print(\"Door unlocked\")\n",
+     "stdin_tests": [
+      {
+       "name": "the right code",
+       "stdin": "OPEN\n",
+       "expected_stdout": "Door unlocked\n",
+       "hidden": false
+      },
+      {
+       "name": "lowercase is not the same",
+       "stdin": "open\n",
+       "expected_stdout": "",
+       "hidden": false,
+       "edge": true
+      },
+      {
+       "name": "a wrong code",
+       "stdin": "CLOSE\n",
+       "expected_stdout": "",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Read the whole error message. Python suggests the fix."
+     ],
+     "solution": "code = input()\nif code == \"OPEN\":\n    print(\"Door unlocked\")\n",
+     "solution_explanation": "A single `=` means \"store\". A condition needs `==`, which means \"is equal to\". String comparison is exact, so `open` in lowercase does not match."
+    },
+    {
+     "id": "m02-l01-e04",
+     "type": "write",
+     "tier": "core",
+     "title": "Delivery fee",
+     "skills": [
+      "conditionals",
+      "f-strings"
+     ],
+     "prompt": "Read an order total (may have decimals). Orders under $50 have an $8 delivery fee added. Orders of $50 or more have free delivery.\n\nPrint the amount to pay in this format:\n\n```\nPay: $48.00\n```\n\nThat example is for an order of `40`.",
+     "starter_code": "total = float(input())\n",
+     "stdin_tests": [
+      {
+       "name": "order of 40",
+       "stdin": "40\n",
+       "expected_stdout": "Pay: $48.00\n",
+       "hidden": false
+      },
+      {
+       "name": "exactly 50 is free delivery",
+       "stdin": "50\n",
+       "expected_stdout": "Pay: $50.00\n",
+       "hidden": false,
+       "edge": true
+      },
+      {
+       "name": "just under 50",
+       "stdin": "49.99\n",
+       "expected_stdout": "Pay: $57.99\n",
+       "hidden": true
+      },
+      {
+       "name": "large order",
+       "stdin": "120\n",
+       "expected_stdout": "Pay: $120.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Change `total` inside an `if`, then print after the `if`.",
+      "`if total < 50:` then `total += 8`."
+     ],
+     "solution": "total = float(input())\nif total < 50:\n    total += 8\nprint(f\"Pay: ${total:.2f}\")\n",
+     "solution_explanation": "The fee is added only when the total is under 50. An order of exactly 50 is not under 50, so it stays as it is. The `print` is outside the block, so it runs for every order."
+    },
+    {
+     "id": "m02-l01-e05",
+     "type": "fix",
+     "tier": "core",
+     "title": "Off by one at the pass mark",
+     "skills": [
+      "conditionals",
+      "debugging"
+     ],
+     "prompt": "The pass mark is 50. A score of **50 or more** passes. This program should print `Pass` for a passing score and always print `Marked`.\n\nA student with exactly 50 complained that they did not get `Pass`.",
+     "starter_code": "score = int(input())\nif score > 50:\n    print(\"Pass\")\nprint(\"Marked\")\n",
+     "stdin_tests": [
+      {
+       "name": "exactly on the pass mark",
+       "stdin": "50\n",
+       "expected_stdout": "Pass\nMarked\n",
+       "hidden": false,
+       "edge": true
+      },
+      {
+       "name": "below the pass mark",
+       "stdin": "49\n",
+       "expected_stdout": "Marked\n",
+       "hidden": false
+      },
+      {
+       "name": "well above",
+       "stdin": "80\n",
+       "expected_stdout": "Pass\nMarked\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Test the boundary by hand: is `50 > 50` true?"
+     ],
+     "solution": "score = int(input())\nif score >= 50:\n    print(\"Pass\")\nprint(\"Marked\")\n",
+     "solution_explanation": "`>` leaves out the boundary value itself. \"50 or more\" needs `>=`. Always test the exact boundary: it is where this kind of bug hides."
+    },
+    {
+     "id": "m02-l01-e06",
+     "type": "fix",
+     "tier": "core",
+     "title": "Indentation changes the meaning",
+     "skills": [
+      "conditionals",
+      "debugging"
+     ],
+     "prompt": "This program reads a temperature. On a hot day (over 35) it should print a warning and some advice. It should always finish with `Reading saved`.\n\nFor `40` the output is right:\n\n```\nHeat warning\nDrink water\nReading saved\n```\n\nFor `20` it should print only `Reading saved`, but it also prints `Drink water`.",
+     "starter_code": "temp = float(input())\nif temp > 35:\n    print(\"Heat warning\")\nprint(\"Drink water\")\nprint(\"Reading saved\")\n",
+     "stdin_tests": [
+      {
+       "name": "a hot day",
+       "stdin": "40\n",
+       "expected_stdout": "Heat warning\nDrink water\nReading saved\n",
+       "hidden": false
+      },
+      {
+       "name": "a mild day",
+       "stdin": "20\n",
+       "expected_stdout": "Reading saved\n",
+       "hidden": false
+      },
+      {
+       "name": "exactly 35 is not over 35",
+       "stdin": "35\n",
+       "expected_stdout": "Reading saved\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Which lines are inside the `if` block right now? Look at the indentation."
+     ],
+     "solution": "temp = float(input())\nif temp > 35:\n    print(\"Heat warning\")\n    print(\"Drink water\")\nprint(\"Reading saved\")\n",
+     "solution_explanation": "`print(\"Drink water\")` was not indented, so it was outside the `if` and ran every time. Indenting it puts it in the block with the warning."
+    },
+    {
+     "id": "m02-l01-e07",
+     "type": "predict",
+     "tier": "core",
+     "title": "Equal or not",
+     "skills": [
+      "conditionals",
+      "types",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "a = 7\nb = \"7\"\nprint(a == 7)\nprint(b == 7)\nprint(str(a) == b)\nif a != 7:\n    print(\"changed\")\nprint(\"end\")\n",
+     "expected_output": "True\nFalse\nTrue\nend\n",
+     "solution_explanation": "The number 7 and the string `\"7\"` are not equal, so line 4 prints `False`. No error: `==` between different types is allowed and is simply `False`. After converting with `str`, the two strings match. `a != 7` is `False`, so `changed` is skipped."
+    },
+    {
+     "id": "m02-l01-e08",
+     "type": "explain",
+     "tier": "core",
+     "title": "Explain the purchase",
+     "skills": [
+      "conditionals",
+      "variables",
+      "explaining"
+     ],
+     "prompt": "Read the code. In your own words, explain what it does, why each step is there, and what it prints. Mention any edge cases you can see.",
+     "starter_code": "balance = 30\nprice = 45\nif price > balance:\n    print(\"Not enough money\")\n    price = balance\nbalance = balance - price\nprint(balance)\n",
+     "model_explanation": "The program tries to pay a price of 45 from a balance of 30.\n\n`45 > 30` is `True`, so both indented lines run: it prints `Not enough money` and lowers `price` to the balance, 30. Then line 6, which is outside the `if`, subtracts the price from the balance: 30 minus 30 is 0. It prints `0`.\n\nSo the output is `Not enough money` then `0`. The `if` makes sure the balance can never go below zero.\n\nEdge case: when the price is less than or equal to the balance, nothing is printed by the `if` and the full price is subtracted.",
+     "checklist": [
+      "Said the condition is True, so both indented lines run",
+      "Said price is lowered to 30 before the subtraction",
+      "Gave the output: Not enough money, then 0",
+      "Explained what happens when the price is not more than the balance"
+     ]
+    },
+    {
+     "id": "m02-l01-e09",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Smaller of two",
+     "skills": [
+      "conditionals"
+     ],
+     "prompt": "Read two whole numbers. Print the smaller one. If they are equal, print that value.\n\nUse one `if`. You have not met `else` yet, and you do not need it.\n\nExample: for `8` and `3`, print `3`.",
+     "starter_code": "a = int(input())\nb = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "first is smaller",
+       "stdin": "3\n8\n",
+       "expected_stdout": "3\n",
+       "hidden": false
+      },
+      {
+       "name": "second is smaller",
+       "stdin": "8\n3\n",
+       "expected_stdout": "3\n",
+       "hidden": false
+      },
+      {
+       "name": "both the same",
+       "stdin": "5\n5\n",
+       "expected_stdout": "5\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "negative numbers",
+       "stdin": "-2\n-7\n",
+       "expected_stdout": "-7\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Start by assuming the answer is `a`: `smallest = a`.",
+      "Then use `if` to change your mind when `b` is smaller."
+     ],
+     "solution": "a = int(input())\nb = int(input())\nsmallest = a\nif b < a:\n    smallest = b\nprint(smallest)\n",
+     "solution_explanation": "The code assumes `a` is the answer, then replaces it only if `b` is smaller. When the two are equal, the condition is `False` and `a` is printed, which is correct. \"Assume, then correct\" is a pattern you will use often."
+    },
+    {
+     "id": "m02-l01-e10",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Wholesale price",
+     "skills": [
+      "conditionals",
+      "operators",
+      "f-strings"
+     ],
+     "prompt": "Notebooks cost $5.00 each. If a customer buys 10 or more, the price drops to $4.00 each for all of them.\n\nRead a quantity (whole number). Print the total in this format:\n\n```\nTotal: $15.00\n```\n\nThat example is for a quantity of `3`.",
+     "starter_code": "qty = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "3 notebooks",
+       "stdin": "3\n",
+       "expected_stdout": "Total: $15.00\n",
+       "hidden": false
+      },
+      {
+       "name": "exactly 10 gets the lower price",
+       "stdin": "10\n",
+       "expected_stdout": "Total: $40.00\n",
+       "hidden": false,
+       "edge": true
+      },
+      {
+       "name": "9 is still full price",
+       "stdin": "9\n",
+       "expected_stdout": "Total: $45.00\n",
+       "hidden": true
+      },
+      {
+       "name": "zero notebooks",
+       "stdin": "0\n",
+       "expected_stdout": "Total: $0.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Store the unit price in a variable first, set to 5.",
+      "Use an `if` to change the unit price to 4 when the quantity is 10 or more."
+     ],
+     "solution": "qty = int(input())\nunit = 5\nif qty >= 10:\n    unit = 4\nprint(f\"Total: ${qty * unit:.2f}\")\n",
+     "solution_explanation": "The unit price starts at 5 and is changed to 4 only for orders of 10 or more. The total is worked out after the `if`, using whichever unit price applies."
+    }
+   ]
+  },
+  {
+   "id": "m02-l02",
+   "title": "elif and else",
+   "recap": "Last lesson: comparisons give `True` or `False`, and `if condition:` runs its indented block only when the condition is `True`. Remember `==` to compare and the colon at the end.",
+   "what": "`else` gives a block to run when the `if` condition is `False`.\n`elif` (short for \"else if\") asks another question, but only when all the questions above it were `False`. In one chain, only one block ever runs.",
+   "why": "With separate `if` statements you must write every condition in full and make sure they never overlap.\n\nBefore:\n\n```python\nif age >= 18:\n    print(\"Adult ticket\")\nif age < 18:\n    print(\"Child ticket\")\n```\n\nAfter:\n\n```python\nif age >= 18:\n    print(\"Adult ticket\")\nelse:\n    print(\"Child ticket\")\n```\n\n`else` means \"in every other case\", so nothing can be missed and nothing can match twice.",
+   "syntax": "```python\nif first_condition:       # checked first\n    block_a\nelif second_condition:    # checked only if the first was False\n    block_b\nelif third_condition:     # you can have as many elif as you need\n    block_c\nelse:                     # no condition. Runs if nothing above matched.\n    block_d\n```\n\nPython checks from the top and runs the **first** block whose condition is `True`. Then it skips the rest of the chain.",
+   "examples": [
+    {
+     "title": "Two-way choice with else",
+     "code": "age = 15\nif age >= 18:\n    print(\"Adult ticket\")\nelse:\n    print(\"Child ticket\")\n",
+     "output": "Child ticket\n",
+     "explain": "- `15 >= 18` is `False`, so the first block is skipped and the `else` block runs.\n- Exactly one of the two blocks always runs."
+    },
+    {
+     "title": "Several ranges with elif",
+     "code": "score = 72\nif score >= 80:\n    grade = \"A\"\nelif score >= 65:\n    grade = \"B\"\nelif score >= 50:\n    grade = \"C\"\nelse:\n    grade = \"F\"\nprint(grade)\n",
+     "output": "B\n",
+     "explain": "- `72 >= 80` is `False`, so Python moves to the first `elif`.\n- `72 >= 65` is `True`, so `grade` becomes `\"B\"` and the rest of the chain is skipped.\n- `72 >= 50` is also true, but it is never checked. The first match wins."
+    },
+    {
+     "title": "Order matters",
+     "code": "temp = 38\nif temp > 20:\n    print(\"Warm\")\nelif temp > 35:\n    print(\"Hot\")\nprint(\"Checked\")\n",
+     "output": "Warm\nChecked\n",
+     "explain": "- 38 is over 35, so you might expect `Hot`. But `38 > 20` is checked first and is `True`, so `Warm` prints and the `elif` is never reached.\n- Put the narrowest condition first: check `> 35` before `> 20`."
+    }
+   ],
+   "mistakes": [
+    {
+     "title": "Giving else a condition",
+     "fix": "`else` never takes a condition. It means \"everything that is left\". If you need a condition, use `elif x <= 5:`.",
+     "code": "x = 3\nif x > 5:\n    print(\"big\")\nelse x <= 5:\n    print(\"small\")\n",
+     "error": "  File \"main.py\", line 4\n    else x <= 5:\n         ^\nSyntaxError: expected ':'"
+    },
+    {
+     "title": "else without an if above it",
+     "fix": "`else` and `elif` must directly follow an `if` block at the same indent level. Here there is nothing for the `else` to belong to.",
+     "code": "x = 3\nprint(x)\nelse:\n    print(\"small\")\n",
+     "error": "  File \"main.py\", line 3\n    else:\n    ^^^^\nSyntaxError: invalid syntax"
+    },
+    {
+     "title": "Separate ifs when you meant one chain",
+     "fix": "No error, but a score of 90 prints `A`, `B` and `C`, because each `if` is its own question and all three are true. Change the second and third to `elif` so only the first match runs.",
+     "code": "score = 90\nif score >= 80:\n    print(\"A\")\nif score >= 65:\n    print(\"B\")\nif score >= 50:\n    print(\"C\")\n"
+    }
+   ],
+   "remember": "One if, any number of elif, at most one else. The first True block wins.",
+   "quick_checks": [
+    {
+     "code": "n = 0\nif n > 0:\n    print(\"positive\")\nelif n == 0:\n    print(\"zero\")\nelse:\n    print(\"negative\")\nprint(\"done\")\n",
+     "expected_output": "zero\ndone\n",
+     "explain": "`0 > 0` is `False`, so the `elif` is checked. `0 == 0` is `True`, so `zero` prints and the `else` is skipped. `done` is outside the chain."
+    }
+   ],
+   "reference": [
+    {
+     "concept": "if / else",
+     "syntax": "if condition:\n    block\nelse:\n    block",
+     "example": "if age >= 18:\n    print(\"Adult\")\nelse:\n    print(\"Child\")"
+    },
+    {
+     "concept": "if / elif / else",
+     "syntax": "if c1:\n    block\nelif c2:\n    block\nelse:\n    block",
+     "example": "if score >= 80:\n    grade = \"A\"\nelif score >= 50:\n    grade = \"C\"\nelse:\n    grade = \"F\""
+    }
+   ],
+   "exercises": [
+    {
+     "id": "m02-l02-e01",
+     "type": "predict",
+     "tier": "warmup",
+     "title": "Time of day",
+     "skills": [
+      "conditionals",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "hour = 14\nif hour < 12:\n    print(\"Morning\")\nelif hour < 18:\n    print(\"Afternoon\")\nelse:\n    print(\"Evening\")\n",
+     "expected_output": "Afternoon\n",
+     "solution_explanation": "`14 < 12` is `False`. `14 < 18` is `True`, so `Afternoon` prints and the `else` is skipped."
+    },
+    {
+     "id": "m02-l02-e02",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Even or odd",
+     "skills": [
+      "conditionals",
+      "operators"
+     ],
+     "prompt": "Read a whole number. Print `Even` if it is even, otherwise print `Odd`.\n\nA number is even when the remainder after dividing by 2 is 0.",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "4 is even",
+       "stdin": "4\n",
+       "expected_stdout": "Even\n",
+       "hidden": false
+      },
+      {
+       "name": "7 is odd",
+       "stdin": "7\n",
+       "expected_stdout": "Odd\n",
+       "hidden": false
+      },
+      {
+       "name": "zero is even",
+       "stdin": "0\n",
+       "expected_stdout": "Even\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "a negative odd number",
+       "stdin": "-3\n",
+       "expected_stdout": "Odd\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "The remainder operator is `%`.",
+      "`if n % 2 == 0:` then `else:`"
+     ],
+     "solution": "n = int(input())\nif n % 2 == 0:\n    print(\"Even\")\nelse:\n    print(\"Odd\")\n",
+     "solution_explanation": "`n % 2` is 0 for even numbers and 1 for odd ones. The `else` covers every number that is not even, so no second condition is needed."
+    },
+    {
+     "id": "m02-l02-e03",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Ticket price",
+     "skills": [
+      "conditionals"
+     ],
+     "prompt": "Read an age (whole number). Print the ticket price:\n\n- under 13: `Ticket: $12`\n- 13 to 64: `Ticket: $20`\n- 65 or over: `Ticket: $15`",
+     "starter_code": "age = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "adult",
+       "stdin": "30\n",
+       "expected_stdout": "Ticket: $20\n",
+       "hidden": false
+      },
+      {
+       "name": "child",
+       "stdin": "5\n",
+       "expected_stdout": "Ticket: $12\n",
+       "hidden": false
+      },
+      {
+       "name": "senior",
+       "stdin": "80\n",
+       "expected_stdout": "Ticket: $15\n",
+       "hidden": true
+      },
+      {
+       "name": "exactly 13 pays the adult price",
+       "stdin": "13\n",
+       "expected_stdout": "Ticket: $20\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "exactly 65 pays the senior price",
+       "stdin": "65\n",
+       "expected_stdout": "Ticket: $15\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Three outcomes means `if`, `elif`, `else`.",
+      "Check `age < 13` first, then `age < 65`. Whatever is left is 65 or over."
+     ],
+     "solution": "age = int(input())\nif age < 13:\n    print(\"Ticket: $12\")\nelif age < 65:\n    print(\"Ticket: $20\")\nelse:\n    print(\"Ticket: $15\")\n",
+     "solution_explanation": "By the time the `elif` is checked, the age is already known to be 13 or more, so `age < 65` alone describes \"13 to 64\". The `else` catches everything from 65 up."
+    },
+    {
+     "id": "m02-l02-e04",
+     "type": "fix",
+     "tier": "core",
+     "title": "Every grade at once",
+     "skills": [
+      "conditionals",
+      "debugging"
+     ],
+     "prompt": "This program should print one grade: `A` for 80 or more, `B` for 65 or more, `C` for 50 or more, otherwise `F`.\n\nFor a score of `90` it prints three lines: `A`, `B` and `C`.",
+     "starter_code": "score = int(input())\nif score >= 80:\n    print(\"A\")\nif score >= 65:\n    print(\"B\")\nif score >= 50:\n    print(\"C\")\nelse:\n    print(\"F\")\n",
+     "stdin_tests": [
+      {
+       "name": "score 90",
+       "stdin": "90\n",
+       "expected_stdout": "A\n",
+       "hidden": false
+      },
+      {
+       "name": "score 70",
+       "stdin": "70\n",
+       "expected_stdout": "B\n",
+       "hidden": false
+      },
+      {
+       "name": "exactly 50",
+       "stdin": "50\n",
+       "expected_stdout": "C\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "score 10",
+       "stdin": "10\n",
+       "expected_stdout": "F\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Each `if` starts a new, separate question. How many of them are true for 90?",
+      "Join them into one chain with `elif`."
+     ],
+     "solution": "score = int(input())\nif score >= 80:\n    print(\"A\")\nelif score >= 65:\n    print(\"B\")\nelif score >= 50:\n    print(\"C\")\nelse:\n    print(\"F\")\n",
+     "solution_explanation": "Three separate `if` statements each ran their own check, so a high score matched all of them. With `elif`, the checks form one chain and only the first match runs."
+    },
+    {
+     "id": "m02-l02-e05",
+     "type": "fix",
+     "tier": "core",
+     "title": "Conditions in the wrong order",
+     "skills": [
+      "conditionals",
+      "debugging"
+     ],
+     "prompt": "This program should describe a temperature:\n\n- over 35: `Hot`\n- over 20: `Warm`\n- over 10: `Mild`\n- otherwise: `Cold`\n\nFor `40` it prints `Warm`. It never prints `Hot`.",
+     "starter_code": "temp = float(input())\nif temp > 20:\n    print(\"Warm\")\nelif temp > 35:\n    print(\"Hot\")\nelif temp > 10:\n    print(\"Mild\")\nelse:\n    print(\"Cold\")\n",
+     "stdin_tests": [
+      {
+       "name": "40 degrees",
+       "stdin": "40\n",
+       "expected_stdout": "Hot\n",
+       "hidden": false
+      },
+      {
+       "name": "25 degrees",
+       "stdin": "25\n",
+       "expected_stdout": "Warm\n",
+       "hidden": false
+      },
+      {
+       "name": "15 degrees",
+       "stdin": "15\n",
+       "expected_stdout": "Mild\n",
+       "hidden": true
+      },
+      {
+       "name": "5 degrees",
+       "stdin": "5\n",
+       "expected_stdout": "Cold\n",
+       "hidden": true
+      },
+      {
+       "name": "exactly 35 is not over 35",
+       "stdin": "35\n",
+       "expected_stdout": "Warm\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "The first `True` condition wins. Which condition does 40 meet first?",
+      "Check the highest threshold first."
+     ],
+     "solution": "temp = float(input())\nif temp > 35:\n    print(\"Hot\")\nelif temp > 20:\n    print(\"Warm\")\nelif temp > 10:\n    print(\"Mild\")\nelse:\n    print(\"Cold\")\n",
+     "solution_explanation": "Any temperature over 35 is also over 20, so the `Warm` check caught it first and `Hot` could never run. Ordering the checks from highest to lowest fixes it."
+    },
+    {
+     "id": "m02-l02-e06",
+     "type": "write",
+     "tier": "core",
+     "title": "Which is bigger",
+     "skills": [
+      "conditionals"
+     ],
+     "prompt": "Read two whole numbers, `a` then `b`. Print one of:\n\n- `a is bigger`\n- `b is bigger`\n- `equal`",
+     "starter_code": "a = int(input())\nb = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "b is bigger",
+       "stdin": "3\n8\n",
+       "expected_stdout": "b is bigger\n",
+       "hidden": false
+      },
+      {
+       "name": "a is bigger",
+       "stdin": "8\n3\n",
+       "expected_stdout": "a is bigger\n",
+       "hidden": false
+      },
+      {
+       "name": "equal values",
+       "stdin": "5\n5\n",
+       "expected_stdout": "equal\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "There are three outcomes. Two need a condition, and the last one can be `else`."
+     ],
+     "solution": "a = int(input())\nb = int(input())\nif a > b:\n    print(\"a is bigger\")\nelif b > a:\n    print(\"b is bigger\")\nelse:\n    print(\"equal\")\n",
+     "solution_explanation": "If `a` is not bigger and `b` is not bigger, the only case left is that they are equal, so `else` handles it without another comparison."
+    },
+    {
+     "id": "m02-l02-e07",
+     "type": "write",
+     "tier": "core",
+     "title": "Shipping bands",
+     "skills": [
+      "conditionals",
+      "operators",
+      "f-strings"
+     ],
+     "prompt": "Read a parcel weight in kilograms (may have decimals). Work out the shipping cost:\n\n- up to and including 1 kg: $5.00\n- up to and including 5 kg: $9.50\n- over 5 kg: $9.50 plus $2.00 for each kilogram over 5\n\nPrint it like this (example for `7`):\n\n```\nShipping: $13.50\n```",
+     "starter_code": "weight = float(input())\n",
+     "stdin_tests": [
+      {
+       "name": "7 kg",
+       "stdin": "7\n",
+       "expected_stdout": "Shipping: $13.50\n",
+       "hidden": false
+      },
+      {
+       "name": "half a kilo",
+       "stdin": "0.5\n",
+       "expected_stdout": "Shipping: $5.00\n",
+       "hidden": false
+      },
+      {
+       "name": "3 kg",
+       "stdin": "3\n",
+       "expected_stdout": "Shipping: $9.50\n",
+       "hidden": true
+      },
+      {
+       "name": "exactly 1 kg",
+       "stdin": "1\n",
+       "expected_stdout": "Shipping: $5.00\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "exactly 5 kg",
+       "stdin": "5\n",
+       "expected_stdout": "Shipping: $9.50\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "5.5 kg",
+       "stdin": "5.5\n",
+       "expected_stdout": "Shipping: $10.50\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Store the cost in a variable inside each branch, then print once at the end.",
+      "The kilograms over 5 are `weight - 5`."
+     ],
+     "solution": "weight = float(input())\nif weight <= 1:\n    cost = 5\nelif weight <= 5:\n    cost = 9.5\nelse:\n    cost = 9.5 + (weight - 5) * 2\nprint(f\"Shipping: ${cost:.2f}\")\n",
+     "solution_explanation": "Each branch sets `cost`, and a single `print` after the chain formats it. `<=` includes the boundary weights of exactly 1 and exactly 5. In the last branch only the weight above 5 is charged at $2 per kilogram."
+    },
+    {
+     "id": "m02-l02-e08",
+     "type": "predict",
+     "tier": "core",
+     "title": "An if inside an if",
+     "skills": [
+      "conditionals",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "x = 15\nif x > 10:\n    print(\"A\")\n    if x > 20:\n        print(\"B\")\n    else:\n        print(\"C\")\nelif x > 5:\n    print(\"D\")\nprint(\"E\")\n",
+     "expected_output": "A\nC\nE\n",
+     "hints": [
+      "The inner `if` and `else` are indented further. They only matter once you are inside the first block."
+     ],
+     "solution_explanation": "`15 > 10` is `True`, so `A` prints and Python goes into that block. Inside it is a second, inner `if`: `15 > 20` is `False`, so its `else` prints `C`. The outer `elif` is skipped because the outer `if` already matched. `E` is outside everything."
+    },
+    {
+     "id": "m02-l02-e09",
+     "type": "explain",
+     "tier": "core",
+     "title": "Explain the bulk discount",
+     "skills": [
+      "conditionals",
+      "operators",
+      "explaining"
+     ],
+     "prompt": "Read the code. In your own words, explain what it does, why each step is there, and what it prints. Mention any edge cases you can see.",
+     "starter_code": "qty = 12\nif qty >= 20:\n    discount = 0.2\nelif qty >= 10:\n    discount = 0.1\nelse:\n    discount = 0\nprice = qty * 5 * (1 - discount)\nprint(f\"${price:.2f}\")\n",
+     "model_explanation": "The program picks a discount based on the quantity, then prices the order at $5 per item.\n\nThe chain is checked from the top. `12 >= 20` is `False`. `12 >= 10` is `True`, so `discount` becomes 0.1 and the `else` is skipped. Only one branch runs.\n\nThe price is 12 times 5, which is 60, times `(1 - 0.1)`, which is 0.9. That gives 54, printed as `$54.00`.\n\nThe `else` matters: it guarantees `discount` always has a value. Without it, a small order would crash on line 8 with a `NameError`.\n\nEdge cases: exactly 10 and exactly 20 get the discounts, because the comparisons use `>=`.",
+     "checklist": [
+      "Said the conditions are checked top to bottom and only one branch runs",
+      "Said the second branch matches, so the discount is 0.1",
+      "Gave the exact output: $54.00",
+      "Explained why the else is needed, or what happens at exactly 10 or 20"
+     ]
+    },
+    {
+     "id": "m02-l02-e10",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Leap year",
+     "skills": [
+      "conditionals",
+      "operators"
+     ],
+     "prompt": "Read a year. Print `Leap year` or `Not a leap year`.\n\nThe rules, in order of priority:\n\n1. A year divisible by 400 is a leap year.\n2. Otherwise, a year divisible by 100 is not.\n3. Otherwise, a year divisible by 4 is.\n4. Everything else is not.\n\n\"Divisible by 4\" means `year % 4 == 0`.",
+     "starter_code": "year = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "2024",
+       "stdin": "2024\n",
+       "expected_stdout": "Leap year\n",
+       "hidden": false
+      },
+      {
+       "name": "2023",
+       "stdin": "2023\n",
+       "expected_stdout": "Not a leap year\n",
+       "hidden": false
+      },
+      {
+       "name": "1900 is divisible by 100 but not 400",
+       "stdin": "1900\n",
+       "expected_stdout": "Not a leap year\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "2000 is divisible by 400",
+       "stdin": "2000\n",
+       "expected_stdout": "Leap year\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "The rules are already in the right order for an `if` / `elif` chain.",
+      "Four rules: `if`, `elif`, `elif`, `else`."
+     ],
+     "solution": "year = int(input())\nif year % 400 == 0:\n    print(\"Leap year\")\nelif year % 100 == 0:\n    print(\"Not a leap year\")\nelif year % 4 == 0:\n    print(\"Leap year\")\nelse:\n    print(\"Not a leap year\")\n",
+     "solution_explanation": "The most specific rule goes first. 2000 is caught by the 400 check before the 100 check can reject it. 1900 fails the 400 check and is rejected by the 100 check before the 4 check can accept it."
+    },
+    {
+     "id": "m02-l02-e11",
+     "type": "fix",
+     "tier": "stretch",
+     "title": "Electricity bill with two bugs",
+     "skills": [
+      "conditionals",
+      "operators",
+      "debugging"
+     ],
+     "prompt": "Electricity is charged in tiers:\n\n- the first 100 units cost $0.25 each\n- the next 200 units (101 to 300) cost $0.30 each\n- every unit above 300 costs $0.40\n\nThis program reads the units used and should print the bill, for example `Bill: $55.00` for `200` units. It has **two** bugs. The first one stops it running:\n\n```\n  File \"main.py\", line 6\n    else\n        ^\nSyntaxError: expected ':'\n```\n\nThe second one gives a wrong answer for large bills. For `400` units the bill should be `$125.00`.",
+     "starter_code": "units = int(input())\nif units <= 100:\n    cost = units * 0.25\nelif units <= 300:\n    cost = 100 * 0.25 + (units - 100) * 0.30\nelse\n    cost = 100 * 0.25 + 200 * 0.30 + units * 0.40\nprint(f\"Bill: ${cost:.2f}\")\n",
+     "stdin_tests": [
+      {
+       "name": "200 units",
+       "stdin": "200\n",
+       "expected_stdout": "Bill: $55.00\n",
+       "hidden": false
+      },
+      {
+       "name": "400 units",
+       "stdin": "400\n",
+       "expected_stdout": "Bill: $125.00\n",
+       "hidden": false
+      },
+      {
+       "name": "50 units",
+       "stdin": "50\n",
+       "expected_stdout": "Bill: $12.50\n",
+       "hidden": true
+      },
+      {
+       "name": "exactly 300 units",
+       "stdin": "300\n",
+       "expected_stdout": "Bill: $85.00\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "301 units",
+       "stdin": "301\n",
+       "expected_stdout": "Bill: $85.40\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "The syntax error names line 6. What does every `if`, `elif` and `else` line end with?",
+      "For 400 units, how many units should be charged at $0.40? Compare with the second branch."
+     ],
+     "solution": "units = int(input())\nif units <= 100:\n    cost = units * 0.25\nelif units <= 300:\n    cost = 100 * 0.25 + (units - 100) * 0.30\nelse:\n    cost = 100 * 0.25 + 200 * 0.30 + (units - 300) * 0.40\nprint(f\"Bill: ${cost:.2f}\")\n",
+     "solution_explanation": "The `else` line was missing its colon. The last branch also charged every unit at $0.40 on top of the first two tiers. Only the units above 300 belong in the top tier, so it should be `(units - 300) * 0.40`."
+    }
+   ]
+  },
+  {
+   "id": "m02-l03",
+   "title": "Boolean logic: and, or, not",
+   "recap": "Last lesson: `if` / `elif` / `else` chains. Python checks the conditions from the top and runs only the first block that matches.",
+   "what": "`and`, `or` and `not` combine or flip `True` / `False` values, so one condition can ask more than one question. `True` and `False` are called **boolean** values (type `bool`).",
+   "why": "Many rules have two parts: \"between 18 and 64\", \"Saturday or Sunday\". Without `and` and `or` you need an `if` inside an `if`, or repeated code.\n\nBefore:\n\n```python\nif age >= 18:\n    if age < 65:\n        print(\"Standard fare\")\n```\n\nAfter:\n\n```python\nif age >= 18 and age < 65:\n    print(\"Standard fare\")\n```",
+   "syntax": "```python\na and b    # True only when both are True\na or b     # True when at least one is True\nnot a      # flips True to False, and False to True\n```\n\n- Each side of `and` / `or` must be a complete condition: `day == \"Sat\" or day == \"Sun\"`.\n- Order: `not` first, then `and`, then `or`. Use brackets when you mix them.\n- A shortcut for ranges: `18 <= age < 65` means `18 <= age and age < 65`.",
+   "examples": [
+    {
+     "title": "Both must be true: and",
+     "code": "age = 25\nif age >= 18 and age < 65:\n    print(\"Standard fare\")\nprint(age >= 18 and age < 20)\n",
+     "output": "Standard fare\nFalse\n",
+     "explain": "- 25 is at least 18 and also under 65. Both sides are `True`, so the block runs.\n- On the last line the left side is `True` but the right side is `False`. `and` needs both, so the result is `False`."
+    },
+    {
+     "title": "Either one is enough: or",
+     "code": "day = \"Sunday\"\nif day == \"Saturday\" or day == \"Sunday\":\n    print(\"Weekend\")\nelse:\n    print(\"Weekday\")\n",
+     "output": "Weekend\n",
+     "explain": "- The left comparison is `False`, the right one is `True`. `or` needs only one, so the result is `True`.\n- Notice `day ==` is written out on both sides."
+    },
+    {
+     "title": "Boolean variables and not",
+     "code": "logged_in = True\nis_admin = False\nprint(logged_in and is_admin)\nprint(logged_in or is_admin)\nprint(not is_admin)\n",
+     "output": "False\nTrue\nTrue\n",
+     "explain": "- A variable can hold `True` or `False` directly. Names like `is_admin` read well in conditions.\n- `not is_admin` flips `False` to `True`."
+    },
+    {
+     "title": "Inside a range, outside a range",
+     "code": "temp = 22\nprint(18 <= temp <= 26)\nprint(temp < 18 or temp > 26)\n",
+     "output": "True\nFalse\n",
+     "explain": "- The first line is the range shortcut: 22 is between 18 and 26.\n- The second line asks the opposite question. \"Outside the range\" uses `or`: a number cannot be below 18 and above 26 at once."
+    }
+   ],
+   "mistakes": [
+    {
+     "title": "Half a condition after or",
+     "fix": "No error, and that is the trap. It prints `Weekend` for Monday. Python reads this as `(day == \"Saturday\") or (\"Sunday\")`. A non-empty string on its own counts as true, so the whole condition is always true. Write the comparison in full: `day == \"Saturday\" or day == \"Sunday\"`.",
+     "code": "day = \"Monday\"\nif day == \"Saturday\" or \"Sunday\":\n    print(\"Weekend\")\n"
+    },
+    {
+     "title": "Using and when you mean or",
+     "fix": "No error, and the discount never prints for anyone. No age is both under 13 and over 64. When a branch never runs, check whether `and` should be `or`.",
+     "code": "age = 70\nif age < 13 and age > 64:\n    print(\"Discount\")\nprint(\"Checked\")\n"
+    },
+    {
+     "title": "Lowercase true and false",
+     "fix": "The boolean values are spelt with a capital letter: `True` and `False`. In lowercase, Python looks for a variable called `true`.",
+     "code": "is_open = true\n",
+     "error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\n    is_open = true\n              ^^^^\nNameError: name 'true' is not defined"
+    }
+   ],
+   "remember": "and needs both. or needs one. not flips.",
+   "quick_checks": [
+    {
+     "code": "a = 5\nb = 10\nprint(a > 3 and b > 20)\nprint(a > 3 or b > 20)\nprint(not a > 3)\n",
+     "expected_output": "False\nTrue\nFalse\n",
+     "explain": "`a > 3` is `True` and `b > 20` is `False`. `and` needs both, so `False`. `or` needs one, so `True`. `not` flips the `True` from `a > 3` to `False`."
+    }
+   ],
+   "reference": [
+    {
+     "concept": "and",
+     "syntax": "cond1 and cond2",
+     "example": "if age >= 18 and age < 65:"
+    },
+    {
+     "concept": "or",
+     "syntax": "cond1 or cond2",
+     "example": "if day == \"Saturday\" or day == \"Sunday\":"
+    },
+    {
+     "concept": "not",
+     "syntax": "not cond",
+     "example": "if not logged_in:"
+    },
+    {
+     "concept": "Range check",
+     "syntax": "low <= value <= high",
+     "example": "if 18 <= temp <= 26:"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "m02-l03-e01",
+     "type": "predict",
+     "tier": "warmup",
+     "title": "Umbrella logic",
+     "skills": [
+      "boolean-logic",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "raining = True\nhas_umbrella = False\nprint(raining and has_umbrella)\nprint(raining or has_umbrella)\nprint(not raining)\nprint(raining and not has_umbrella)\n",
+     "expected_output": "False\nTrue\nFalse\nTrue\n",
+     "solution_explanation": "`and` needs both to be `True`, and `has_umbrella` is not. `or` needs one. `not raining` flips `True` to `False`. On the last line `not has_umbrella` is `True`, so both sides of the `and` are `True`."
+    },
+    {
+     "id": "m02-l03-e02",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Working age",
+     "skills": [
+      "boolean-logic",
+      "conditionals"
+     ],
+     "prompt": "Read an age (whole number). Print `Yes` if the age is from 15 to 66 inclusive, otherwise print `No`.",
+     "starter_code": "age = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "age 30",
+       "stdin": "30\n",
+       "expected_stdout": "Yes\n",
+       "hidden": false
+      },
+      {
+       "name": "age 10",
+       "stdin": "10\n",
+       "expected_stdout": "No\n",
+       "hidden": false
+      },
+      {
+       "name": "exactly 15",
+       "stdin": "15\n",
+       "expected_stdout": "Yes\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "exactly 66",
+       "stdin": "66\n",
+       "expected_stdout": "Yes\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "age 67",
+       "stdin": "67\n",
+       "expected_stdout": "No\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "\"From 15 to 66\" is two conditions that must both be true.",
+      "`age >= 15 and age <= 66`"
+     ],
+     "solution": "age = int(input())\nif age >= 15 and age <= 66:\n    print(\"Yes\")\nelse:\n    print(\"No\")\n",
+     "solution_explanation": "Both limits must hold at once, so the two comparisons are joined with `and`. `>=` and `<=` include the end values. `15 <= age <= 66` is a shorter way to write the same check."
+    },
+    {
+     "id": "m02-l03-e03",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Weekend check",
+     "skills": [
+      "boolean-logic",
+      "conditionals"
+     ],
+     "prompt": "Read the name of a day, typed with a capital first letter, such as `Monday`. Print `Weekend` for `Saturday` or `Sunday`. Print `Weekday` for anything else.",
+     "starter_code": "day = input()\n",
+     "stdin_tests": [
+      {
+       "name": "Saturday",
+       "stdin": "Saturday\n",
+       "expected_stdout": "Weekend\n",
+       "hidden": false
+      },
+      {
+       "name": "Monday",
+       "stdin": "Monday\n",
+       "expected_stdout": "Weekday\n",
+       "hidden": false
+      },
+      {
+       "name": "Sunday",
+       "stdin": "Sunday\n",
+       "expected_stdout": "Weekend\n",
+       "hidden": true
+      },
+      {
+       "name": "lowercase does not match",
+       "stdin": "sunday\n",
+       "expected_stdout": "Weekday\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Write a full comparison on each side of `or`."
+     ],
+     "solution": "day = input()\nif day == \"Saturday\" or day == \"Sunday\":\n    print(\"Weekend\")\nelse:\n    print(\"Weekday\")\n",
+     "solution_explanation": "Each side of `or` is a complete comparison. String comparison is exact, so `sunday` in lowercase matches neither and falls to the `else`."
+    },
+    {
+     "id": "m02-l03-e04",
+     "type": "fix",
+     "tier": "core",
+     "title": "Always the weekend",
+     "skills": [
+      "boolean-logic",
+      "debugging"
+     ],
+     "prompt": "This program should print `Weekend` only for `Saturday` or `Sunday`, and `Weekday` otherwise. It prints `Weekend` for every day, including `Monday`.\n\nThere is no error message.",
+     "starter_code": "day = input()\nif day == \"Saturday\" or \"Sunday\":\n    print(\"Weekend\")\nelse:\n    print(\"Weekday\")\n",
+     "stdin_tests": [
+      {
+       "name": "Monday",
+       "stdin": "Monday\n",
+       "expected_stdout": "Weekday\n",
+       "hidden": false
+      },
+      {
+       "name": "Sunday",
+       "stdin": "Sunday\n",
+       "expected_stdout": "Weekend\n",
+       "hidden": false
+      },
+      {
+       "name": "Saturday",
+       "stdin": "Saturday\n",
+       "expected_stdout": "Weekend\n",
+       "hidden": true
+      },
+      {
+       "name": "an empty line",
+       "stdin": "\n",
+       "expected_stdout": "Weekday\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Look at the right-hand side of the `or`. Is it a comparison?",
+      "A string on its own counts as true. Compare it to `day`."
+     ],
+     "solution": "day = input()\nif day == \"Saturday\" or day == \"Sunday\":\n    print(\"Weekend\")\nelse:\n    print(\"Weekday\")\n",
+     "solution_explanation": "The right side of the `or` was only the string `\"Sunday\"`, which Python treats as true, so the condition was always true. Each side needs its own `day ==`."
+    },
+    {
+     "id": "m02-l03-e05",
+     "type": "fix",
+     "tier": "core",
+     "title": "The impossible discount",
+     "skills": [
+      "boolean-logic",
+      "debugging"
+     ],
+     "prompt": "Children under 13 and seniors 65 or over get a discount. This program should print `Discount` for them and `Full price` for everyone else.\n\nIt prints `Full price` for everybody.",
+     "starter_code": "age = int(input())\nif age < 13 and age >= 65:\n    print(\"Discount\")\nelse:\n    print(\"Full price\")\n",
+     "stdin_tests": [
+      {
+       "name": "a child",
+       "stdin": "10\n",
+       "expected_stdout": "Discount\n",
+       "hidden": false
+      },
+      {
+       "name": "a senior",
+       "stdin": "70\n",
+       "expected_stdout": "Discount\n",
+       "hidden": false
+      },
+      {
+       "name": "an adult",
+       "stdin": "30\n",
+       "expected_stdout": "Full price\n",
+       "hidden": false
+      },
+      {
+       "name": "exactly 13",
+       "stdin": "13\n",
+       "expected_stdout": "Full price\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "exactly 65",
+       "stdin": "65\n",
+       "expected_stdout": "Discount\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Can one age be under 13 and also 65 or over?"
+     ],
+     "solution": "age = int(input())\nif age < 13 or age >= 65:\n    print(\"Discount\")\nelse:\n    print(\"Full price\")\n",
+     "solution_explanation": "In English we say \"children and seniors\", but one person only needs to be in one of the groups. That is `or`. With `and`, the condition could never be true."
+    },
+    {
+     "id": "m02-l03-e06",
+     "type": "write",
+     "tier": "core",
+     "title": "Login check",
+     "skills": [
+      "boolean-logic",
+      "input"
+     ],
+     "prompt": "Read a username, then a password. Print `Welcome` only if the username is `admin` and the password is `s3cret`. Otherwise print `Access denied`.",
+     "starter_code": "username = input()\npassword = input()\n",
+     "stdin_tests": [
+      {
+       "name": "correct details",
+       "stdin": "admin\ns3cret\n",
+       "expected_stdout": "Welcome\n",
+       "hidden": false
+      },
+      {
+       "name": "wrong password",
+       "stdin": "admin\nsecret\n",
+       "expected_stdout": "Access denied\n",
+       "hidden": false
+      },
+      {
+       "name": "wrong username",
+       "stdin": "Admin\ns3cret\n",
+       "expected_stdout": "Access denied\n",
+       "hidden": true
+      },
+      {
+       "name": "both left blank",
+       "stdin": "\n\n",
+       "expected_stdout": "Access denied\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Both things must be right. Which word joins the two comparisons?"
+     ],
+     "solution": "username = input()\npassword = input()\nif username == \"admin\" and password == \"s3cret\":\n    print(\"Welcome\")\nelse:\n    print(\"Access denied\")\n",
+     "solution_explanation": "`and` makes sure both the username and the password match. If either comparison is `False`, the `else` runs."
+    },
+    {
+     "id": "m02-l03-e07",
+     "type": "write",
+     "tier": "core",
+     "title": "Can they ride",
+     "skills": [
+      "boolean-logic",
+      "conditionals"
+     ],
+     "prompt": "A ride has a height rule. Read a height in centimetres (whole number), then `yes` or `no` for whether the rider is with an adult.\n\nA person can ride if they are at least 140 cm tall, **or** if they are at least 120 cm tall **and** with an adult.\n\nPrint `Can ride` or `Cannot ride`.",
+     "starter_code": "height = int(input())\nwith_adult = input()\n",
+     "stdin_tests": [
+      {
+       "name": "tall enough alone",
+       "stdin": "150\nno\n",
+       "expected_stdout": "Can ride\n",
+       "hidden": false
+      },
+      {
+       "name": "medium height with an adult",
+       "stdin": "130\nyes\n",
+       "expected_stdout": "Can ride\n",
+       "hidden": false
+      },
+      {
+       "name": "medium height alone",
+       "stdin": "130\nno\n",
+       "expected_stdout": "Cannot ride\n",
+       "hidden": false
+      },
+      {
+       "name": "too short even with an adult",
+       "stdin": "110\nyes\n",
+       "expected_stdout": "Cannot ride\n",
+       "hidden": true
+      },
+      {
+       "name": "exactly 120 with an adult",
+       "stdin": "120\nyes\n",
+       "expected_stdout": "Can ride\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "exactly 140 alone",
+       "stdin": "140\nno\n",
+       "expected_stdout": "Can ride\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Write the rule almost word for word, with brackets around the `and` part.",
+      "`with_adult` is text. Compare it: `with_adult == \"yes\"`."
+     ],
+     "solution": "height = int(input())\nwith_adult = input()\nif height >= 140 or (height >= 120 and with_adult == \"yes\"):\n    print(\"Can ride\")\nelse:\n    print(\"Cannot ride\")\n",
+     "solution_explanation": "The condition follows the sentence. The brackets are not strictly needed, because `and` is worked out before `or`, but they make the grouping obvious to a reader."
+    },
+    {
+     "id": "m02-l03-e08",
+     "type": "predict",
+     "tier": "core",
+     "title": "Five conditions",
+     "skills": [
+      "boolean-logic",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "x = 7\nprint(x > 5 and x < 10)\nprint(x < 5 or x > 6)\nprint(not (x == 7))\nprint(x > 5 and not x > 8)\nprint(1 < x < 5)\n",
+     "expected_output": "True\nTrue\nFalse\nTrue\nFalse\n",
+     "solution_explanation": "Line 2: both sides are true. Line 3: the left is false but the right is true, and `or` needs one. Line 4: `x == 7` is true, and `not` flips it. Line 5: `x > 8` is false, `not` makes it true, and both sides are then true. Line 6: 7 is more than 1 but not less than 5."
+    },
+    {
+     "id": "m02-l03-e09",
+     "type": "explain",
+     "tier": "core",
+     "title": "Explain the entry rule",
+     "skills": [
+      "boolean-logic",
+      "conditionals",
+      "explaining"
+     ],
+     "prompt": "Read the code. In your own words, explain what it does, why each step is there, and what it prints. Mention any edge cases you can see.",
+     "starter_code": "age = 16\nwith_parent = True\nif age >= 18 or (age >= 15 and with_parent):\n    print(\"Entry allowed\")\nelse:\n    print(\"Entry refused\")\n",
+     "model_explanation": "The rule is: adults can always enter, and people aged 15 to 17 can enter if a parent is with them.\n\nFor age 16, `age >= 18` is `False`. So the result depends on the bracketed part. `age >= 15` is `True` and `with_parent` is `True`, so the `and` is `True`. `False or True` is `True`, and the program prints `Entry allowed`.\n\nThe brackets show that the `and` part is one unit. `with_parent` is already a boolean, so it needs no `== True`.\n\nEdge cases: a 14-year-old with a parent is refused, because `age >= 15` fails. An 18-year-old alone is allowed, because the left side of the `or` is enough.",
+     "checklist": [
+      "Said or needs only one side to be True",
+      "Said the left side is False and the bracketed and is True",
+      "Gave the output: Entry allowed",
+      "Tested another case in words, such as age 14 or age 18"
+     ]
+    },
+    {
+     "id": "m02-l03-e10",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Valid triangle",
+     "skills": [
+      "boolean-logic",
+      "conditionals"
+     ],
+     "prompt": "Read three whole numbers: the lengths of three sides. Print `Triangle` if they can form a triangle, otherwise print `Not a triangle`.\n\nThree lengths form a triangle when **each** side is shorter than the other two added together.\n\nExample: `3`, `4`, `5` is a triangle. `1`, `2`, `10` is not, because 10 is not shorter than 1 + 2.",
+     "starter_code": "a = int(input())\nb = int(input())\nc = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "3, 4, 5",
+       "stdin": "3\n4\n5\n",
+       "expected_stdout": "Triangle\n",
+       "hidden": false
+      },
+      {
+       "name": "1, 2, 10",
+       "stdin": "1\n2\n10\n",
+       "expected_stdout": "Not a triangle\n",
+       "hidden": false
+      },
+      {
+       "name": "the long side is typed first",
+       "stdin": "10\n2\n1\n",
+       "expected_stdout": "Not a triangle\n",
+       "hidden": true
+      },
+      {
+       "name": "1, 2, 3 is flat, not a triangle",
+       "stdin": "1\n2\n3\n",
+       "expected_stdout": "Not a triangle\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "all zero",
+       "stdin": "0\n0\n0\n",
+       "expected_stdout": "Not a triangle\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "You need three comparisons, one for each side.",
+      "All three must be true: join them with `and`."
+     ],
+     "solution": "a = int(input())\nb = int(input())\nc = int(input())\nif a < b + c and b < a + c and c < a + b:\n    print(\"Triangle\")\nelse:\n    print(\"Not a triangle\")\n",
+     "solution_explanation": "The rule says \"each side\", so there is one comparison per side and all three are joined with `and`. Using `<` and not `<=` rejects flat shapes such as 1, 2, 3, and also rejects all zeros."
+    },
+    {
+     "id": "m02-l03-e11",
+     "type": "fix",
+     "tier": "stretch",
+     "title": "Opening hours with three bugs",
+     "skills": [
+      "boolean-logic",
+      "conditionals",
+      "debugging"
+     ],
+     "prompt": "A shop is open:\n\n- Monday to Friday, from 9 up to (but not including) 17\n- Saturday, from 10 up to (but not including) 14\n- never on Sunday\n\nThis program reads a day name and an hour (0 to 23) and should print `Open` or `Closed`. It has **three** bugs, all in the conditions. There are no error messages.\n\nStart with the failing tests. For each one, work through the conditions by hand.",
+     "starter_code": "day = input()\nhour = int(input())\nweekday = day != \"Saturday\" or day != \"Sunday\"\nif weekday and hour >= 9 and hour <= 17:\n    print(\"Open\")\nelif day == \"Saturday\" and hour >= 10 or hour < 14:\n    print(\"Open\")\nelse:\n    print(\"Closed\")\n",
+     "stdin_tests": [
+      {
+       "name": "Monday at 10",
+       "stdin": "Monday\n10\n",
+       "expected_stdout": "Open\n",
+       "hidden": false
+      },
+      {
+       "name": "Sunday at 11",
+       "stdin": "Sunday\n11\n",
+       "expected_stdout": "Closed\n",
+       "hidden": false
+      },
+      {
+       "name": "Saturday at 15",
+       "stdin": "Saturday\n15\n",
+       "expected_stdout": "Closed\n",
+       "hidden": false
+      },
+      {
+       "name": "Monday at 17 is closing time",
+       "stdin": "Monday\n17\n",
+       "expected_stdout": "Closed\n",
+       "hidden": false,
+       "edge": true
+      },
+      {
+       "name": "Saturday at 12",
+       "stdin": "Saturday\n12\n",
+       "expected_stdout": "Open\n",
+       "hidden": true
+      },
+      {
+       "name": "Friday at 9 is opening time",
+       "stdin": "Friday\n9\n",
+       "expected_stdout": "Open\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "Sunday at 3",
+       "stdin": "Sunday\n3\n",
+       "expected_stdout": "Closed\n",
+       "hidden": true
+      },
+      {
+       "name": "Saturday at 9",
+       "stdin": "Saturday\n9\n",
+       "expected_stdout": "Closed\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Try `day = \"Sunday\"` in the `weekday` line. Is `\"Sunday\" != \"Saturday\"` true? What does `or` do with that?",
+      "\"Up to but not including 17\" is `<`, not `<=`.",
+      "In the `elif`, `or hour < 14` makes any early hour count as open. Both hour limits must hold."
+     ],
+     "solution": "day = input()\nhour = int(input())\nweekday = day != \"Saturday\" and day != \"Sunday\"\nif weekday and hour >= 9 and hour < 17:\n    print(\"Open\")\nelif day == \"Saturday\" and hour >= 10 and hour < 14:\n    print(\"Open\")\nelse:\n    print(\"Closed\")\n",
+     "solution_explanation": "Bug 1: `day != \"Saturday\" or day != \"Sunday\"` is true for every day, because no day is both. A weekday is not Saturday **and** not Sunday. Bug 2: `hour <= 17` let 17 count as open. Bug 3: `or hour < 14` made the Saturday rule true for any hour before 14 on any day. It needs `and`."
+    }
+   ]
+  },
+  {
+   "id": "m02-l04",
+   "title": "while loops",
+   "recap": "Last lesson: `and` needs both sides true, `or` needs one, `not` flips. Each side of `and` / `or` must be a full comparison.",
+   "what": "A `while` loop repeats a block of code for as long as its condition stays `True`. One pass through the block is called an **iteration**.",
+   "why": "Some work must repeat an unknown number of times: keep asking until the answer is valid, keep adding until a target is reached. Copying lines cannot do that, because you do not know how many copies you need.\n\n```python\nbalance = 100\nwhile balance < 160:     # repeats as many times as it takes\n    balance += 25\n```",
+   "syntax": "```python\ncount = 0              # 1. a starting value\nwhile count < 3:       # 2. the condition, checked before every round\n    print(count)       # 3. the block to repeat (indented)\n    count += 1         # 4. a change, so the condition can become False\nprint(\"after\")         # runs once the condition is False\n```\n\nEvery `while` loop needs these parts: **start, check, change**. If nothing in the block changes what the condition looks at, the loop never ends. That is called an **infinite loop**.",
+   "examples": [
+    {
+     "title": "Count down",
+     "code": "n = 3\nwhile n > 0:\n    print(n)\n    n -= 1\nprint(\"Lift-off\")\n",
+     "output": "3\n2\n1\nLift-off\n",
+     "explain": "- Before each round Python checks `n > 0`.\n- The block prints `n`, then lowers it by 1.\n- When `n` reaches 0, the check is `False`. The loop ends and the program carries on below it."
+    },
+    {
+     "title": "Repeat until a target is reached",
+     "code": "balance = 100\nweeks = 0\nwhile balance < 160:\n    balance += 25\n    weeks += 1\nprint(weeks, balance)\n",
+     "output": "3 175\n",
+     "explain": "- You do not need to know the number of rounds in advance. The loop stops when the balance is no longer under 160.\n- `weeks` counts the rounds. A variable used like this is called a **counter**.\n- The balance goes 125, 150, 175. At 175 the check fails, so the answer is 3 weeks."
+    },
+    {
+     "title": "Keep reading until a stop word",
+     "code": "total = 0\nline = input(\"Price or done: \")\nwhile line != \"done\":\n    total += float(line)\n    line = input(\"Price or done: \")\nprint(f\"Total: ${total:.2f}\")\n",
+     "output": "Price or done: 4.5\nPrice or done: 3\nPrice or done: done\nTotal: $7.50\n",
+     "explain": "- Line 2 reads the first value before the loop, so the condition has something to check.\n- Inside the loop, the value is used first and the next line is read last. That last line is the \"change\" step.\n- When the user types `done`, the check fails and the loop ends without trying to convert `done` to a number.",
+     "stdin": "4.5\n3\ndone\n"
+    }
+   ],
+   "mistakes": [
+    {
+     "title": "Forgetting the change step",
+     "fix": "`n` never changes, so `n > 0` is true forever. On this site you will see: \"Your code took too long. Check for an infinite loop.\" Add `n -= 1` inside the block.",
+     "code": "n = 3\nwhile n > 0:\n    print(n)\n",
+     "run": false
+    },
+    {
+     "title": "Stopping one round early or late",
+     "fix": "No error. This prints 1 to 4, not 1 to 5, because the loop stops as soon as `n < 5` is false. If the last value should be included, use `<=`. Check the first and last round by hand whenever you write a loop.",
+     "code": "n = 1\nwhile n < 5:\n    print(n)\n    n += 1\n"
+    },
+    {
+     "title": "A condition that is false from the start",
+     "fix": "No error. It prints only `Done`. The check happens before the first round, so if it is false straight away the block never runs. That is sometimes exactly what you want, and sometimes a sign the start value is wrong.",
+     "code": "stock = 0\nwhile stock > 0:\n    print(\"Selling one\")\n    stock -= 1\nprint(\"Done\")\n"
+    }
+   ],
+   "remember": "Start, check, change. Miss the change and the loop never ends.",
+   "quick_checks": [
+    {
+     "code": "n = 1\nwhile n < 20:\n    n = n * 2\nprint(n)\n",
+     "expected_output": "32\n",
+     "explain": "`n` goes 2, 4, 8, 16, 32. At 16 the check `16 < 20` is still true, so one more doubling happens. At 32 the check fails. The loop stops at the first value that is not under 20."
+    }
+   ],
+   "reference": [
+    {
+     "concept": "while loop",
+     "syntax": "while condition:\n    block",
+     "example": "n = 3\nwhile n > 0:\n    print(n)\n    n -= 1"
+    },
+    {
+     "concept": "Read until a stop word",
+     "syntax": "line = input()\nwhile line != stop:\n    ...\n    line = input()",
+     "example": "line = input()\nwhile line != \"done\":\n    total += float(line)\n    line = input()"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "m02-l04-e01",
+     "type": "predict",
+     "tier": "warmup",
+     "title": "Rows",
+     "skills": [
+      "while-loops",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "i = 0\nwhile i < 3:\n    print(\"Row\", i)\n    i += 1\nprint(\"i is\", i)\n",
+     "expected_output": "Row 0\nRow 1\nRow 2\ni is 3\n",
+     "solution_explanation": "The loop runs for `i` equal to 0, 1 and 2. After the third round `i` becomes 3, the check `3 < 3` fails, and the last line shows that `i` kept that final value."
+    },
+    {
+     "id": "m02-l04-e02",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Count to n",
+     "skills": [
+      "while-loops"
+     ],
+     "prompt": "Read a whole number `n`. Print the numbers from 1 up to and including `n`, one per line. If `n` is 0, print nothing.\n\nUse a `while` loop.",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "count to 3",
+       "stdin": "3\n",
+       "expected_stdout": "1\n2\n3\n",
+       "hidden": false
+      },
+      {
+       "name": "count to 1",
+       "stdin": "1\n",
+       "expected_stdout": "1\n",
+       "hidden": true
+      },
+      {
+       "name": "n is 0, so nothing prints",
+       "stdin": "0\n",
+       "expected_stdout": "",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Start a counter at 1.",
+      "Keep going while the counter is `<= n`. Print it, then add 1."
+     ],
+     "solution": "n = int(input())\ni = 1\nwhile i <= n:\n    print(i)\n    i += 1\n",
+     "solution_explanation": "The counter starts at 1 and the loop runs while it is at most `n`, so `n` itself is included. When `n` is 0 the check `1 <= 0` is false at once and nothing prints."
+    },
+    {
+     "id": "m02-l04-e03",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Countdown",
+     "skills": [
+      "while-loops"
+     ],
+     "prompt": "Read a whole number `n`. Print a countdown from `n` down to 1, one number per line, then print `Go!`.\n\nExample for `3`:\n\n```\n3\n2\n1\nGo!\n```",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "from 3",
+       "stdin": "3\n",
+       "expected_stdout": "3\n2\n1\nGo!\n",
+       "hidden": false
+      },
+      {
+       "name": "from 1",
+       "stdin": "1\n",
+       "expected_stdout": "1\nGo!\n",
+       "hidden": true
+      },
+      {
+       "name": "from 0 prints only Go!",
+       "stdin": "0\n",
+       "expected_stdout": "Go!\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "You can count down with `n` itself. No extra counter is needed.",
+      "`while n > 0:` print, then `n -= 1`. Print `Go!` after the loop."
+     ],
+     "solution": "n = int(input())\nwhile n > 0:\n    print(n)\n    n -= 1\nprint(\"Go!\")\n",
+     "solution_explanation": "The loop prints `n` and lowers it until it reaches 0. `print(\"Go!\")` is not indented, so it runs once, after the loop has finished."
+    },
+    {
+     "id": "m02-l04-e04",
+     "type": "fix",
+     "tier": "core",
+     "title": "The loop that never stops",
+     "skills": [
+      "while-loops",
+      "debugging"
+     ],
+     "prompt": "This program should add up the numbers from `n` down to 1. For `4` it should print `10` (4 + 3 + 2 + 1).\n\nWhen you run it, you get: \"Your code took too long. Check for an infinite loop.\"",
+     "starter_code": "n = int(input())\ntotal = 0\nwhile n > 0:\n    total += n\nprint(total)\n",
+     "stdin_tests": [
+      {
+       "name": "n is 4",
+       "stdin": "4\n",
+       "expected_stdout": "10\n",
+       "hidden": false
+      },
+      {
+       "name": "n is 1",
+       "stdin": "1\n",
+       "expected_stdout": "1\n",
+       "hidden": true
+      },
+      {
+       "name": "n is 0",
+       "stdin": "0\n",
+       "expected_stdout": "0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Start, check, change. Which of the three is missing?",
+      "Nothing inside the loop changes `n`."
+     ],
+     "solution": "n = int(input())\ntotal = 0\nwhile n > 0:\n    total += n\n    n -= 1\nprint(total)\n",
+     "solution_explanation": "The loop condition looks at `n`, but `n` never changed, so the condition stayed true forever. Lowering `n` by 1 each round lets it reach 0 and end the loop."
+    },
+    {
+     "id": "m02-l04-e05",
+     "type": "fix",
+     "tier": "core",
+     "title": "One line short",
+     "skills": [
+      "while-loops",
+      "debugging"
+     ],
+     "prompt": "This program should print the first `n` multiples of 5. For `3` it should print:\n\n```\n5\n10\n15\n```\n\nIt stops one line early and prints only `5` and `10`.",
+     "starter_code": "n = int(input())\ni = 1\nwhile i < n:\n    print(i * 5)\n    i += 1\n",
+     "stdin_tests": [
+      {
+       "name": "first 3 multiples",
+       "stdin": "3\n",
+       "expected_stdout": "5\n10\n15\n",
+       "hidden": false
+      },
+      {
+       "name": "first 1 multiple",
+       "stdin": "1\n",
+       "expected_stdout": "5\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "n is 0",
+       "stdin": "0\n",
+       "expected_stdout": "",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Walk through it with `n = 3`. What is `i` when the loop stops?",
+      "The last round should be when `i` equals `n`."
+     ],
+     "solution": "n = int(input())\ni = 1\nwhile i <= n:\n    print(i * 5)\n    i += 1\n",
+     "solution_explanation": "With `i < n` the loop stopped before `i` reached `n`, so the last multiple was missed. `<=` includes the final round. This is called an off-by-one error."
+    },
+    {
+     "id": "m02-l04-e06",
+     "type": "write",
+     "tier": "core",
+     "title": "Sum until zero",
+     "skills": [
+      "while-loops",
+      "input"
+     ],
+     "prompt": "Read whole numbers, one per line, until a `0` is read. Print the sum of all the numbers before the `0`.\n\nExample: for the lines `3`, `4`, `0`, print `7`.",
+     "starter_code": "# Read numbers until 0, then print their sum.\n",
+     "stdin_tests": [
+      {
+       "name": "3, 4, then 0",
+       "stdin": "3\n4\n0\n",
+       "expected_stdout": "7\n",
+       "hidden": false
+      },
+      {
+       "name": "with a negative number",
+       "stdin": "5\n-2\n10\n0\n",
+       "expected_stdout": "13\n",
+       "hidden": true
+      },
+      {
+       "name": "0 is the very first line",
+       "stdin": "0\n",
+       "expected_stdout": "0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Read the first number before the loop.",
+      "Loop `while number != 0:`. Add it to the total, then read the next one at the end of the block."
+     ],
+     "solution": "total = 0\nnumber = int(input())\nwhile number != 0:\n    total += number\n    number = int(input())\nprint(total)\n",
+     "solution_explanation": "The first number is read before the loop so the condition has a value to check. Each round adds the current number, then reads the next. When 0 arrives, the loop ends without reading any further."
+    },
+    {
+     "id": "m02-l04-e07",
+     "type": "write",
+     "tier": "core",
+     "title": "Doubling time",
+     "skills": [
+      "while-loops"
+     ],
+     "prompt": "A colony of bacteria doubles every hour. Read the starting count and a target count (both whole numbers, both at least 1). Print how many hours it takes for the count to reach the target or go past it.\n\nExample: starting at `5` with a target of `40`, the count goes 10, 20, 40. Print `3`.",
+     "starter_code": "count = int(input())\ntarget = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "5 to 40",
+       "stdin": "5\n40\n",
+       "expected_stdout": "3\n",
+       "hidden": false
+      },
+      {
+       "name": "1 to 1000",
+       "stdin": "1\n1000\n",
+       "expected_stdout": "10\n",
+       "hidden": true
+      },
+      {
+       "name": "already at the target",
+       "stdin": "50\n50\n",
+       "expected_stdout": "0\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "target is passed, not hit exactly",
+       "stdin": "3\n20\n",
+       "expected_stdout": "3\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Keep a second variable for the hours, starting at 0.",
+      "Loop while the count is still below the target. Each round: double the count, add 1 to the hours."
+     ],
+     "solution": "count = int(input())\ntarget = int(input())\nhours = 0\nwhile count < target:\n    count *= 2\n    hours += 1\nprint(hours)\n",
+     "solution_explanation": "The loop runs only while the count is below the target, so if it starts at or above the target the answer is 0. Each round doubles the count and counts one more hour."
+    },
+    {
+     "id": "m02-l04-e08",
+     "type": "predict",
+     "tier": "core",
+     "title": "Halving",
+     "skills": [
+      "while-loops",
+      "operators",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "n = 10\nsteps = 0\nwhile n > 1:\n    n = n // 2\n    steps += 1\n    print(n)\nprint(\"steps:\", steps)\n",
+     "expected_output": "5\n2\n1\nsteps: 3\n",
+     "solution_explanation": "`10 // 2` is 5, `5 // 2` is 2 (whole division drops the half), and `2 // 2` is 1. At 1 the check `1 > 1` fails. Three rounds ran."
+    },
+    {
+     "id": "m02-l04-e09",
+     "type": "explain",
+     "tier": "core",
+     "title": "Explain the digit loop",
+     "skills": [
+      "while-loops",
+      "operators",
+      "explaining"
+     ],
+     "prompt": "Read the code. In your own words, explain what it does, why each step is there, and what it prints. Mention any edge cases you can see.",
+     "starter_code": "number = 472\ntotal = 0\nwhile number > 0:\n    total += number % 10\n    number = number // 10\nprint(total)\n",
+     "model_explanation": "The program adds up the digits of a number.\n\nEach round, `number % 10` gives the last digit, and it is added to `total`. Then `number // 10` removes that last digit. So `number` goes 472, 47, 4, 0, and the digits added are 2, 7 and 4.\n\nWhen `number` reaches 0 there are no digits left, the condition is false and the loop ends. It prints `13`.\n\nEdge case: if `number` starts at 0, the loop never runs and it prints `0`. It would not work for negative numbers, because the condition is false straight away.",
+     "checklist": [
+      "Said % 10 takes the last digit",
+      "Said // 10 removes the last digit, which is what ends the loop",
+      "Gave the exact output: 13",
+      "Mentioned what happens when number starts at 0 (or is negative)"
+     ]
+    },
+    {
+     "id": "m02-l04-e10",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Guessing game log",
+     "skills": [
+      "while-loops",
+      "conditionals",
+      "input"
+     ],
+     "prompt": "The first input line is a secret whole number. The lines after it are guesses. Read guesses until one is correct.\n\nFor each wrong guess print `Too low` or `Too high`. When the guess is right, print `Correct in N guesses`, where N counts every guess including the right one.\n\nExample: for the lines `7`, `3`, `9`, `7`:\n\n```\nToo low\nToo high\nCorrect in 3 guesses\n```",
+     "starter_code": "secret = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "two wrong guesses, then right",
+       "stdin": "7\n3\n9\n7\n",
+       "expected_stdout": "Too low\nToo high\nCorrect in 3 guesses\n",
+       "hidden": false
+      },
+      {
+       "name": "several low guesses",
+       "stdin": "50\n10\n20\n30\n50\n",
+       "expected_stdout": "Too low\nToo low\nToo low\nCorrect in 4 guesses\n",
+       "hidden": true
+      },
+      {
+       "name": "right on the first guess",
+       "stdin": "5\n5\n",
+       "expected_stdout": "Correct in 1 guesses\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Read the first guess before the loop, and set a counter to 1.",
+      "Loop while the guess is not the secret. Inside: print the message, read the next guess, add 1 to the counter."
+     ],
+     "solution": "secret = int(input())\nguess = int(input())\ncount = 1\nwhile guess != secret:\n    if guess < secret:\n        print(\"Too low\")\n    else:\n        print(\"Too high\")\n    guess = int(input())\n    count += 1\nprint(f\"Correct in {count} guesses\")\n",
+     "solution_explanation": "The first guess is read before the loop and counted. The loop body only runs for wrong guesses: it prints the feedback, reads the next guess and counts it. When the guess matches, the loop ends and the summary prints."
+    },
+    {
+     "id": "m02-l04-e11",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Count the digits",
+     "skills": [
+      "while-loops",
+      "operators"
+     ],
+     "prompt": "Read a whole number that is 0 or more. Print how many digits it has. Use a `while` loop and `//`.\n\nExample: for `472`, print `3`.\n\nCareful: `0` has one digit.",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "472 has 3 digits",
+       "stdin": "472\n",
+       "expected_stdout": "3\n",
+       "hidden": false
+      },
+      {
+       "name": "1000 has 4 digits",
+       "stdin": "1000\n",
+       "expected_stdout": "4\n",
+       "hidden": true
+      },
+      {
+       "name": "9 has 1 digit",
+       "stdin": "9\n",
+       "expected_stdout": "1\n",
+       "hidden": true
+      },
+      {
+       "name": "0 has 1 digit",
+       "stdin": "0\n",
+       "expected_stdout": "1\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "`n // 10` removes the last digit. Count how many times you can do that.",
+      "A loop `while n > 0` gives 0 for the number 0. Count the first digit before the loop, then loop while `n >= 10`."
+     ],
+     "solution": "n = int(input())\ndigits = 1\nwhile n >= 10:\n    n = n // 10\n    digits += 1\nprint(digits)\n",
+     "solution_explanation": "Every number has at least one digit, so the count starts at 1. Each time the number is 10 or more, one digit is removed and the count goes up. Starting at 1 is what makes 0 work."
+    },
+    {
+     "id": "m02-l04-e12",
+     "type": "fix",
+     "tier": "stretch",
+     "title": "PIN entry with two bugs",
+     "skills": [
+      "while-loops",
+      "boolean-logic",
+      "debugging"
+     ],
+     "prompt": "A user gets up to **three** tries to enter the PIN `4821`. The program reads one try per line.\n\n- If a try is right, it should stop reading and print `Unlocked after N tries`.\n- After three wrong tries it should print `Locked out`.\n\nIt has **two** bugs. With the single input line `4821` it crashes:\n\n```\nTraceback (most recent call last):\n  File \"main.py\", line 6, in <module>\n    guess = input()\nEOFError: input() was called but there was no more input to read\n```\n\nThat means it called `input()` again when it should have stopped.",
+     "starter_code": "pin = \"4821\"\ntries = 0\nguess = input()\nwhile guess != pin or tries < 3:\n    tries += 1\n    guess = input()\nif guess == pin:\n    print(\"Unlocked after\", tries, \"tries\")\nelse:\n    print(\"Locked out\")\n",
+     "stdin_tests": [
+      {
+       "name": "right first time",
+       "stdin": "4821\n",
+       "expected_stdout": "Unlocked after 1 tries\n",
+       "hidden": false
+      },
+      {
+       "name": "right on the second try",
+       "stdin": "1111\n4821\n",
+       "expected_stdout": "Unlocked after 2 tries\n",
+       "hidden": false
+      },
+      {
+       "name": "three wrong tries",
+       "stdin": "1\n2\n3\n",
+       "expected_stdout": "Locked out\n",
+       "hidden": true
+      },
+      {
+       "name": "right on the third and last try",
+       "stdin": "1\n2\n4821\n",
+       "expected_stdout": "Unlocked after 3 tries\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "a fourth line is never read",
+       "stdin": "1\n2\n3\n4821\n",
+       "expected_stdout": "Locked out\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "The loop should keep going only while the guess is wrong **and** there are tries left.",
+      "By the time the loop is first checked, one guess has already been read. What should `tries` be at that point?"
+     ],
+     "solution": "pin = \"4821\"\ntries = 1\nguess = input()\nwhile guess != pin and tries < 3:\n    tries += 1\n    guess = input()\nif guess == pin:\n    print(\"Unlocked after\", tries, \"tries\")\nelse:\n    print(\"Locked out\")\n",
+     "solution_explanation": "Bug 1: with `or`, the loop continued whenever either part was true, so a correct first guess still asked for more input. It must be `and`. Bug 2: one guess is read before the loop, so `tries` has to start at 1, otherwise the count is one too low and a fourth try is allowed."
+    }
+   ]
+  },
+  {
+   "id": "m02-l05",
+   "title": "for loops and range",
+   "recap": "Last lesson: `while` repeats a block as long as a condition is true. You manage it yourself: start value, check, change.",
+   "what": "A `for` loop runs a block once for each item in a sequence, such as each number in a range or each character in a string.\n`range()` produces a sequence of whole numbers.",
+   "why": "Counting with `while` needs three separate lines, and forgetting one gives an infinite loop.\n\nBefore:\n\n```python\ni = 0\nwhile i < 5:\n    print(i)\n    i += 1\n```\n\nAfter:\n\n```python\nfor i in range(5):\n    print(i)\n```\n\nThe `for` loop handles the start, the check and the change for you. Use `for` when you know what you are looping over. Use `while` when you only know the condition for stopping.",
+   "syntax": "```python\nfor i in range(5):          # i is 0, 1, 2, 3, 4      (5 rounds, stops before 5)\nfor i in range(2, 6):       # i is 2, 3, 4, 5         (start, stop)\nfor i in range(0, 10, 2):   # i is 0, 2, 4, 6, 8      (start, stop, step)\nfor i in range(5, 0, -1):   # i is 5, 4, 3, 2, 1      (negative step counts down)\nfor ch in \"abc\":            # ch is \"a\", \"b\", \"c\"     (each character)\n```\n\n- `i` is the **loop variable**. It takes the next value at the start of every round. You choose its name.\n- `range` includes the start and **stops before** the stop value.",
+   "examples": [
+    {
+     "title": "Repeat a fixed number of times",
+     "code": "for i in range(3):\n    print(\"Lap\", i + 1)\nprint(\"Finished\")\n",
+     "output": "Lap 1\nLap 2\nLap 3\nFinished\n",
+     "explain": "- `range(3)` gives 0, 1, 2. That is three rounds.\n- `i + 1` turns the 0-based count into 1, 2, 3 for people to read."
+    },
+    {
+     "title": "Add up a range",
+     "code": "total = 0\nfor n in range(1, 6):\n    total += n\nprint(total)\n",
+     "output": "15\n",
+     "explain": "- `range(1, 6)` gives 1, 2, 3, 4, 5. The stop value 6 is not included.\n- `total` starts at 0 and grows each round. A variable used like this is called an **accumulator**. It must be created before the loop."
+    },
+    {
+     "title": "Steps and counting down",
+     "code": "for n in range(10, 0, -3):\n    print(n)\n",
+     "output": "10\n7\n4\n1\n",
+     "explain": "- The third number is the step. A negative step counts down.\n- It stops before reaching the stop value 0. The next value would be -2, which is past 0, so the loop ends at 1."
+    },
+    {
+     "title": "Loop over the characters of a string",
+     "code": "word = \"banana\"\ncount = 0\nfor ch in word:\n    if ch == \"a\":\n        count += 1\nprint(count)\n",
+     "output": "3\n",
+     "explain": "- A `for` loop can walk through a string one character at a time. No `range` is needed.\n- Each round, `ch` is the next character. The `if` counts only the `a` characters."
+    }
+   ],
+   "mistakes": [
+    {
+     "title": "Expecting range to include the stop value",
+     "fix": "No error. This prints 1 to 4. `range(1, 5)` stops before 5. To include 5, write `range(1, 6)`. With a variable, that is `range(1, n + 1)`.",
+     "code": "for i in range(1, 5):\n    print(i)\n"
+    },
+    {
+     "title": "Looping over a number",
+     "fix": "\"Not iterable\" means \"this is not something a `for` loop can step through\". A number is a single value. Wrap it in `range`: `for i in range(5):`.",
+     "code": "for i in 5:\n    print(i)\n",
+     "error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\n    for i in 5:\n             ^\nTypeError: 'int' object is not iterable"
+    },
+    {
+     "title": "Forgetting to indent the block",
+     "fix": "Just like `if`, the line after `for ... :` must be indented.",
+     "code": "for i in range(3):\nprint(i)\n",
+     "error": "  File \"main.py\", line 2\n    print(i)\n    ^^^^^\nIndentationError: expected an indented block after 'for' statement on line 1"
+    }
+   ],
+   "remember": "range(start, stop) includes start and stops before stop.",
+   "quick_checks": [
+    {
+     "code": "for i in range(2, 8, 2):\n    print(i, end=\" \")\nprint()\nprint(i)\n",
+     "expected_output": "2 4 6\n6\n",
+     "explain": "`range(2, 8, 2)` gives 2, 4, 6. It stops before 8. `end=\" \"` keeps them on one line, and the empty `print()` ends that line. After the loop, `i` still holds its last value, 6."
+    }
+   ],
+   "reference": [
+    {
+     "concept": "Repeat n times",
+     "syntax": "for i in range(n):\n    block",
+     "example": "for i in range(3):\n    print(i)   # 0 1 2"
+    },
+    {
+     "concept": "Range with start and stop",
+     "syntax": "range(start, stop)",
+     "example": "for n in range(1, 6):   # 1 2 3 4 5"
+    },
+    {
+     "concept": "Range with a step",
+     "syntax": "range(start, stop, step)",
+     "example": "for n in range(10, 0, -2):   # 10 8 6 4 2"
+    },
+    {
+     "concept": "Loop over characters",
+     "syntax": "for ch in text:\n    block",
+     "example": "for ch in \"abc\":\n    print(ch)"
+    },
+    {
+     "concept": "Accumulator pattern",
+     "syntax": "total = 0\nfor x in ...:\n    total += x",
+     "example": "total = 0\nfor n in range(1, 6):\n    total += n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "m02-l05-e01",
+     "type": "predict",
+     "tier": "warmup",
+     "title": "Squares",
+     "skills": [
+      "for-loops",
+      "range",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "for i in range(4):\n    print(i * i)\n",
+     "expected_output": "0\n1\n4\n9\n",
+     "solution_explanation": "`range(4)` gives 0, 1, 2, 3. Each value is multiplied by itself. The loop starts at 0, not 1, and stops before 4."
+    },
+    {
+     "id": "m02-l05-e02",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Times table",
+     "skills": [
+      "for-loops",
+      "f-strings"
+     ],
+     "prompt": "Read a whole number `n`. Print its times table from 1 to 10, one line each, in this format:\n\n```\n7 x 1 = 7\n7 x 2 = 14\n```\n\nand so on up to `7 x 10 = 70`.",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "7 times table",
+       "stdin": "7\n",
+       "expected_stdout": "7 x 1 = 7\n7 x 2 = 14\n7 x 3 = 21\n7 x 4 = 28\n7 x 5 = 35\n7 x 6 = 42\n7 x 7 = 49\n7 x 8 = 56\n7 x 9 = 63\n7 x 10 = 70\n",
+       "hidden": false
+      },
+      {
+       "name": "0 times table",
+       "stdin": "0\n",
+       "expected_stdout": "0 x 1 = 0\n0 x 2 = 0\n0 x 3 = 0\n0 x 4 = 0\n0 x 5 = 0\n0 x 6 = 0\n0 x 7 = 0\n0 x 8 = 0\n0 x 9 = 0\n0 x 10 = 0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "You need the numbers 1 to 10. What `range` gives exactly those?",
+      "`for i in range(1, 11):` and an f-string with `n`, `i` and `n * i`."
+     ],
+     "solution": "n = int(input())\nfor i in range(1, 11):\n    print(f\"{n} x {i} = {n * i}\")\n",
+     "solution_explanation": "`range(1, 11)` gives 1 to 10, because the stop value is not included. The f-string builds each line from `n`, the loop variable and their product."
+    },
+    {
+     "id": "m02-l05-e03",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Sum from 1 to n",
+     "skills": [
+      "for-loops",
+      "range"
+     ],
+     "prompt": "Read a whole number `n` that is 0 or more. Print the sum of all whole numbers from 1 to `n`. Use a `for` loop.\n\nExample: for `5`, print `15`.",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "n is 5",
+       "stdin": "5\n",
+       "expected_stdout": "15\n",
+       "hidden": false
+      },
+      {
+       "name": "n is 100",
+       "stdin": "100\n",
+       "expected_stdout": "5050\n",
+       "hidden": true
+      },
+      {
+       "name": "n is 0",
+       "stdin": "0\n",
+       "expected_stdout": "0\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "n is 1",
+       "stdin": "1\n",
+       "expected_stdout": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Create `total = 0` before the loop.",
+      "To include `n`, the range must stop at `n + 1`."
+     ],
+     "solution": "n = int(input())\ntotal = 0\nfor i in range(1, n + 1):\n    total += i\nprint(total)\n",
+     "solution_explanation": "The accumulator starts at 0 before the loop. `range(1, n + 1)` covers 1 to `n` inclusive. When `n` is 0 the range is empty, the loop does not run, and 0 is printed."
+    },
+    {
+     "id": "m02-l05-e04",
+     "type": "fix",
+     "tier": "core",
+     "title": "Stops one early",
+     "skills": [
+      "for-loops",
+      "range",
+      "debugging"
+     ],
+     "prompt": "This program should print the numbers from 1 to `n`, including `n`. For `3` it prints only `1` and `2`.",
+     "starter_code": "n = int(input())\nfor i in range(1, n):\n    print(i)\n",
+     "stdin_tests": [
+      {
+       "name": "1 to 3",
+       "stdin": "3\n",
+       "expected_stdout": "1\n2\n3\n",
+       "hidden": false
+      },
+      {
+       "name": "n is 1",
+       "stdin": "1\n",
+       "expected_stdout": "1\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "1 to 5",
+       "stdin": "5\n",
+       "expected_stdout": "1\n2\n3\n4\n5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Does `range` include its stop value?"
+     ],
+     "solution": "n = int(input())\nfor i in range(1, n + 1):\n    print(i)\n",
+     "solution_explanation": "`range(1, n)` stops before `n`. To include `n`, the stop value has to be one more: `n + 1`."
+    },
+    {
+     "id": "m02-l05-e05",
+     "type": "write",
+     "tier": "core",
+     "title": "Count the vowels",
+     "skills": [
+      "for-loops",
+      "strings",
+      "boolean-logic"
+     ],
+     "prompt": "Read one word in lowercase letters. Print how many vowels (`a`, `e`, `i`, `o`, `u`) it has.\n\nExample: for `banana`, print `3`.",
+     "starter_code": "word = input()\n",
+     "stdin_tests": [
+      {
+       "name": "banana",
+       "stdin": "banana\n",
+       "expected_stdout": "3\n",
+       "hidden": false
+      },
+      {
+       "name": "queue",
+       "stdin": "queue\n",
+       "expected_stdout": "4\n",
+       "hidden": true
+      },
+      {
+       "name": "no vowels",
+       "stdin": "rhythm\n",
+       "expected_stdout": "0\n",
+       "hidden": true
+      },
+      {
+       "name": "an empty line",
+       "stdin": "\n",
+       "expected_stdout": "0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Loop over the characters: `for ch in word:`.",
+      "Inside, check `ch == \"a\" or ch == \"e\" or ...` with a full comparison each time."
+     ],
+     "solution": "word = input()\ncount = 0\nfor ch in word:\n    if ch == \"a\" or ch == \"e\" or ch == \"i\" or ch == \"o\" or ch == \"u\":\n        count += 1\nprint(count)\n",
+     "solution_explanation": "The loop visits every character. The `or` chain is true when the character is any one of the five vowels, and the counter goes up. For an empty word the loop does not run and 0 is printed."
+    },
+    {
+     "id": "m02-l05-e06",
+     "type": "write",
+     "tier": "core",
+     "title": "Even numbers between",
+     "skills": [
+      "for-loops",
+      "range",
+      "conditionals"
+     ],
+     "prompt": "Read two whole numbers `a` and `b`, with `a` less than or equal to `b`. Print every even number from `a` to `b` inclusive, one per line.\n\nExample: for `3` and `10`, print `4`, `6`, `8`, `10` on separate lines.",
+     "starter_code": "a = int(input())\nb = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "3 to 10",
+       "stdin": "3\n10\n",
+       "expected_stdout": "4\n6\n8\n10\n",
+       "hidden": false
+      },
+      {
+       "name": "0 to 4",
+       "stdin": "0\n4\n",
+       "expected_stdout": "0\n2\n4\n",
+       "hidden": true
+      },
+      {
+       "name": "a single even number",
+       "stdin": "6\n6\n",
+       "expected_stdout": "6\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "a single odd number prints nothing",
+       "stdin": "7\n7\n",
+       "expected_stdout": "",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Loop over every number from `a` to `b`. The range must include `b`.",
+      "Inside the loop, print only when `n % 2 == 0`."
+     ],
+     "solution": "a = int(input())\nb = int(input())\nfor n in range(a, b + 1):\n    if n % 2 == 0:\n        print(n)\n",
+     "solution_explanation": "The range runs from `a` to `b` inclusive. The `if` filters it: only numbers with no remainder when divided by 2 are printed. Checking each number is simpler than working out where the first even number is."
+    },
+    {
+     "id": "m02-l05-e07",
+     "type": "fix",
+     "tier": "core",
+     "title": "Average that forgets",
+     "skills": [
+      "for-loops",
+      "operators",
+      "debugging"
+     ],
+     "prompt": "The first input line is how many readings follow (at least 1). This program should print the average of the readings. For the lines `3`, `10`, `20`, `30` it should print `20.0`.\n\nIt prints `10.0`.",
+     "starter_code": "n = int(input())\ntotal = 0\nfor i in range(n):\n    reading = float(input())\n    total = reading\nprint(total / n)\n",
+     "stdin_tests": [
+      {
+       "name": "10, 20, 30",
+       "stdin": "3\n10\n20\n30\n",
+       "expected_stdout": "20.0\n",
+       "hidden": false
+      },
+      {
+       "name": "two readings",
+       "stdin": "2\n1\n2\n",
+       "expected_stdout": "1.5\n",
+       "hidden": true
+      },
+      {
+       "name": "a single reading",
+       "stdin": "1\n5\n",
+       "expected_stdout": "5.0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Add `print(total)` inside the loop and watch how it changes.",
+      "`total = reading` replaces the total. It should add to it."
+     ],
+     "solution": "n = int(input())\ntotal = 0\nfor i in range(n):\n    reading = float(input())\n    total += reading\nprint(total / n)\n",
+     "solution_explanation": "`total = reading` threw away the running total each round, so only the last reading was left. `total += reading` keeps adding. With a single reading the bug is invisible, which is why testing more than one case matters."
+    },
+    {
+     "id": "m02-l05-e08",
+     "type": "predict",
+     "tier": "core",
+     "title": "Step by three",
+     "skills": [
+      "for-loops",
+      "range",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "total = 0\nfor n in range(1, 10, 3):\n    total += n\n    print(n, total)\nprint(\"end\", n)\n",
+     "expected_output": "1 1\n4 5\n7 12\nend 7\n",
+     "solution_explanation": "`range(1, 10, 3)` gives 1, 4, 7. The next value would be 10, which is the stop value and is not included. The running total is 1, then 5, then 12. After the loop `n` keeps its last value, 7."
+    },
+    {
+     "id": "m02-l05-e09",
+     "type": "explain",
+     "tier": "core",
+     "title": "Explain the digit counter",
+     "skills": [
+      "for-loops",
+      "strings",
+      "conditionals",
+      "explaining"
+     ],
+     "prompt": "Read the code. In your own words, explain what it does, why each step is there, and what it prints. Mention any edge cases you can see.",
+     "starter_code": "text = \"a1b22c\"\ndigits = 0\nfor ch in text:\n    if \"0\" <= ch <= \"9\":\n        digits += 1\nprint(digits)\n",
+     "model_explanation": "The program counts how many characters in the text are digits.\n\nThe `for` loop takes each character in turn: `a`, `1`, `b`, `2`, `2`, `c`. The condition `\"0\" <= ch <= \"9\"` is true when the character sits between `\"0\"` and `\"9\"` in character order, which is true only for the digit characters. Each time it is true, the counter goes up by one.\n\nThere are three digit characters, so it prints `3`.\n\nNote that it counts digit characters, not numbers: `22` counts as two. Edge case: for an empty string the loop never runs and it prints `0`.",
+     "checklist": [
+      "Said the loop visits each character in turn",
+      "Said the condition is true only for digit characters",
+      "Gave the exact output: 3",
+      "Mentioned an edge case: empty text, or that 22 counts as two digits"
+     ]
+    },
+    {
+     "id": "m02-l05-e10",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Factorial",
+     "skills": [
+      "for-loops",
+      "range"
+     ],
+     "prompt": "Read a whole number `n` that is 0 or more. Print `n` factorial: the product of all whole numbers from 1 to `n`.\n\nExample: for `5`, print `120` (1 x 2 x 3 x 4 x 5).\n\nBy definition, 0 factorial is `1`.",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "5 factorial",
+       "stdin": "5\n",
+       "expected_stdout": "120\n",
+       "hidden": false
+      },
+      {
+       "name": "10 factorial",
+       "stdin": "10\n",
+       "expected_stdout": "3628800\n",
+       "hidden": true
+      },
+      {
+       "name": "1 factorial",
+       "stdin": "1\n",
+       "expected_stdout": "1\n",
+       "hidden": true
+      },
+      {
+       "name": "0 factorial is 1",
+       "stdin": "0\n",
+       "expected_stdout": "1\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "This is the accumulator pattern with `*` in place of `+`.",
+      "What must the result start at? Starting at 0 would make every product 0."
+     ],
+     "solution": "n = int(input())\nresult = 1\nfor i in range(1, n + 1):\n    result *= i\nprint(result)\n",
+     "solution_explanation": "The accumulator starts at 1, because multiplying by 1 changes nothing. Each round multiplies in the next number. When `n` is 0 the loop does not run and the starting value 1 is printed, which matches the definition."
+    },
+    {
+     "id": "m02-l05-e11",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Largest reading",
+     "skills": [
+      "for-loops",
+      "conditionals",
+      "input"
+     ],
+     "prompt": "The first input line is how many whole numbers follow (at least 1). Read them and print the largest.\n\nExample: for the lines `3`, `4`, `9`, `2`, print `9`.\n\nDo not assume the numbers are positive.",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "4, 9, 2",
+       "stdin": "3\n4\n9\n2\n",
+       "expected_stdout": "9\n",
+       "hidden": false
+      },
+      {
+       "name": "largest is last",
+       "stdin": "4\n1\n2\n3\n8\n",
+       "expected_stdout": "8\n",
+       "hidden": true
+      },
+      {
+       "name": "all negative",
+       "stdin": "2\n-5\n-3\n",
+       "expected_stdout": "-3\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "only one number",
+       "stdin": "1\n42\n",
+       "expected_stdout": "42\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Remember \"assume, then correct\" from the Smaller of two exercise.",
+      "Starting the largest at 0 fails when every number is negative. Read the first number and start with that.",
+      "Then loop `n - 1` more times, replacing `largest` whenever a bigger number arrives."
+     ],
+     "solution": "n = int(input())\nlargest = int(input())\nfor i in range(n - 1):\n    number = int(input())\n    if number > largest:\n        largest = number\nprint(largest)\n",
+     "solution_explanation": "The first number is the starting best guess, which is safe even when all the numbers are negative. The loop reads the remaining `n - 1` numbers and replaces the guess whenever it sees something bigger."
+    },
+    {
+     "id": "m02-l05-e12",
+     "type": "fix",
+     "tier": "stretch",
+     "title": "FizzBuzz gone wrong",
+     "skills": [
+      "for-loops",
+      "conditionals",
+      "boolean-logic",
+      "debugging"
+     ],
+     "prompt": "FizzBuzz: for each number from 1 to `n`, print\n\n- `FizzBuzz` if it is divisible by both 3 and 5\n- `Fizz` if it is divisible by 3 only\n- `Buzz` if it is divisible by 5 only\n- the number itself otherwise\n\nFor `5` the output should be:\n\n```\n1\n2\nFizz\n4\nBuzz\n```\n\nThis program has **two** bugs. Compare its output with the expected output line by line.",
+     "starter_code": "n = int(input())\nfor i in range(n):\n    if i % 3 == 0:\n        print(\"Fizz\")\n    elif i % 5 == 0:\n        print(\"Buzz\")\n    elif i % 3 == 0 and i % 5 == 0:\n        print(\"FizzBuzz\")\n    else:\n        print(i)\n",
+     "stdin_tests": [
+      {
+       "name": "up to 5",
+       "stdin": "5\n",
+       "expected_stdout": "1\n2\nFizz\n4\nBuzz\n",
+       "hidden": false
+      },
+      {
+       "name": "up to 15",
+       "stdin": "15\n",
+       "expected_stdout": "1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizzBuzz\n",
+       "hidden": true
+      },
+      {
+       "name": "up to 1",
+       "stdin": "1\n",
+       "expected_stdout": "1\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "What is the first value of `i`? What should it be?",
+      "For 15, which branch matches first? Remember that the first true branch wins."
+     ],
+     "solution": "n = int(input())\nfor i in range(1, n + 1):\n    if i % 3 == 0 and i % 5 == 0:\n        print(\"FizzBuzz\")\n    elif i % 3 == 0:\n        print(\"Fizz\")\n    elif i % 5 == 0:\n        print(\"Buzz\")\n    else:\n        print(i)\n",
+     "solution_explanation": "Bug 1: `range(n)` goes from 0 to `n - 1`. The task needs 1 to `n`, which is `range(1, n + 1)`. Bug 2: the `FizzBuzz` check came last, but any number divisible by both was already caught by the `Fizz` check. The most specific condition has to be first."
+    }
+   ]
+  },
+  {
+   "id": "m02-l06",
+   "title": "break and continue",
+   "recap": "Last lesson: `for` runs a block once per item, and `range(start, stop)` stops before `stop`. Before that, `while` repeats as long as a condition is true.",
+   "what": "`break` leaves the loop straight away. `continue` skips the rest of the current round and goes on to the next one. Both work in `for` and `while` loops.",
+   "why": "Sometimes you find what you were looking for and there is no point looping further. Sometimes one item should be ignored but the loop should keep going. Without `break` and `continue` you need extra variables and deeper indentation.\n\n```python\nfor n in range(1, 1000):\n    if n * n > 50:\n        print(n)\n        break          # found it, stop looking\n```",
+   "syntax": "```python\nfor item in sequence:\n    if skip_this_one:\n        continue       # jump to the next round\n    if finished:\n        break          # leave the loop completely\n    do_work()          # only reached when neither happened\n\nwhile True:            # loops forever on purpose...\n    line = input()\n    if line == \"stop\":\n        break          # ...until break ends it\n```\n\n`break` and `continue` almost always sit inside an `if`. `while True:` with a `break` is the usual way to write \"read until a stop word\".",
+   "examples": [
+    {
+     "title": "Stop at the first match",
+     "code": "for n in range(1, 20):\n    if n * n > 50:\n        print(\"First square over 50 is\", n * n)\n        break\nprint(\"n stopped at\", n)\n",
+     "output": "First square over 50 is 64\nn stopped at 8\n",
+     "explain": "- The loop could run up to 19, but at `n = 8` the square is 64. The message prints and `break` ends the loop.\n- The last line shows `n` stayed at 8. Rounds 9 to 19 never happened."
+    },
+    {
+     "title": "Skip some items",
+     "code": "for ch in \"a-b-c\":\n    if ch == \"-\":\n        continue\n    print(ch)\n",
+     "output": "a\nb\nc\n",
+     "explain": "- When the character is a dash, `continue` jumps straight to the next character. The `print` below it is skipped for that round.\n- The loop itself keeps going. Only `break` ends it."
+    },
+    {
+     "title": "Read until a stop word",
+     "code": "total = 0\nwhile True:\n    line = input(\"Amount or stop: \")\n    if line == \"stop\":\n        break\n    total += int(line)\nprint(total)\n",
+     "output": "Amount or stop: 5\nAmount or stop: 10\nAmount or stop: stop\n15\n",
+     "explain": "- `while True` never ends by itself. The `break` is the only way out.\n- The stop word is checked before the conversion, so `int(\"stop\")` is never attempted.\n- Compare this with the `while line != \"done\"` example two lessons ago. Here `input()` is written only once.",
+     "stdin": "5\n10\nstop\n"
+    }
+   ],
+   "mistakes": [
+    {
+     "title": "continue before the change step in a while loop",
+     "fix": "When `i` is 2, `continue` jumps back to the check and skips `i += 1`. `i` stays 2 forever: an infinite loop. In a `while` loop, make sure the change step runs before any `continue`. A `for` loop does not have this problem, because it moves on by itself.",
+     "code": "i = 0\nwhile i < 5:\n    if i == 2:\n        continue\n    print(i)\n    i += 1\n",
+     "run": false
+    },
+    {
+     "title": "break outside a loop",
+     "fix": "`break` only makes sense inside a `for` or `while` block. An `if` is not a loop. Here Python refuses to run the file.",
+     "code": "x = 5\nif x > 3:\n    break\n",
+     "error": "  File \"main.py\", line 3\nSyntaxError: 'break' outside loop"
+    },
+    {
+     "title": "Code placed after break",
+     "fix": "No error, but the message never prints. `break` leaves at once, so a line after it in the same block cannot run. Put the work before the `break`.",
+     "code": "for n in range(5):\n    if n == 2:\n        break\n        print(\"Found 2\")\nprint(\"Loop finished\")\n"
+    }
+   ],
+   "remember": "break: leave the loop. continue: skip to the next round.",
+   "quick_checks": [
+    {
+     "code": "for i in range(6):\n    if i == 1:\n        continue\n    if i == 4:\n        break\n    print(i)\nprint(\"after\", i)\n",
+     "expected_output": "0\n2\n3\nafter 4\n",
+     "explain": "0 prints. At 1, `continue` skips the print. 2 and 3 print. At 4, `break` ends the loop before the print, and `i` is left at 4. 5 is never reached."
+    }
+   ],
+   "reference": [
+    {
+     "concept": "Leave a loop early",
+     "syntax": "break",
+     "example": "for n in range(100):\n    if n * n > 50:\n        break"
+    },
+    {
+     "concept": "Skip to the next round",
+     "syntax": "continue",
+     "example": "for ch in text:\n    if ch == \" \":\n        continue\n    print(ch)"
+    },
+    {
+     "concept": "Loop until a stop word",
+     "syntax": "while True:\n    ...\n    if done:\n        break",
+     "example": "while True:\n    line = input()\n    if line == \"stop\":\n        break"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "m02-l06-e01",
+     "type": "predict",
+     "tier": "warmup",
+     "title": "Stopping at three",
+     "skills": [
+      "break-continue",
+      "for-loops",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "for n in range(10):\n    if n == 3:\n        break\n    print(n)\nprint(\"stopped at\", n)\n",
+     "expected_output": "0\n1\n2\nstopped at 3\n",
+     "solution_explanation": "0, 1 and 2 print. When `n` is 3, `break` runs before the `print`, so 3 is not printed inside the loop. The last line shows `n` is still 3."
+    },
+    {
+     "id": "m02-l06-e02",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Skip the multiples of 3",
+     "skills": [
+      "break-continue",
+      "for-loops"
+     ],
+     "prompt": "Read a whole number `n`. Print the numbers from 1 to `n`, one per line, but leave out every multiple of 3. Use `continue`.\n\nExample: for `7`, print `1`, `2`, `4`, `5`, `7` on separate lines.",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "up to 7",
+       "stdin": "7\n",
+       "expected_stdout": "1\n2\n4\n5\n7\n",
+       "hidden": false
+      },
+      {
+       "name": "up to 3",
+       "stdin": "3\n",
+       "expected_stdout": "1\n2\n",
+       "hidden": true
+      },
+      {
+       "name": "n is 0",
+       "stdin": "0\n",
+       "expected_stdout": "",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "A multiple of 3 has `i % 3 == 0`.",
+      "Inside the loop: if it is a multiple of 3, `continue`. Otherwise the code reaches the `print`."
+     ],
+     "solution": "n = int(input())\nfor i in range(1, n + 1):\n    if i % 3 == 0:\n        continue\n    print(i)\n",
+     "solution_explanation": "For multiples of 3, `continue` jumps to the next number and the `print` is skipped. Every other number falls through to the `print`."
+    },
+    {
+     "id": "m02-l06-e03",
+     "type": "write",
+     "tier": "warmup",
+     "title": "First multiple",
+     "skills": [
+      "break-continue",
+      "while-loops"
+     ],
+     "prompt": "Read two whole numbers `a` and `b` (both at least 1). Print the first number that is `a` or greater and divisible by `b`.\n\nExample: for `10` and `7`, print `14`.",
+     "starter_code": "a = int(input())\nb = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "from 10, divisible by 7",
+       "stdin": "10\n7\n",
+       "expected_stdout": "14\n",
+       "hidden": false
+      },
+      {
+       "name": "from 1, divisible by 5",
+       "stdin": "1\n5\n",
+       "expected_stdout": "5\n",
+       "hidden": true
+      },
+      {
+       "name": "a is already divisible",
+       "stdin": "14\n7\n",
+       "expected_stdout": "14\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Start at `a` and move up by 1 until the number divides evenly.",
+      "`while True:` check `n % b == 0`, print and `break`. Otherwise add 1."
+     ],
+     "solution": "a = int(input())\nb = int(input())\nn = a\nwhile True:\n    if n % b == 0:\n        print(n)\n        break\n    n += 1\n",
+     "solution_explanation": "The search starts at `a` itself, so if `a` is already divisible it is printed straight away. Otherwise `n` goes up by 1 each round until the remainder is 0, and `break` ends the loop."
+    },
+    {
+     "id": "m02-l06-e04",
+     "type": "fix",
+     "tier": "core",
+     "title": "continue skips the counter",
+     "skills": [
+      "break-continue",
+      "while-loops",
+      "debugging"
+     ],
+     "prompt": "This program should print the odd numbers from 1 to `n`. For `5` it should print `1`, `3`, `5` on separate lines.\n\nIt prints `1` and then you get: \"Your code took too long. Check for an infinite loop.\"",
+     "starter_code": "n = int(input())\ni = 1\nwhile i <= n:\n    if i % 2 == 0:\n        continue\n    print(i)\n    i += 1\n",
+     "stdin_tests": [
+      {
+       "name": "odd numbers to 5",
+       "stdin": "5\n",
+       "expected_stdout": "1\n3\n5\n",
+       "hidden": false
+      },
+      {
+       "name": "odd numbers to 6",
+       "stdin": "6\n",
+       "expected_stdout": "1\n3\n5\n",
+       "hidden": true
+      },
+      {
+       "name": "n is 0",
+       "stdin": "0\n",
+       "expected_stdout": "",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "What is `i` when the program gets stuck? Follow that value through the loop.",
+      "When `continue` runs, the line `i += 1` is skipped. `i` must change before the `continue`."
+     ],
+     "solution": "n = int(input())\ni = 1\nwhile i <= n:\n    if i % 2 == 0:\n        i += 1\n        continue\n    print(i)\n    i += 1\n",
+     "solution_explanation": "When `i` reached 2, `continue` jumped back to the check without adding 1, so `i` stayed 2 forever. Adding 1 before the `continue` keeps the loop moving. A `for` loop over `range(1, n + 1)` would avoid the problem completely."
+    },
+    {
+     "id": "m02-l06-e05",
+     "type": "write",
+     "tier": "core",
+     "title": "Read until a blank line",
+     "skills": [
+      "break-continue",
+      "while-loops",
+      "input"
+     ],
+     "prompt": "Read lines of text until an empty line is read. Print how many lines came before the empty one, in this format:\n\n```\nLines: 2\n```\n\nUse `while True` and `break`.",
+     "starter_code": "# Read lines until an empty one. Print how many there were.\n",
+     "stdin_tests": [
+      {
+       "name": "two lines then a blank",
+       "stdin": "milk\nbread\n\n",
+       "expected_stdout": "Lines: 2\n",
+       "hidden": false
+      },
+      {
+       "name": "four lines then a blank",
+       "stdin": "a\nb\nc\nd\n\n",
+       "expected_stdout": "Lines: 4\n",
+       "hidden": true
+      },
+      {
+       "name": "the first line is blank",
+       "stdin": "\n",
+       "expected_stdout": "Lines: 0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "An empty line is the empty string: `\"\"`.",
+      "Inside `while True:`, read a line. If it equals `\"\"`, `break`. Otherwise add 1 to a counter."
+     ],
+     "solution": "count = 0\nwhile True:\n    line = input()\n    if line == \"\":\n        break\n    count += 1\nprint(f\"Lines: {count}\")\n",
+     "solution_explanation": "Each round reads one line. An empty line triggers `break` before the counter is increased, so the blank line itself is not counted."
+    },
+    {
+     "id": "m02-l06-e06",
+     "type": "write",
+     "tier": "core",
+     "title": "First negative reading",
+     "skills": [
+      "break-continue",
+      "for-loops",
+      "conditionals"
+     ],
+     "prompt": "The first input line is `n`, the maximum number of readings. Up to `n` whole numbers follow, one per line.\n\nRead the readings in order. As soon as you read a negative number, stop reading and print:\n\n```\nNegative found: -2 at position 2\n```\n\n(positions start at 1). If all `n` readings are 0 or more, print `All good`.\n\nImportant: after a negative reading there may be no more input lines, so you must stop reading at that point.",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "negative in second position, nothing after it",
+       "stdin": "4\n3\n-2\n",
+       "expected_stdout": "Negative found: -2 at position 2\n",
+       "hidden": false
+      },
+      {
+       "name": "no negatives",
+       "stdin": "3\n1\n2\n3\n",
+       "expected_stdout": "All good\n",
+       "hidden": false
+      },
+      {
+       "name": "negative in first position",
+       "stdin": "2\n-1\n",
+       "expected_stdout": "Negative found: -1 at position 1\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "no readings at all",
+       "stdin": "0\n",
+       "expected_stdout": "All good\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "You need to remember, after the loop, whether a negative was found. Use a variable that starts as `False`.",
+      "When you find one: print the message, set the variable to `True`, and `break`.",
+      "After the loop: `if not found:` print `All good`."
+     ],
+     "solution": "n = int(input())\nfound = False\nfor position in range(1, n + 1):\n    reading = int(input())\n    if reading < 0:\n        print(f\"Negative found: {reading} at position {position}\")\n        found = True\n        break\nif not found:\n    print(\"All good\")\n",
+     "solution_explanation": "The loop counts positions from 1. On the first negative reading it prints the message, records that one was found, and `break` stops any further reading. A boolean variable used like `found` is called a **flag**. After the loop, the flag decides whether `All good` is printed."
+    },
+    {
+     "id": "m02-l06-e07",
+     "type": "fix",
+     "tier": "core",
+     "title": "Stops one deposit late",
+     "skills": [
+      "break-continue",
+      "while-loops",
+      "debugging"
+     ],
+     "prompt": "The first input line is a savings target. Each line after it is a deposit. The program should stop reading as soon as the total **reaches or passes** the target, then print a summary.\n\nFor the lines `100`, `50`, `50` it should print `Reached 100 in 2 deposits`. Instead it crashes:\n\n```\nTraceback (most recent call last):\n  File \"main.py\", line 5, in <module>\n    amount = int(input())\n                 ~~~~~^^\nEOFError: input() was called but there was no more input to read\n```\n\nIt tried to read a third deposit.",
+     "starter_code": "target = int(input())\ntotal = 0\ncount = 0\nwhile True:\n    amount = int(input())\n    total += amount\n    count += 1\n    if total > target:\n        break\nprint(f\"Reached {total} in {count} deposits\")\n",
+     "stdin_tests": [
+      {
+       "name": "hits the target exactly",
+       "stdin": "100\n50\n50\n",
+       "expected_stdout": "Reached 100 in 2 deposits\n",
+       "hidden": false,
+       "edge": true
+      },
+      {
+       "name": "goes past the target",
+       "stdin": "100\n70\n40\n",
+       "expected_stdout": "Reached 110 in 2 deposits\n",
+       "hidden": false
+      },
+      {
+       "name": "one big deposit",
+       "stdin": "10\n25\n",
+       "expected_stdout": "Reached 25 in 1 deposits\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "After two deposits the total is exactly 100. Is `100 > 100` true?"
+     ],
+     "solution": "target = int(input())\ntotal = 0\ncount = 0\nwhile True:\n    amount = int(input())\n    total += amount\n    count += 1\n    if total >= target:\n        break\nprint(f\"Reached {total} in {count} deposits\")\n",
+     "solution_explanation": "\"Reaches or passes\" includes being exactly equal, so the exit condition must be `>=`. With `>`, a total that landed exactly on the target did not stop the loop, and the program asked for input that was not there."
+    },
+    {
+     "id": "m02-l06-e08",
+     "type": "predict",
+     "tier": "core",
+     "title": "Skip and stop",
+     "skills": [
+      "break-continue",
+      "for-loops",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "total = 0\nfor n in range(1, 8):\n    if n % 2 == 0:\n        continue\n    if total > 8:\n        break\n    total += n\n    print(n, total)\nprint(total)\n",
+     "expected_output": "1 1\n3 4\n5 9\n9\n",
+     "hints": [
+      "Make a small table with columns for n and total, one row per round."
+     ],
+     "solution_explanation": "Even numbers are skipped by `continue`. For 1, 3 and 5 the total is not yet over 8, so each is added: 1, 4, 9. At `n = 7` the total is 9, which is over 8, so `break` ends the loop before anything is added. The final total is 9."
+    },
+    {
+     "id": "m02-l06-e09",
+     "type": "explain",
+     "tier": "core",
+     "title": "Explain the divisor search",
+     "skills": [
+      "break-continue",
+      "while-loops",
+      "explaining"
+     ],
+     "prompt": "Read the code. In your own words, explain what it does, why each step is there, and what it prints. Mention any edge cases you can see.",
+     "starter_code": "n = 91\ndivisor = 2\nwhile divisor < n:\n    if n % divisor == 0:\n        print(\"Divisible by\", divisor)\n        break\n    divisor += 1\nif divisor == n:\n    print(\"Prime\")\n",
+     "model_explanation": "The program checks whether `n` is a prime number by trying to divide it by 2, 3, 4 and so on.\n\nEach round tests one divisor. If the remainder is 0, the divisor goes in evenly: the program reports it and `break` leaves the loop early. Otherwise the divisor goes up by 1.\n\nFor 91, the divisors 2 to 6 leave a remainder. 7 divides evenly (7 times 13), so it prints `Divisible by 7` and stops.\n\nThe `if` after the loop tells the two endings apart. If the loop ran out without a `break`, `divisor` has climbed all the way to `n`, so nothing divided it and it prints `Prime`. After a `break`, `divisor` is smaller than `n`, so `Prime` is not printed.\n\nEdge cases: for `n = 2` the loop never runs, `divisor == n` is true, and it correctly prints `Prime`. For `n = 1` or `0` it prints nothing at all, which is a gap.",
+     "checklist": [
+      "Said the loop tries each divisor from 2 upwards",
+      "Said break ends the loop at the first divisor that goes in evenly",
+      "Gave the output: Divisible by 7",
+      "Explained how the final if knows whether the loop finished without a break",
+      "Mentioned an edge case such as n = 2 or n = 1"
+     ]
+    },
+    {
+     "id": "m02-l06-e10",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Is it prime",
+     "skills": [
+      "break-continue",
+      "for-loops",
+      "conditionals"
+     ],
+     "prompt": "Read a whole number. Print `Prime` if it is a prime number, otherwise print `Not prime`.\n\nA prime number is greater than 1 and can only be divided evenly by 1 and itself. So `0` and `1` are not prime.",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "7 is prime",
+       "stdin": "7\n",
+       "expected_stdout": "Prime\n",
+       "hidden": false
+      },
+      {
+       "name": "91 is 7 times 13",
+       "stdin": "91\n",
+       "expected_stdout": "Not prime\n",
+       "hidden": false
+      },
+      {
+       "name": "97 is prime",
+       "stdin": "97\n",
+       "expected_stdout": "Prime\n",
+       "hidden": true
+      },
+      {
+       "name": "2 is the smallest prime",
+       "stdin": "2\n",
+       "expected_stdout": "Prime\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "1 is not prime",
+       "stdin": "1\n",
+       "expected_stdout": "Not prime\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "0 is not prime",
+       "stdin": "0\n",
+       "expected_stdout": "Not prime\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Use a flag: `is_prime = n > 1`. That handles 0 and 1 before the loop starts.",
+      "Try every divisor from 2 up to `n - 1`. If one divides evenly, set the flag to `False` and `break`.",
+      "`range(2, n)` is empty when `n` is 2, which is what you want."
+     ],
+     "solution": "n = int(input())\nis_prime = n > 1\nfor d in range(2, n):\n    if n % d == 0:\n        is_prime = False\n        break\nif is_prime:\n    print(\"Prime\")\nelse:\n    print(\"Not prime\")\n",
+     "solution_explanation": "The flag starts as the result of `n > 1`, so 0 and 1 are already marked not prime. The loop tries each possible divisor. One even division is enough to prove the number is not prime, so the flag is cleared and `break` stops the search. The message is printed once, after the loop."
+    },
+    {
+     "id": "m02-l06-e11",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Clean total",
+     "skills": [
+      "break-continue",
+      "while-loops",
+      "input"
+     ],
+     "prompt": "Read lines until the word `end`. Every other line is a whole number.\n\n- Add up the numbers that are 0 or more.\n- Ignore negative numbers, but count how many you ignored.\n\nThen print two lines:\n\n```\nTotal: 12\nIgnored: 1\n```\n\nThat example is for the lines `5`, `-3`, `7`, `end`.\n\nUse `break` for `end` and `continue` for the negatives.",
+     "starter_code": "# Read until \"end\". Total the valid amounts and count the ignored ones.\n",
+     "stdin_tests": [
+      {
+       "name": "one negative ignored",
+       "stdin": "5\n-3\n7\nend\n",
+       "expected_stdout": "Total: 12\nIgnored: 1\n",
+       "hidden": false
+      },
+      {
+       "name": "all negative",
+       "stdin": "-1\n-2\nend\n",
+       "expected_stdout": "Total: 0\nIgnored: 2\n",
+       "hidden": true
+      },
+      {
+       "name": "end is the first line",
+       "stdin": "end\n",
+       "expected_stdout": "Total: 0\nIgnored: 0\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "zero is valid",
+       "stdin": "0\n4\nend\n",
+       "expected_stdout": "Total: 4\nIgnored: 0\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Check for `end` before converting the line to a number.",
+      "After converting: if the number is negative, add 1 to the ignored count and `continue`."
+     ],
+     "solution": "total = 0\nignored = 0\nwhile True:\n    line = input()\n    if line == \"end\":\n        break\n    amount = int(line)\n    if amount < 0:\n        ignored += 1\n        continue\n    total += amount\nprint(f\"Total: {total}\")\nprint(f\"Ignored: {ignored}\")\n",
+     "solution_explanation": "The order of the checks matters. `end` is tested first, while the line is still text. Then the line is converted. A negative amount is counted and `continue` skips the addition. Only valid amounts reach `total += amount`."
+    },
+    {
+     "id": "m02-l06-e12",
+     "type": "fix",
+     "tier": "stretch",
+     "title": "Password attempts with two bugs",
+     "skills": [
+      "break-continue",
+      "while-loops",
+      "debugging"
+     ],
+     "prompt": "A user gets three attempts at the password `swordfish`. One attempt is typed per line.\n\n- A **blank line** is a slip of the finger and must **not** count as an attempt.\n- As soon as the password is right, the program should stop reading.\n\nAt the end it prints `Access granted` or `Locked`, then how many attempts were used.\n\nIt has **two** bugs. With the single input line `swordfish` it crashes:\n\n```\nTraceback (most recent call last):\n  File \"main.py\", line 4, in <module>\n    password = input()\nEOFError: input() was called but there was no more input to read\n```",
+     "starter_code": "attempts = 0\ngranted = False\nwhile attempts < 3:\n    password = input()\n    attempts += 1\n    if password == \"\":\n        continue\n    if password == \"swordfish\":\n        granted = True\n        continue\nif granted:\n    print(\"Access granted\")\nelse:\n    print(\"Locked\")\nprint(\"Attempts used:\", attempts)\n",
+     "stdin_tests": [
+      {
+       "name": "right first time",
+       "stdin": "swordfish\n",
+       "expected_stdout": "Access granted\nAttempts used: 1\n",
+       "hidden": false
+      },
+      {
+       "name": "three wrong attempts",
+       "stdin": "a\nb\nc\n",
+       "expected_stdout": "Locked\nAttempts used: 3\n",
+       "hidden": false
+      },
+      {
+       "name": "a blank line does not count",
+       "stdin": "\nswordfish\n",
+       "expected_stdout": "Access granted\nAttempts used: 1\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "blank line among wrong attempts",
+       "stdin": "a\n\nb\nswordfish\n",
+       "expected_stdout": "Access granted\nAttempts used: 3\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "After the right password, should the loop go round again? Which keyword leaves a loop?",
+      "Where is `attempts` increased? Does that happen before or after the blank-line check?"
+     ],
+     "solution": "attempts = 0\ngranted = False\nwhile attempts < 3:\n    password = input()\n    if password == \"\":\n        continue\n    attempts += 1\n    if password == \"swordfish\":\n        granted = True\n        break\nif granted:\n    print(\"Access granted\")\nelse:\n    print(\"Locked\")\nprint(\"Attempts used:\", attempts)\n",
+     "solution_explanation": "Bug 1: after the correct password the code used `continue`, which went back for another round and another `input()`. It needs `break` to leave the loop. Bug 2: `attempts += 1` ran before the blank-line check, so blank lines were counted. Moving it below the check means a blank line skips the count."
+    }
+   ]
+  },
+  {
+   "id": "m02-l07",
+   "title": "Nested loops",
+   "recap": "Last lesson: `break` leaves a loop, `continue` skips to the next round. You have also met `print(..., end=\"\")`, which prints without starting a new line.",
+   "what": "A **nested loop** is a loop inside another loop. For each single round of the outer loop, the inner loop runs all of its rounds from start to finish.",
+   "why": "Anything with rows and columns needs two loops: seats in a cinema, cells in a table, every pairing of two lists of options. One loop walks the rows. Inside it, another walks the columns of that row.\n\n```python\nfor row in range(1, 3):\n    for seat in range(1, 4):\n        print(row, seat)\n```",
+   "syntax": "```python\nfor outer in range(3):          # runs 3 times\n    for inner in range(4):      # runs 4 times for EACH outer round\n        work(outer, inner)      # runs 3 x 4 = 12 times\n    after_inner()               # indented once: runs 3 times, after each inner loop\n```\n\n- The inner loop is indented inside the outer one. Its block is indented twice.\n- Give the two loop variables different names.\n- Watch the indentation of each line. It decides how many times the line runs.",
+   "examples": [
+    {
+     "title": "Every row with every seat",
+     "code": "for row in range(1, 3):\n    for seat in range(1, 4):\n        print(f\"Row {row} Seat {seat}\")\n",
+     "output": "Row 1 Seat 1\nRow 1 Seat 2\nRow 1 Seat 3\nRow 2 Seat 1\nRow 2 Seat 2\nRow 2 Seat 3\n",
+     "explain": "- The outer loop sets `row` to 1. The inner loop then runs fully: seats 1, 2, 3.\n- Only then does the outer loop move to `row` 2, and the inner loop starts again from seat 1.\n- 2 rows times 3 seats is 6 lines."
+    },
+    {
+     "title": "Printing a grid",
+     "code": "for row in range(3):\n    for col in range(4):\n        print(\"#\", end=\"\")\n    print()\n",
+     "output": "####\n####\n####\n",
+     "explain": "- The inner loop prints four `#` characters on the same line, because of `end=\"\"`.\n- `print()` with nothing in it ends the line. It is indented once, so it belongs to the outer loop and runs once per row."
+    },
+    {
+     "title": "The inner loop can depend on the outer one",
+     "code": "for row in range(1, 5):\n    for col in range(row):\n        print(\"*\", end=\"\")\n    print()\n",
+     "output": "*\n**\n***\n****\n",
+     "explain": "- The inner range uses `row`, so its length changes: 1 round, then 2, then 3, then 4.\n- That is how a triangle is drawn: each row is one star longer than the last."
+    },
+    {
+     "title": "Trying every pair",
+     "code": "count = 0\nfor a in range(1, 7):\n    for b in range(1, 7):\n        if a + b == 7:\n            count += 1\nprint(count)\n",
+     "output": "6\n",
+     "explain": "- This checks all 36 ways two dice can land and counts those that add up to 7.\n- The `if` is inside both loops, so it runs once for every pair `(a, b)`."
+    }
+   ],
+   "mistakes": [
+    {
+     "title": "The end-of-row print in the wrong place",
+     "fix": "No error, but every `#` lands on its own line. The empty `print()` is indented twice, so it runs after every character. Move it back one level so it runs once per row.",
+     "code": "for row in range(2):\n    for col in range(3):\n        print(\"#\", end=\"\")\n        print()\n"
+    },
+    {
+     "title": "Thinking break leaves both loops",
+     "fix": "No error. It prints `0 0`, `1 0`, `2 0`. `break` only leaves the loop it is directly inside, which is the inner one. The outer loop carries on with its next round.",
+     "code": "for row in range(3):\n    for col in range(3):\n        if col == 1:\n            break\n        print(row, col)\n"
+    }
+   ],
+   "remember": "For each one round outside, the whole inner loop runs.",
+   "quick_checks": [
+    {
+     "code": "for a in range(2):\n    for b in range(3):\n        print(a + b, end=\" \")\n    print(\"|\")\n",
+     "expected_output": "0 1 2 |\n1 2 3 |\n",
+     "explain": "When `a` is 0 the inner loop prints 0, 1, 2 on one line, then the outer loop prints the bar and ends the line. Then `a` is 1 and the inner loop starts again from `b = 0`, printing 1, 2, 3."
+    }
+   ],
+   "reference": [
+    {
+     "concept": "Nested loop",
+     "syntax": "for a in ...:\n    for b in ...:\n        block",
+     "example": "for row in range(2):\n    for col in range(3):\n        print(row, col)"
+    },
+    {
+     "concept": "Print a grid row by row",
+     "syntax": "inner loop: print(x, end=\"\")\nafter it: print()",
+     "example": "for row in range(3):\n    for col in range(4):\n        print(\"#\", end=\"\")\n    print()"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "m02-l07-e01",
+     "type": "predict",
+     "tier": "warmup",
+     "title": "Small products",
+     "skills": [
+      "nested-loops",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "for i in range(1, 3):\n    for j in range(1, 3):\n        print(i * j)\n",
+     "expected_output": "1\n2\n2\n4\n",
+     "solution_explanation": "The pairs come in this order: (1, 1), (1, 2), (2, 1), (2, 2). The inner variable `j` changes fastest. The products are 1, 2, 2, 4."
+    },
+    {
+     "id": "m02-l07-e02",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Rectangle",
+     "skills": [
+      "nested-loops",
+      "printing"
+     ],
+     "prompt": "Read a number of rows, then a number of columns. Print a rectangle of `#` characters with that many rows and columns.\n\nExample for `2` and `3`:\n\n```\n###\n###\n```",
+     "starter_code": "rows = int(input())\ncols = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "2 rows of 3",
+       "stdin": "2\n3\n",
+       "expected_stdout": "###\n###\n",
+       "hidden": false
+      },
+      {
+       "name": "3 rows of 1",
+       "stdin": "3\n1\n",
+       "expected_stdout": "#\n#\n#\n",
+       "hidden": true
+      },
+      {
+       "name": "a single cell",
+       "stdin": "1\n1\n",
+       "expected_stdout": "#\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "zero rows prints nothing",
+       "stdin": "0\n5\n",
+       "expected_stdout": "",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "The outer loop is for rows, the inner loop for columns.",
+      "Print each `#` with `end=\"\"`. After the inner loop, an empty `print()` ends the row."
+     ],
+     "solution": "rows = int(input())\ncols = int(input())\nfor r in range(rows):\n    for c in range(cols):\n        print(\"#\", end=\"\")\n    print()\n",
+     "solution_explanation": "The inner loop prints one row of `#` characters on a single line. The empty `print()` is at the outer loop level, so it ends the line once per row."
+    },
+    {
+     "id": "m02-l07-e03",
+     "type": "write",
+     "tier": "warmup",
+     "title": "Seat labels",
+     "skills": [
+      "nested-loops",
+      "f-strings"
+     ],
+     "prompt": "Read a number of rows and a number of seats per row. Print a label for every seat, one per line, in the format `R1S1`. Rows and seats are numbered from 1.\n\nExample for `2` and `2`:\n\n```\nR1S1\nR1S2\nR2S1\nR2S2\n```",
+     "starter_code": "rows = int(input())\nseats = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "2 rows of 2",
+       "stdin": "2\n2\n",
+       "expected_stdout": "R1S1\nR1S2\nR2S1\nR2S2\n",
+       "hidden": false
+      },
+      {
+       "name": "1 row of 3",
+       "stdin": "1\n3\n",
+       "expected_stdout": "R1S1\nR1S2\nR1S3\n",
+       "hidden": true
+      },
+      {
+       "name": "a single seat",
+       "stdin": "1\n1\n",
+       "expected_stdout": "R1S1\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Numbering from 1 means `range(1, rows + 1)`.",
+      "The f-string is `f\"R{row}S{seat}\"`."
+     ],
+     "solution": "rows = int(input())\nseats = int(input())\nfor row in range(1, rows + 1):\n    for seat in range(1, seats + 1):\n        print(f\"R{row}S{seat}\")\n",
+     "solution_explanation": "Both ranges start at 1 and stop at one past the count, so the numbering is 1-based. The `print` is inside both loops, so it runs once for every row and seat pair."
+    },
+    {
+     "id": "m02-l07-e04",
+     "type": "fix",
+     "tier": "core",
+     "title": "New line in the wrong place",
+     "skills": [
+      "nested-loops",
+      "printing",
+      "debugging"
+     ],
+     "prompt": "This program should print a grid of stars. For `2` rows and `3` columns:\n\n```\n***\n***\n```\n\nIt prints every star on its own line.",
+     "starter_code": "rows = int(input())\ncols = int(input())\nfor r in range(rows):\n    for c in range(cols):\n        print(\"*\", end=\"\")\n        print()\n",
+     "stdin_tests": [
+      {
+       "name": "2 by 3",
+       "stdin": "2\n3\n",
+       "expected_stdout": "***\n***\n",
+       "hidden": false
+      },
+      {
+       "name": "3 by 2",
+       "stdin": "3\n2\n",
+       "expected_stdout": "**\n**\n**\n",
+       "hidden": true
+      },
+      {
+       "name": "1 by 4",
+       "stdin": "1\n4\n",
+       "expected_stdout": "****\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "How many times does the empty `print()` run? Look at how far it is indented."
+     ],
+     "solution": "rows = int(input())\ncols = int(input())\nfor r in range(rows):\n    for c in range(cols):\n        print(\"*\", end=\"\")\n    print()\n",
+     "solution_explanation": "The empty `print()` was inside the inner loop, so a new line started after every star. Moving it out one level makes it run once per row, after the inner loop has finished that row."
+    },
+    {
+     "id": "m02-l07-e05",
+     "type": "write",
+     "tier": "core",
+     "title": "Left triangle",
+     "skills": [
+      "nested-loops",
+      "printing"
+     ],
+     "prompt": "Read a whole number `n`. Print a triangle of stars with `n` rows. Row 1 has one star, row 2 has two, and so on.\n\nExample for `3`:\n\n```\n*\n**\n***\n```",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "3 rows",
+       "stdin": "3\n",
+       "expected_stdout": "*\n**\n***\n",
+       "hidden": false
+      },
+      {
+       "name": "5 rows",
+       "stdin": "5\n",
+       "expected_stdout": "*\n**\n***\n****\n*****\n",
+       "hidden": true
+      },
+      {
+       "name": "1 row",
+       "stdin": "1\n",
+       "expected_stdout": "*\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "0 rows prints nothing",
+       "stdin": "0\n",
+       "expected_stdout": "",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Let the outer loop variable be the row number, from 1 to `n`.",
+      "The inner loop should run `row` times."
+     ],
+     "solution": "n = int(input())\nfor row in range(1, n + 1):\n    for col in range(row):\n        print(\"*\", end=\"\")\n    print()\n",
+     "solution_explanation": "The row number doubles as the number of stars to print. `range(row)` gives exactly `row` rounds of the inner loop, so each row is one star longer than the one before."
+    },
+    {
+     "id": "m02-l07-e06",
+     "type": "write",
+     "tier": "core",
+     "title": "Multiplication grid",
+     "skills": [
+      "nested-loops",
+      "printing"
+     ],
+     "prompt": "Read a whole number `n`. Print an `n` by `n` multiplication grid. Each row is on one line, with a single space between numbers.\n\nExample for `3`:\n\n```\n1 2 3\n2 4 6\n3 6 9\n```\n\nA space at the end of a line is fine. The tests ignore it.",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "3 by 3",
+       "stdin": "3\n",
+       "expected_stdout": "1 2 3\n2 4 6\n3 6 9\n",
+       "hidden": false
+      },
+      {
+       "name": "4 by 4",
+       "stdin": "4\n",
+       "expected_stdout": "1 2 3 4\n2 4 6 8\n3 6 9 12\n4 8 12 16\n",
+       "hidden": true
+      },
+      {
+       "name": "1 by 1",
+       "stdin": "1\n",
+       "expected_stdout": "1\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Both loops run from 1 to `n`.",
+      "Print each product with `end=\" \"` so the next one follows on the same line."
+     ],
+     "solution": "n = int(input())\nfor row in range(1, n + 1):\n    for col in range(1, n + 1):\n        print(row * col, end=\" \")\n    print()\n",
+     "solution_explanation": "Each cell is the row number times the column number. `end=\" \"` puts a space after each number and keeps the row on one line. The empty `print()` ends the row."
+    },
+    {
+     "id": "m02-l07-e07",
+     "type": "fix",
+     "tier": "core",
+     "title": "Pairs counted too many times",
+     "skills": [
+      "nested-loops",
+      "range",
+      "debugging"
+     ],
+     "prompt": "This program should count the pairs of **different** numbers `a` and `b`, with `a` less than `b`, both from 1 to `n`, whose sum is even.\n\nFor `n = 4` the pairs are (1, 3) and (2, 4), so it should print `2`. It prints `8`.",
+     "starter_code": "n = int(input())\ncount = 0\nfor a in range(1, n + 1):\n    for b in range(1, n + 1):\n        if (a + b) % 2 == 0:\n            count += 1\nprint(count)\n",
+     "stdin_tests": [
+      {
+       "name": "n is 4",
+       "stdin": "4\n",
+       "expected_stdout": "2\n",
+       "hidden": false
+      },
+      {
+       "name": "n is 5",
+       "stdin": "5\n",
+       "expected_stdout": "4\n",
+       "hidden": true
+      },
+      {
+       "name": "n is 1 has no pairs",
+       "stdin": "1\n",
+       "expected_stdout": "0\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "n is 2",
+       "stdin": "2\n",
+       "expected_stdout": "0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Print `a` and `b` inside the `if` to see which pairs are being counted.",
+      "It counts (1, 1), and it counts both (1, 3) and (3, 1). The rule says `a` is less than `b`.",
+      "Start the inner loop just above `a`."
+     ],
+     "solution": "n = int(input())\ncount = 0\nfor a in range(1, n + 1):\n    for b in range(a + 1, n + 1):\n        if (a + b) % 2 == 0:\n            count += 1\nprint(count)\n",
+     "solution_explanation": "The inner loop started at 1, so it paired each number with itself and counted every pair twice, once in each order. Starting `b` at `a + 1` means `b` is always greater than `a`, so each pair is seen exactly once."
+    },
+    {
+     "id": "m02-l07-e08",
+     "type": "predict",
+     "tier": "core",
+     "title": "Counting back along each row",
+     "skills": [
+      "nested-loops",
+      "tracing"
+     ],
+     "prompt": "Read the code. Without running it, type exactly what it prints.",
+     "starter_code": "for row in range(3):\n    for col in range(row + 1):\n        print(row - col, end=\"\")\n    print()\n",
+     "expected_output": "0\n10\n210\n",
+     "hints": [
+      "Write out the (row, col) pairs for each row first, then do the subtraction."
+     ],
+     "solution_explanation": "Row 0 has one column: 0 minus 0. Row 1 has columns 0 and 1: 1 minus 0, then 1 minus 1, giving `10`. Row 2 has columns 0, 1, 2, giving `210`. `end=\"\"` puts no space between the digits."
+    },
+    {
+     "id": "m02-l07-e09",
+     "type": "explain",
+     "tier": "core",
+     "title": "Explain the quarter-hour count",
+     "skills": [
+      "nested-loops",
+      "range",
+      "explaining"
+     ],
+     "prompt": "Read the code. In your own words, explain what it does, why each step is there, and what it prints. Mention any edge cases you can see.",
+     "starter_code": "total = 0\nfor hour in range(3):\n    for minute in range(0, 60, 15):\n        total += 1\nprint(total)\n",
+     "model_explanation": "The program counts how many quarter-hour time slots there are in 3 hours.\n\nThe outer loop runs 3 times, for hours 0, 1 and 2. For each hour, the inner loop runs over the minutes 0, 15, 30 and 45. That is 4 rounds, because `range(0, 60, 15)` stops before 60. The inner loop starts again from 0 for every new hour.\n\n`total += 1` is inside both loops, so it runs 3 times 4, which is 12 times. It prints `12`.\n\nEdge case: if the outer range were `range(0)`, neither loop body would run and it would print `0`.",
+     "checklist": [
+      "Said the inner loop runs fully for each round of the outer loop",
+      "Worked out that the inner loop has 4 rounds (0, 15, 30, 45)",
+      "Gave the exact output: 12, as 3 times 4",
+      "Mentioned an edge case, such as zero hours"
+     ]
+    },
+    {
+     "id": "m02-l07-e10",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Right-aligned triangle",
+     "skills": [
+      "nested-loops",
+      "printing"
+     ],
+     "prompt": "Read a whole number `n`. Print a triangle of stars that leans to the right. Row `i` has `n - i` spaces followed by `i` stars.\n\nExample for `3`:\n\n```\n  *\n **\n***\n```\n\nSpaces at the start of a line matter here.",
+     "starter_code": "n = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "3 rows",
+       "stdin": "3\n",
+       "expected_stdout": "  *\n **\n***\n",
+       "hidden": false
+      },
+      {
+       "name": "4 rows",
+       "stdin": "4\n",
+       "expected_stdout": "   *\n  **\n ***\n****\n",
+       "hidden": true
+      },
+      {
+       "name": "1 row has no spaces",
+       "stdin": "1\n",
+       "expected_stdout": "*\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Each row needs two inner loops, one after the other: one for spaces, one for stars.",
+      "For row `i`: print `n - i` spaces with `end=\"\"`, then `i` stars with `end=\"\"`, then an empty `print()`."
+     ],
+     "solution": "n = int(input())\nfor i in range(1, n + 1):\n    for s in range(n - i):\n        print(\" \", end=\"\")\n    for t in range(i):\n        print(\"*\", end=\"\")\n    print()\n",
+     "solution_explanation": "Inside each row there are two inner loops in sequence. The first prints the leading spaces, and the second prints the stars. As `i` grows, the space count shrinks and the star count grows, which pushes the stars to the right edge."
+    },
+    {
+     "id": "m02-l07-e11",
+     "type": "write",
+     "tier": "stretch",
+     "title": "Coin combinations",
+     "skills": [
+      "nested-loops",
+      "conditionals"
+     ],
+     "prompt": "A machine gives change using only 20 cent and 50 cent coins. Read an amount in cents (a whole number, 0 or more). Print how many different combinations of the two coins add up to exactly that amount.\n\nExample: for `100`, there are `2` ways: five 20c coins, or two 50c coins.\n\nFor `90` there is `1` way: two 20c coins and one 50c coin.",
+     "starter_code": "amount = int(input())\n",
+     "stdin_tests": [
+      {
+       "name": "100 cents",
+       "stdin": "100\n",
+       "expected_stdout": "2\n",
+       "hidden": false
+      },
+      {
+       "name": "90 cents",
+       "stdin": "90\n",
+       "expected_stdout": "1\n",
+       "hidden": false
+      },
+      {
+       "name": "200 cents",
+       "stdin": "200\n",
+       "expected_stdout": "3\n",
+       "hidden": true
+      },
+      {
+       "name": "30 cents cannot be made",
+       "stdin": "30\n",
+       "expected_stdout": "0\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "0 cents: one way, using no coins",
+       "stdin": "0\n",
+       "expected_stdout": "1\n",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Try every count of 20c coins with every count of 50c coins.",
+      "The most 20c coins you could need is `amount // 20`. So loop `range(amount // 20 + 1)`, and the same idea for 50.",
+      "Inside both loops: `if twenties * 20 + fifties * 50 == amount:` add 1 to a counter."
+     ],
+     "solution": "amount = int(input())\nways = 0\nfor twenties in range(amount // 20 + 1):\n    for fifties in range(amount // 50 + 1):\n        if twenties * 20 + fifties * 50 == amount:\n            ways += 1\nprint(ways)\n",
+     "solution_explanation": "The loops try every possible number of each coin, from 0 up to the most that could fit. The `+ 1` is needed because `range` stops before its stop value. Each combination whose value equals the amount is counted. For 0 cents, the only combination tried is zero of each, and it matches."
+    },
+    {
+     "id": "m02-l07-e12",
+     "type": "fix",
+     "tier": "stretch",
+     "title": "Prime list with two bugs",
+     "skills": [
+      "nested-loops",
+      "break-continue",
+      "debugging"
+     ],
+     "prompt": "This program should print every prime number from 2 up to and including `n`, one per line. For `10` it should print:\n\n```\n2\n3\n5\n7\n```\n\nIt prints nothing at all. It has **two** bugs. Fix the first, then test with `13` to find the second.",
+     "starter_code": "n = int(input())\nfor num in range(2, n):\n    is_prime = True\n    for d in range(2, num):\n        if num % d == 0:\n            is_prime = False\n    break\n    if is_prime:\n        print(num)\n",
+     "stdin_tests": [
+      {
+       "name": "primes to 10",
+       "stdin": "10\n",
+       "expected_stdout": "2\n3\n5\n7\n",
+       "hidden": false
+      },
+      {
+       "name": "primes to 13 includes 13",
+       "stdin": "13\n",
+       "expected_stdout": "2\n3\n5\n7\n11\n13\n",
+       "hidden": false
+      },
+      {
+       "name": "n is 2",
+       "stdin": "2\n",
+       "expected_stdout": "2\n",
+       "hidden": true,
+       "edge": true
+      },
+      {
+       "name": "n is 1 prints nothing",
+       "stdin": "1\n",
+       "expected_stdout": "",
+       "hidden": true,
+       "edge": true
+      }
+     ],
+     "hints": [
+      "Which loop does the `break` belong to? Look at its indentation.",
+      "The `break` should end the inner search once a divisor is found. Where does it need to be?",
+      "For 13: does `range(2, n)` include `n`?"
+     ],
+     "solution": "n = int(input())\nfor num in range(2, n + 1):\n    is_prime = True\n    for d in range(2, num):\n        if num % d == 0:\n            is_prime = False\n            break\n    if is_prime:\n        print(num)\n",
+     "solution_explanation": "Bug 1: the `break` was indented at the level of the outer loop, so it ended the whole program during the first round, before the print could run. It belongs inside the `if`, where it stops the inner search as soon as a divisor is found. Bug 2: `range(2, n)` leaves out `n` itself, so a prime `n` was never printed. It needs `n + 1`."
+    }
+   ]
+  }
+ ]
+}

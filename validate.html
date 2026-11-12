@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Content check - Python Practice</title>
+  <link rel="stylesheet" href="css/app.css">
+  <style>main { margin-left: 0; }</style>
+</head>
+<body>
+  <main>
+    <div class="page">
+      <h1>Content check</h1>
+      <p class="muted">Loads every lesson and exercise and runs the quality gate in Python: reference solutions pass their tests, broken code fails, predicted outputs match, and each exercise has a visible test and an edge-case test.</p>
+      <div class="toolbar"><button type="button" class="btn primary" id="go">Run all checks</button><span class="muted" id="status"></span></div>
+      <div id="summary"></div>
+      <table class="table" id="table" hidden>
+        <thead><tr><th>ID</th><th>Check that failed</th><th>Detail</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </main>
+  <script type="module">
+    import { loadContent } from './js/content.js';
+    import { run, runTests } from './js/runner.js';
+    import { validateAll } from './js/validate-core.js';
+
+    const $ = (id) => document.getElementById(id);
+    const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+    async function exec(req) {
+      if (req.kind === 'run') return run(req);
+      const out = await runTests({ code: req.code, files: req.files, tests: [{ ...req.test, kind: req.kind }] });
+      return out.results[0] || { passed: false, internal: out.failed || 'no result' };
+    }
+
+    $('go').onclick = async () => {
+      $('go').disabled = true;
+      $('table').hidden = true;
+      $('summary').innerHTML = '';
+      $('status').textContent = 'Loading Python and content...';
+      try {
+        const { curriculum, files } = await loadContent();
+        const { failures, counts } = await validateAll({
+          curriculum, modules: files, exec,
+          onProgress: (id) => { $('status').textContent = `Checking ${id}`; },
+        });
+        $('status').textContent = '';
+        const types = Object.entries(counts.byType).map(([k, v]) => `${v} ${k}`).join(', ');
+        $('summary').innerHTML = `<p class="notice ${failures.length ? 'warn' : 'ok'}"><b>${failures.length ? `${failures.length} failure${failures.length === 1 ? '' : 's'}` : 'All checks passed'}.</b>
+          ${counts.checks} checks across ${counts.lessons} lessons and ${counts.exercises} exercises (${types}).</p>`;
+        $('table').hidden = failures.length === 0;
+        $('table').tBodies[0].innerHTML = failures.map((f) => `<tr><td><code>${esc(f.id)}</code></td><td>${esc(f.check)}</td><td><code>${esc(f.detail)}</code></td></tr>`).join('');
+      } catch (err) {
+        $('status').textContent = '';
+        $('summary').innerHTML = `<p class="notice warn"><b>The check could not run.</b> ${esc(err.message)}</p>`;
+      }
+      $('go').disabled = false;
+    };
+  </script>
+</body>
+</html>

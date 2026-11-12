@@ -1,0 +1,541 @@
+{
+ "version": 1,
+ "modules": [
+  {
+   "id": "m01",
+   "title": "Python basics",
+   "summary": "Variables, input, types, arithmetic and formatted output. A quick pass to get the syntax back.",
+   "file": "modules/m01.json",
+   "lessons": [
+    {
+     "id": "m01-l01",
+     "title": "Variables and print"
+    },
+    {
+     "id": "m01-l02",
+     "title": "Reading input"
+    },
+    {
+     "id": "m01-l03",
+     "title": "Types and type conversion"
+    },
+    {
+     "id": "m01-l04",
+     "title": "Arithmetic operators"
+    },
+    {
+     "id": "m01-l05",
+     "title": "f-strings and formatting output"
+    }
+   ]
+  },
+  {
+   "id": "m02",
+   "title": "Conditionals and loops",
+   "summary": "Making decisions with if, and repeating work with while and for.",
+   "file": "modules/m02.json",
+   "lessons": [
+    {
+     "id": "m02-l01",
+     "title": "Comparisons and if"
+    },
+    {
+     "id": "m02-l02",
+     "title": "elif and else"
+    },
+    {
+     "id": "m02-l03",
+     "title": "Boolean logic: and, or, not"
+    },
+    {
+     "id": "m02-l04",
+     "title": "while loops"
+    },
+    {
+     "id": "m02-l05",
+     "title": "for loops and range"
+    },
+    {
+     "id": "m02-l06",
+     "title": "break and continue"
+    },
+    {
+     "id": "m02-l07",
+     "title": "Nested loops"
+    }
+   ]
+  },
+  {
+   "id": "m03",
+   "title": "Strings in depth",
+   "summary": "Indexing, slicing, methods, building and validating text, and simple parsing. A heavy module.",
+   "lessons": [
+    {
+     "id": "m03-l01",
+     "title": "Indexing and length"
+    },
+    {
+     "id": "m03-l02",
+     "title": "Slicing"
+    },
+    {
+     "id": "m03-l03",
+     "title": "Case and cleaning: lower, upper, strip"
+    },
+    {
+     "id": "m03-l04",
+     "title": "Searching: in, find, startswith, endswith, count"
+    },
+    {
+     "id": "m03-l05",
+     "title": "Replacing text"
+    },
+    {
+     "id": "m03-l06",
+     "title": "split and join"
+    },
+    {
+     "id": "m03-l07",
+     "title": "Looping over strings"
+    },
+    {
+     "id": "m03-l08",
+     "title": "Building strings"
+    },
+    {
+     "id": "m03-l09",
+     "title": "Formatting and alignment"
+    },
+    {
+     "id": "m03-l10",
+     "title": "Validating text"
+    },
+    {
+     "id": "m03-l11",
+     "title": "Simple parsing: pulling fields out of a line"
+    },
+    {
+     "id": "m03-l12",
+     "title": "Strings mixed practice"
+    }
+   ]
+  },
+  {
+   "id": "m04",
+   "title": "Lists and tuples",
+   "summary": "Ordered collections: creating, changing, looping, nesting, and the copying gotchas.",
+   "lessons": [
+    {
+     "id": "m04-l01",
+     "title": "Creating lists and indexing"
+    },
+    {
+     "id": "m04-l02",
+     "title": "Slicing lists"
+    },
+    {
+     "id": "m04-l03",
+     "title": "Changing lists: append, insert, remove, pop"
+    },
+    {
+     "id": "m04-l04",
+     "title": "Looping over lists"
+    },
+    {
+     "id": "m04-l05",
+     "title": "Searching, counting and sorting"
+    },
+    {
+     "id": "m04-l06",
+     "title": "Tuples and unpacking"
+    },
+    {
+     "id": "m04-l07",
+     "title": "Nested lists"
+    },
+    {
+     "id": "m04-l08",
+     "title": "Copying and mutation gotchas"
+    }
+   ]
+  },
+  {
+   "id": "m05",
+   "title": "Dictionaries and sets",
+   "summary": "Looking things up by key, counting, grouping, and set operations.",
+   "lessons": [
+    {
+     "id": "m05-l01",
+     "title": "Dictionaries: lookup and update"
+    },
+    {
+     "id": "m05-l02",
+     "title": "Missing keys: in and get"
+    },
+    {
+     "id": "m05-l03",
+     "title": "Looping over keys, values and items"
+    },
+    {
+     "id": "m05-l04",
+     "title": "Counting with a dictionary"
+    },
+    {
+     "id": "m05-l05",
+     "title": "Grouping with a dictionary"
+    },
+    {
+     "id": "m05-l06",
+     "title": "Nested dictionaries"
+    },
+    {
+     "id": "m05-l07",
+     "title": "Sets and set operations"
+    }
+   ]
+  },
+  {
+   "id": "m06",
+   "title": "Functions",
+   "summary": "Parameters, return values, scope, and breaking a problem into small functions.",
+   "lessons": [
+    {
+     "id": "m06-l01",
+     "title": "Defining and calling functions"
+    },
+    {
+     "id": "m06-l02",
+     "title": "Parameters and return"
+    },
+    {
+     "id": "m06-l03",
+     "title": "Default and keyword arguments"
+    },
+    {
+     "id": "m06-l04",
+     "title": "Scope: local and global names"
+    },
+    {
+     "id": "m06-l05",
+     "title": "Docstrings and clear names"
+    },
+    {
+     "id": "m06-l06",
+     "title": "Breaking a problem into functions"
+    }
+   ]
+  },
+  {
+   "id": "m07",
+   "title": "Errors and debugging",
+   "summary": "Reading tracebacks, finding bugs methodically, and handling errors. A heavy module.",
+   "lessons": [
+    {
+     "id": "m07-l01",
+     "title": "Reading a traceback"
+    },
+    {
+     "id": "m07-l02",
+     "title": "Common error types"
+    },
+    {
+     "id": "m07-l03",
+     "title": "Syntax and indentation errors"
+    },
+    {
+     "id": "m07-l04",
+     "title": "Print debugging"
+    },
+    {
+     "id": "m07-l05",
+     "title": "Logic and off-by-one errors"
+    },
+    {
+     "id": "m07-l06",
+     "title": "Checking assumptions with assert"
+    },
+    {
+     "id": "m07-l07",
+     "title": "try and except"
+    },
+    {
+     "id": "m07-l08",
+     "title": "finally and raising errors"
+    },
+    {
+     "id": "m07-l09",
+     "title": "Debugging multi-function programs"
+    },
+    {
+     "id": "m07-l10",
+     "title": "Debugging mixed practice"
+    }
+   ]
+  },
+  {
+   "id": "m08",
+   "title": "Files and parsing",
+   "summary": "Reading and writing text, CSV, JSON, logs and config files, cleaning messy data, and producing reports. The heaviest module.",
+   "lessons": [
+    {
+     "id": "m08-l01",
+     "title": "Reading a text file"
+    },
+    {
+     "id": "m08-l02",
+     "title": "Reading line by line"
+    },
+    {
+     "id": "m08-l03",
+     "title": "Writing and appending"
+    },
+    {
+     "id": "m08-l04",
+     "title": "CSV by hand"
+    },
+    {
+     "id": "m08-l05",
+     "title": "The csv module"
+    },
+    {
+     "id": "m08-l06",
+     "title": "JSON"
+    },
+    {
+     "id": "m08-l07",
+     "title": "Log files"
+    },
+    {
+     "id": "m08-l08",
+     "title": "Config files"
+    },
+    {
+     "id": "m08-l09",
+     "title": "Fixed-width data"
+    },
+    {
+     "id": "m08-l10",
+     "title": "Messy data: blank lines and extra spaces"
+    },
+    {
+     "id": "m08-l11",
+     "title": "Messy data: bad rows and missing values"
+    },
+    {
+     "id": "m08-l12",
+     "title": "Producing reports"
+    },
+    {
+     "id": "m08-l13",
+     "title": "Parsing mixed practice"
+    }
+   ]
+  },
+  {
+   "id": "m09",
+   "title": "Comprehensions and built-ins",
+   "summary": "Shorter ways to build and search collections.",
+   "lessons": [
+    {
+     "id": "m09-l01",
+     "title": "List comprehensions"
+    },
+    {
+     "id": "m09-l02",
+     "title": "Dict and set comprehensions"
+    },
+    {
+     "id": "m09-l03",
+     "title": "sorted with key"
+    },
+    {
+     "id": "m09-l04",
+     "title": "min and max with key"
+    },
+    {
+     "id": "m09-l05",
+     "title": "enumerate and zip"
+    },
+    {
+     "id": "m09-l06",
+     "title": "any and all"
+    },
+    {
+     "id": "m09-l07",
+     "title": "lambda"
+    }
+   ]
+  },
+  {
+   "id": "m10",
+   "title": "Object-oriented programming",
+   "summary": "Classes and objects, taken slowly.",
+   "lessons": [
+    {
+     "id": "m10-l01",
+     "title": "Classes and objects"
+    },
+    {
+     "id": "m10-l02",
+     "title": "__init__ and attributes"
+    },
+    {
+     "id": "m10-l03",
+     "title": "Methods"
+    },
+    {
+     "id": "m10-l04",
+     "title": "__str__ and __repr__"
+    },
+    {
+     "id": "m10-l05",
+     "title": "Composition: objects that hold objects"
+    },
+    {
+     "id": "m10-l06",
+     "title": "Inheritance basics"
+    },
+    {
+     "id": "m10-l07",
+     "title": "When to use a class"
+    }
+   ]
+  },
+  {
+   "id": "m11",
+   "title": "Standard library",
+   "summary": "The modules that save the most time: collections, itertools, re and datetime.",
+   "lessons": [
+    {
+     "id": "m11-l01",
+     "title": "Counter"
+    },
+    {
+     "id": "m11-l02",
+     "title": "defaultdict"
+    },
+    {
+     "id": "m11-l03",
+     "title": "deque"
+    },
+    {
+     "id": "m11-l04",
+     "title": "itertools basics"
+    },
+    {
+     "id": "m11-l05",
+     "title": "re: finding patterns in text"
+    },
+    {
+     "id": "m11-l06",
+     "title": "re: groups and substitution"
+    },
+    {
+     "id": "m11-l07",
+     "title": "datetime basics"
+    }
+   ]
+  },
+  {
+   "id": "m12",
+   "title": "Complexity",
+   "summary": "Big O in plain words, and how to compare two approaches.",
+   "lessons": [
+    {
+     "id": "m12-l01",
+     "title": "Big O in plain words"
+    },
+    {
+     "id": "m12-l02",
+     "title": "Comparing two approaches"
+    },
+    {
+     "id": "m12-l03",
+     "title": "Why a dict lookup is fast"
+    }
+   ]
+  },
+  {
+   "id": "m13",
+   "title": "Data structures and algorithm patterns",
+   "summary": "The patterns behind most assessment questions.",
+   "lessons": [
+    {
+     "id": "m13-l01",
+     "title": "Hashing"
+    },
+    {
+     "id": "m13-l02",
+     "title": "Two pointers"
+    },
+    {
+     "id": "m13-l03",
+     "title": "Sliding window"
+    },
+    {
+     "id": "m13-l04",
+     "title": "Stacks"
+    },
+    {
+     "id": "m13-l05",
+     "title": "Queues"
+    },
+    {
+     "id": "m13-l06",
+     "title": "Recursion"
+    },
+    {
+     "id": "m13-l07",
+     "title": "Binary search"
+    },
+    {
+     "id": "m13-l08",
+     "title": "Sorting"
+    },
+    {
+     "id": "m13-l09",
+     "title": "Linked lists"
+    },
+    {
+     "id": "m13-l10",
+     "title": "Trees"
+    },
+    {
+     "id": "m13-l11",
+     "title": "BFS and DFS on graphs"
+    },
+    {
+     "id": "m13-l12",
+     "title": "Heaps"
+    },
+    {
+     "id": "m13-l13",
+     "title": "Intro to dynamic programming"
+    }
+   ]
+  },
+  {
+   "id": "m14",
+   "title": "Mixed practice",
+   "summary": "Interview-style sets that combine skills, especially parsing, strings and debugging.",
+   "lessons": [
+    {
+     "id": "m14-l01",
+     "title": "Parsing sets"
+    },
+    {
+     "id": "m14-l02",
+     "title": "String sets"
+    },
+    {
+     "id": "m14-l03",
+     "title": "Debugging sets"
+    },
+    {
+     "id": "m14-l04",
+     "title": "Mixed timed-style sets"
+    }
+   ]
+  }
+ ]
+}
